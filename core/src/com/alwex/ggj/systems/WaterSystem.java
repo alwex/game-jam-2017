@@ -12,7 +12,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
 
-import javax.swing.text.Position;
 import java.util.ArrayList;
 
 /**
@@ -39,6 +38,10 @@ public class WaterSystem extends EntityProcessingSystem {
 
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
+    }
+
+    public ArrayList<Entity> getSpringList() {
+        return springList;
     }
 
     @Override
