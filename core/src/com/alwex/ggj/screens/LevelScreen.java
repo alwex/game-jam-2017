@@ -69,6 +69,11 @@ public class LevelScreen implements Screen {
                                 map.getProperties().get("height", Integer.class)
                         ),
                         new MapSystem(mapRenderer, camera),
+                        new PhysicSystem(
+                                0.05f,
+                                map.getProperties().get("width", Integer.class),
+                                map.getProperties().get("height", Integer.class)
+                        ),
                         new WaterSystem(
                                 map.getProperties().get("width", Integer.class),
                                 map.getProperties().get("height", Integer.class)
