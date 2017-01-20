@@ -71,8 +71,9 @@ public class LevelScreen implements Screen {
                         new InputSystem(camera),
                         new SliceableSystem(),
                         new SpawnSystem(1),
-                        new RenderSystem(batch, camera, shapeRenderer),
-                        new MicrophoneRenderSystem(camera, shapeRenderer)
+//                        new RenderSystem(batch, camera, shapeRenderer),
+                        new WaterRenderSystem(shapeRenderer, camera)
+//                        new MicrophoneRenderSystem(camera, shapeRenderer)
                 ).build();
 
         world = new World(config);
