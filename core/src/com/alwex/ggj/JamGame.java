@@ -36,7 +36,7 @@ public class JamGame extends Game {
     @Override
     public void create() {
         fpsLogger = new FPSLogger();
-        recorder = Gdx.audio.newAudioRecorder(22050, true);
+        recorder = Gdx.audio.newAudioRecorder(22050 * 4, true);
         batch = new SpriteBatch();
         img = new Texture("badlogic.jpg");
         tweenManager = new TweenManager();

@@ -1,8 +1,13 @@
 package com.alwex.ggj.screens;
 
 import com.alwex.ggj.JamGame;
+import com.alwex.ggj.components.MicrophoneComponent;
 import com.alwex.ggj.components.PositionComponent;
 import com.alwex.ggj.components.ShapeComponent;
+import com.alwex.ggj.systems.MicrophoneRenderSystem;
+import com.alwex.ggj.systems.PositionSystem;
+import com.alwex.ggj.systems.MicrophoneSystem;
+import com.alwex.ggj.systems.RenderSystem;
 import com.alwex.ggj.systems.*;
 import com.artemis.Entity;
 import com.artemis.World;
@@ -14,6 +19,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -32,12 +38,14 @@ public class LevelScreen implements Screen {
     SpriteBatch batch;
     TiledMap map;
     World world;
+    ShapeRenderer shapeRenderer;
 
     public LevelScreen(final JamGame game, String mapName) {
         this.game = game;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 32, 24);
+        shapeRenderer = new ShapeRenderer();
 
         batch = game.getBatch();
 
@@ -49,14 +57,22 @@ public class LevelScreen implements Screen {
                         new EventSystem(),
 
                         // other systems goes here
-//                        new MicrophoneSystem(game.getRecorder()),
+                        new MicrophoneSystem(game.getRecorder(), 1024),
                         new PositionSystem(),
                         new MapSystem(mapRenderer, camera),
                         new WaterSystem(
                                 map.getProperties().get("width", Integer.class),
                                 map.getProperties().get("height", Integer.class)
                         ),
-                        new RenderSystem(batch, camera)
+                        new FishSystem(
+                                map.getProperties().get("width", Integer.class),
+                                map.getProperties().get("height", Integer.class)
+                        ),
+                        new InputSystem(camera),
+                        new SliceableSystem(),
+                        new SpawnSystem(1),
+                        new RenderSystem(batch, camera, shapeRenderer),
+                        new MicrophoneRenderSystem(camera, shapeRenderer)
                 ).build();
 
         world = new World(config);
@@ -64,6 +80,12 @@ public class LevelScreen implements Screen {
 
     @Override
     public void show() {
+        for(int i=0; i<128; i++){
+            Entity e = world.createEntity()
+                    .edit()
+                    .add(new MicrophoneComponent(i, 150))
+                    .getEntity();
+        }
     }
 
     @Override
