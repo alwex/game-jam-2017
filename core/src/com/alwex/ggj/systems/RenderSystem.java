@@ -29,16 +29,17 @@ public class RenderSystem extends EntityProcessingSystem {
     ShapeRenderer shapeRenderer;
     OrthographicCamera camera;
 
-    public RenderSystem(SpriteBatch batch, OrthographicCamera camera) {
+    public RenderSystem(SpriteBatch batch, OrthographicCamera camera, ShapeRenderer shapeRenderer) {
         super(Aspect.all(PositionComponent.class, ShapeComponent.class));
 
         this.batch = batch;
         this.camera = camera;
+        this.shapeRenderer = shapeRenderer;
     }
 
     @Override
     protected void initialize() {
-        shapeRenderer = new ShapeRenderer();
+
     }
 
     @Override

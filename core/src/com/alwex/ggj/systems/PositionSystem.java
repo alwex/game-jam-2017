@@ -30,10 +30,12 @@ public class PositionSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity e) {
+
         PositionComponent p = positionMapper.get(e);
     }
 
     @Override
     protected void end() {
+
     }
 }
