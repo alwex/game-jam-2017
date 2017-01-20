@@ -48,9 +48,9 @@ public class WaterSystem extends EntityProcessingSystem {
     protected void initialize() {
         springList = new ArrayList<Entity>();
 
-        float resolution = 0.25f;
+        float resolution = 1f;
 
-        for (int i = 0; i < mapWidth * (1 / resolution); i++) {
+        for (int i = 0; i <= mapWidth * (1 / resolution); i++) {
             Entity e = world.createEntity()
                     .edit()
                     .add(new PositionComponent(i * resolution, mapHeight / MathUtils.random(1f, 3f)))
