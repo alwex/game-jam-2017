@@ -3,16 +3,14 @@ package com.alwex.ggj.screens;
 import com.alwex.ggj.JamGame;
 import com.alwex.ggj.components.PositionComponent;
 import com.alwex.ggj.components.ShapeComponent;
-import com.alwex.ggj.systems.MapSystem;
-import com.alwex.ggj.systems.PositionSystem;
-import com.alwex.ggj.systems.MicrophoneSystem;
-import com.alwex.ggj.systems.RenderSystem;
+import com.alwex.ggj.systems.*;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
 import com.artemis.WorldConfigurationBuilder;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -51,9 +49,13 @@ public class LevelScreen implements Screen {
                         new EventSystem(),
 
                         // other systems goes here
-                        new MicrophoneSystem(game.getRecorder()),
+//                        new MicrophoneSystem(game.getRecorder()),
                         new PositionSystem(),
                         new MapSystem(mapRenderer, camera),
+                        new WaterSystem(
+                                map.getProperties().get("width", Integer.class),
+                                map.getProperties().get("height", Integer.class)
+                        ),
                         new RenderSystem(batch, camera)
                 ).build();
 
@@ -62,32 +64,16 @@ public class LevelScreen implements Screen {
 
     @Override
     public void show() {
-        Entity e = world.createEntity()
-                .edit()
-                .add(new PositionComponent(10, 10))
-                .add(new ShapeComponent(10, 10))
-                .getEntity();
-
-        Entity e2 = world.createEntity()
-                .edit()
-                .add(new ShapeComponent(100, 100))
-                .add(new PositionComponent(100, 300))
-                .getEntity();
     }
 
     @Override
     public void render(float delta) {
-
         // clear the screen with plain black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         world.setDelta(delta);
         world.process();
-
-        batch.begin();
-//        batch.draw(img, 0, 0);
-        batch.end();
     }
 
     @Override

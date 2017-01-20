@@ -48,7 +48,7 @@ public class RenderSystem extends EntityProcessingSystem {
 //        batch.begin();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.YELLOW);
+        shapeRenderer.setColor(Color.BLUE);
     }
 
     @Override
