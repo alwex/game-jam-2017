@@ -32,7 +32,6 @@ public class PositionSystem extends EntityProcessingSystem {
     protected void process(Entity e) {
 
         PositionComponent p = positionMapper.get(e);
-        //p.x += 0.1f;
     }
 
     @Override

@@ -8,17 +8,23 @@ import com.alwex.ggj.systems.MicrophoneRenderSystem;
 import com.alwex.ggj.systems.PositionSystem;
 import com.alwex.ggj.systems.MicrophoneSystem;
 import com.alwex.ggj.systems.RenderSystem;
+import com.alwex.ggj.systems.*;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
 import com.artemis.WorldConfigurationBuilder;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import net.mostlyoriginal.api.event.common.EventSystem;
+import net.mostlyoriginal.api.system.render.MapRenderSystem;
 
 /**
  * Created by alexandreguidet on 20/01/17.
@@ -26,20 +32,25 @@ import net.mostlyoriginal.api.event.common.EventSystem;
 public class LevelScreen implements Screen {
 
     final JamGame game;
+
+    OrthogonalTiledMapRenderer mapRenderer;
     OrthographicCamera camera;
     SpriteBatch batch;
+    TiledMap map;
     World world;
     ShapeRenderer shapeRenderer;
 
-
-    public LevelScreen(final JamGame game) {
+    public LevelScreen(final JamGame game, String mapName) {
         this.game = game;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, 32, 24);
         shapeRenderer = new ShapeRenderer();
 
         batch = game.getBatch();
+
+        map = new TmxMapLoader().load("maps/" + mapName);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / 8f);
 
         WorldConfiguration config = new WorldConfigurationBuilder()
                 .with(
@@ -48,6 +59,18 @@ public class LevelScreen implements Screen {
                         // other systems goes here
                         new MicrophoneSystem(game.getRecorder(), 1024),
                         new PositionSystem(),
+                        new MapSystem(mapRenderer, camera),
+                        new WaterSystem(
+                                map.getProperties().get("width", Integer.class),
+                                map.getProperties().get("height", Integer.class)
+                        ),
+                        new FishSystem(
+                                map.getProperties().get("width", Integer.class),
+                                map.getProperties().get("height", Integer.class)
+                        ),
+                        new InputSystem(camera),
+                        new SliceableSystem(),
+                        new SpawnSystem(1),
                         new RenderSystem(batch, camera, shapeRenderer),
                         new MicrophoneRenderSystem(camera, shapeRenderer)
                 ).build();
@@ -67,13 +90,12 @@ public class LevelScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        // clear the screen with plain black
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         world.setDelta(delta);
         world.process();
-
-        batch.begin();
-//        batch.draw(img, 0, 0);
-        batch.end();
     }
 
     @Override
