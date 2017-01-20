@@ -80,12 +80,7 @@ public class LevelScreen implements Screen {
 
     @Override
     public void show() {
-        for(int i=0; i<128; i++){
-            Entity e = world.createEntity()
-                    .edit()
-                    .add(new MicrophoneComponent(i, 150))
-                    .getEntity();
-        }
+
     }
 
     @Override
@@ -105,7 +100,7 @@ public class LevelScreen implements Screen {
 
     @Override
     public void pause() {
-
+        resume();
     }
 
     @Override

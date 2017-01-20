@@ -59,8 +59,8 @@ public class WaterRenderSystem extends BaseSystem {
             }
         }
 
-        SpringComponent spring = springMapper.get(e);
-        PositionComponent position = positionMapper.get(e);
+        //SpringComponent spring = springMapper.get();
+        //PositionComponent position = positionMapper.get(e);
     }
 
     @Override

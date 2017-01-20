@@ -36,13 +36,14 @@ public class MicrophoneRenderSystem extends EntityProcessingSystem {
     @Override
     protected void begin() {
 
-
+        shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
     }
     @Override
     protected void process(Entity e) {
-        MicrophoneComponent mic = microphoneMapper.get(e);
+        //MicrophoneComponent mic = microphoneMapper.get(e);
 
+        /*
         Polyline line = mic.getLine();
         shapeRenderer.setColor(
                 new Color(
@@ -54,10 +55,11 @@ public class MicrophoneRenderSystem extends EntityProcessingSystem {
         );
         Polyline line2 = new Polyline(line.getTransformedVertices());
 
-        line2.setPosition(0, 200f);
+        line2.setPosition(0, 1);
         Gdx.gl.glLineWidth(5);
 
         shapeRenderer.polyline(line2.getTransformedVertices());
+        */
 
     }
     protected void end() {
