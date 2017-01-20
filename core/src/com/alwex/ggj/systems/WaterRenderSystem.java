@@ -64,8 +64,8 @@ public class WaterRenderSystem extends BaseSystem {
     protected void initialize() {
         meshRenderer = new ImmediateModeRenderer20(false, true, 0);
 
-        topColor = new Color(0.01f, 0.89f, 0.94f, 0.3f);
-        bottomColor = new Color(0f, 0.15f, 0.16f, 0.3f);
+        topColor = new Color(0.46f, 0.65f, 0.74f, 0.9f);
+        bottomColor = new Color(0.01f, 0.18f, 0.36f,  0.5f);
 
     }
 

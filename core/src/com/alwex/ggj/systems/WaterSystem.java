@@ -25,6 +25,7 @@ public class WaterSystem extends EntityProcessingSystem {
     float k = 0.025f;
     float spread = 0.01f;
     float dampening = 0.05f;
+    float waterLevel = 15f;
 
     Entity target;
 
@@ -53,9 +54,9 @@ public class WaterSystem extends EntityProcessingSystem {
         for (int i = 0; i <= mapWidth * (1 / resolution); i++) {
             Entity e = world.createEntity()
                     .edit()
-                    .add(new PositionComponent(i * resolution, mapHeight / MathUtils.random(1f, 3f)))
+                    .add(new PositionComponent(i * resolution, waterLevel))
                     .add(new ShapeComponent(1 * resolution, 1 * resolution))
-                    .add(new SpringComponent(0, 0, mapHeight / 2, 0, 0))
+                    .add(new SpringComponent(0, 0, waterLevel, 0, 0))
                     .getEntity();
             springList.add(e);
 
