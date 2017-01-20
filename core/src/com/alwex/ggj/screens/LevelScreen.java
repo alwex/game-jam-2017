@@ -1,6 +1,7 @@
 package com.alwex.ggj.screens;
 
 import com.alwex.ggj.JamGame;
+import com.alwex.ggj.systems.MicrophoneSystem;
 import com.alwex.ggj.systems.RenderSystem;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
@@ -22,6 +23,7 @@ public class LevelScreen implements Screen {
     SpriteBatch batch;
     World world;
 
+
     public LevelScreen(final JamGame game) {
         this.game = game;
 
@@ -35,6 +37,7 @@ public class LevelScreen implements Screen {
                         new EventSystem(),
 
                         // other systems goes here
+                        new MicrophoneSystem(game.getRecorder()),
                         new RenderSystem(batch, camera)
                 ).build();
 
