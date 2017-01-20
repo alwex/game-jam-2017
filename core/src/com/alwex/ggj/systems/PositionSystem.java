@@ -26,12 +26,10 @@ public class PositionSystem extends EntityProcessingSystem {
 
     @Override
     protected void begin() {
-        Gdx.app.log("log", "begin");
     }
 
     @Override
     protected void process(Entity e) {
-        Gdx.app.log("log", "" + e.getId());
 
         PositionComponent p = positionMapper.get(e);
         //p.x += 0.1f;
@@ -39,6 +37,6 @@ public class PositionSystem extends EntityProcessingSystem {
 
     @Override
     protected void end() {
-        Gdx.app.log("log", "end");
+
     }
 }

@@ -1,8 +1,10 @@
 package com.alwex.ggj.screens;
 
 import com.alwex.ggj.JamGame;
+import com.alwex.ggj.components.MicrophoneComponent;
 import com.alwex.ggj.components.PositionComponent;
 import com.alwex.ggj.components.ShapeComponent;
+import com.alwex.ggj.systems.MicrophoneRenderSystem;
 import com.alwex.ggj.systems.PositionSystem;
 import com.alwex.ggj.systems.MicrophoneSystem;
 import com.alwex.ggj.systems.RenderSystem;
@@ -15,6 +17,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import net.mostlyoriginal.api.event.common.EventSystem;
 
 /**
@@ -26,6 +29,7 @@ public class LevelScreen implements Screen {
     OrthographicCamera camera;
     SpriteBatch batch;
     World world;
+    ShapeRenderer shapeRenderer;
 
 
     public LevelScreen(final JamGame game) {
@@ -33,6 +37,7 @@ public class LevelScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
+        shapeRenderer = new ShapeRenderer();
 
         batch = game.getBatch();
 
@@ -41,9 +46,10 @@ public class LevelScreen implements Screen {
                         new EventSystem(),
 
                         // other systems goes here
-                        new MicrophoneSystem(game.getRecorder()),
+                        new MicrophoneSystem(game.getRecorder(), 1024),
                         new PositionSystem(),
-                        new RenderSystem(batch, camera)
+                        new RenderSystem(batch, camera, shapeRenderer),
+                        new MicrophoneRenderSystem(camera, shapeRenderer)
                 ).build();
 
         world = new World(config);
@@ -51,11 +57,10 @@ public class LevelScreen implements Screen {
 
     @Override
     public void show() {
-        for(int i=0; i<32; i++){
+        for(int i=0; i<128; i++){
             Entity e = world.createEntity()
                     .edit()
-                    .add(new PositionComponent(i*32, 10))
-                    .add(new ShapeComponent(32, 24))
+                    .add(new MicrophoneComponent(i, 150))
                     .getEntity();
         }
     }

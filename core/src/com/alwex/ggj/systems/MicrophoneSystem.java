@@ -1,5 +1,6 @@
 package com.alwex.ggj.systems;
 
+import com.alwex.ggj.components.MicrophoneComponent;
 import com.alwex.ggj.components.PositionComponent;
 import com.artemis.Aspect;
 import com.artemis.BaseSystem;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.AudioRecorder;
 import com.badlogic.gdx.math.MathUtils;
 import org.jtransforms.dst.FloatDST_1D;
+import org.jtransforms.fft.FloatFFT_1D;
 /**
  * Created by Isaac on 20/01/2017.
  */
@@ -18,14 +20,16 @@ public class MicrophoneSystem extends EntityProcessingSystem {
     AudioRecorder recorder;
     short[] shortPCM;
     float[] floats;
+    int count;
     FloatDST_1D fourierTransform;
 
 
-    ComponentMapper<PositionComponent> positionMapper;
+    ComponentMapper<MicrophoneComponent> microphoneMapper;
 
-    public MicrophoneSystem(AudioRecorder recorder) {
-        super(Aspect.all(PositionComponent.class));
+    public MicrophoneSystem(AudioRecorder recorder, int count) {
+        super(Aspect.all(MicrophoneComponent.class));
         this.recorder = recorder;
+        this.count = count;
     }
 
     public static float[] floatMe(short[] pcms) {
@@ -42,38 +46,25 @@ public class MicrophoneSystem extends EntityProcessingSystem {
 
         recorder.read(this.shortPCM, 0, this.shortPCM.length);
         this.floats = floatMe(shortPCM);
-        this.fourierTransform.forward(floats,false);
+        this.fourierTransform.forward(floats,true);
 
     }
 
-    float[] buffer;
     @Override
     protected void process(Entity e) {
 
-        float pi = (float)Math.PI;
 
-        PositionComponent p = positionMapper.get(e);
+        MicrophoneComponent mic = microphoneMapper.get(e);
 
-        float total = 0;
-        for (int i=0; i<10; i++) {
-            float f = this.floats[i];
-            total += Math.abs(f) * MathUtils.sin((p.x * pi)  / ((float)i) / 10.0f )*0.1f;
-        }
+        mic.setSize(this.floats[mic.hz]);
 
 
-        float weight = 40.0f;
-
-        this.buffer[(int)(p.x/32f)] = (this.buffer[(int)(p.x/32f)]*weight + total) / (weight+1);// (total + this.buffer[(int)(p.x/32)])/2.0f;
-
-        //p.y = this.floats[(int)(p.x/8)] / 400.0f + 200;//total/100 + 200;
-        p.y = this.buffer[(int)(p.x/32f)]/100 + 200;
     }
 
     @Override
     protected void initialize() {
-        this.fourierTransform = new FloatDST_1D(128);
-        this.shortPCM = new short[128];
-        this.floats = new float[128];
-        this.buffer = new float[128];
+        this.fourierTransform = new FloatDST_1D(count/8);
+        this.shortPCM = new short[count];
+        this.floats = new float[count];
     }
 }
