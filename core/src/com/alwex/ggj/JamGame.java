@@ -30,7 +30,7 @@ public class JamGame extends Game {
 		img = new Texture("badlogic.jpg");
 		tweenManager = new TweenManager();
 
-		this.setScreen(new LevelScreen(this));
+		this.setScreen(new LevelScreen(this, "template.tmx"));
 	}
 
 	@Override
