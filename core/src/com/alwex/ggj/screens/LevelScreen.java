@@ -35,6 +35,7 @@ public class LevelScreen implements Screen {
 
     OrthogonalTiledMapRenderer mapRenderer;
     OrthographicCamera camera;
+    OrthographicCamera staticCamera;
     SpriteBatch batch;
     TiledMap map;
     World world;
@@ -45,6 +46,10 @@ public class LevelScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 32, 24);
+
+        staticCamera = new OrthographicCamera();
+        staticCamera.setToOrtho(false, 32, 24);
+
         shapeRenderer = new ShapeRenderer();
 
         batch = game.getBatch();
@@ -59,6 +64,10 @@ public class LevelScreen implements Screen {
                         // other systems goes here
                         new MicrophoneSystem(game.getRecorder(), 1024),
                         new PositionSystem(),
+                        new SkyRenderSystem(shapeRenderer, camera,
+                                map.getProperties().get("width", Integer.class),
+                                map.getProperties().get("height", Integer.class)
+                        ),
                         new MapSystem(mapRenderer, camera),
                         new WaterSystem(
                                 map.getProperties().get("width", Integer.class),
