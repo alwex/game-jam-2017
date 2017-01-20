@@ -34,7 +34,7 @@ public class PositionSystem extends EntityProcessingSystem {
         Gdx.app.log("log", "" + e.getId());
 
         PositionComponent p = positionMapper.get(e);
-        p.x += 0.1f;
+        //p.x += 0.1f;
     }
 
     @Override

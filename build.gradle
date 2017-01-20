@@ -51,7 +51,6 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java"
 
-
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
@@ -68,7 +67,7 @@ project(":core") {
         compile "net.mostlyoriginal.artemis-odb:contrib-jam:$artemisContribVersion"
         compile "net.mostlyoriginal.artemis-odb:contrib-eventbus:$artemisContribVersion"
         compile "net.mostlyoriginal.artemis-odb:contrib-plugin-operations:$artemisContribVersion"
-
+        compile "com.github.wendykierp:JTransforms:3.1"
         // tween engine
         compile fileTree(dir: '../libs', include: '*.jar')
     }

@@ -51,17 +51,13 @@ public class LevelScreen implements Screen {
 
     @Override
     public void show() {
-        Entity e = world.createEntity()
-                .edit()
-                .add(new PositionComponent(10, 10))
-                .add(new ShapeComponent(10, 10))
-                .getEntity();
-
-        Entity e2 = world.createEntity()
-                .edit()
-                .add(new ShapeComponent(100, 100))
-                .add(new PositionComponent(100, 300))
-                .getEntity();
+        for(int i=0; i<32; i++){
+            Entity e = world.createEntity()
+                    .edit()
+                    .add(new PositionComponent(i*32, 10))
+                    .add(new ShapeComponent(32, 24))
+                    .getEntity();
+        }
     }
 
     @Override
