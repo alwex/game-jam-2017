@@ -5,6 +5,7 @@ import com.alwex.ggj.components.PositionComponent;
 import com.alwex.ggj.components.ShapeComponent;
 import com.alwex.ggj.systems.MapSystem;
 import com.alwex.ggj.systems.PositionSystem;
+import com.alwex.ggj.systems.MicrophoneSystem;
 import com.alwex.ggj.systems.RenderSystem;
 import com.artemis.Entity;
 import com.artemis.World;
@@ -50,9 +51,10 @@ public class LevelScreen implements Screen {
                         new EventSystem(),
 
                         // other systems goes here
+                        new MicrophoneSystem(game.getRecorder()),
+                        new PositionSystem(),
                         new MapSystem(mapRenderer, camera),
-                        new RenderSystem(batch, camera),
-                        new PositionSystem()
+                        new RenderSystem(batch, camera)
                 ).build();
 
         world = new World(config);
