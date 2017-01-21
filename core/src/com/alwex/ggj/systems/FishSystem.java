@@ -41,8 +41,8 @@ public class FishSystem extends EntityProcessingSystem {
         fishNames.add("bottle");
         fishNames.add("crab");
         fishNames.add("divingman");
-        fishNames.add("octopus2");
-        fishNames.add("octopus3");
+//        fishNames.add("octopus2");
+//        fishNames.add("octopus3");
         fishNames.add("octopus4");
         fishNames.add("pengo");
         fishNames.add("pengobaby");

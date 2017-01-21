@@ -1,8 +1,10 @@
 package com.alwex.ggj.factory;
 
 import com.alwex.ggj.components.*;
+import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.World;
+import com.artemis.annotations.Wire;
 import com.badlogic.gdx.math.MathUtils;
 
 /**
@@ -10,6 +12,14 @@ import com.badlogic.gdx.math.MathUtils;
  */
 public class EntityFactory {
     public static EntityFactory instance = new EntityFactory();
+
+    ComponentMapper<PositionComponent> positionMapper;
+    ComponentMapper<SpriteComponent> spiteMapper;
+
+    private EntityFactory() {
+
+    }
+
 
     public Entity createFish(
             World world,
@@ -25,7 +35,15 @@ public class EntityFactory {
                 .add(new SliceableComponent())
                 .add(new SpriteComponent(name))
                 .add(new RotationComponent(0, MathUtils.random(0.5f, 1f)))
-//                .add(new PhysicComponent())
+                .add(new PhysicComponent(
+                        MathUtils.random(0.5f, 1f),
+                        MathUtils.random(0.5f, 1f),
+                        MathUtils.random(0.5f, 1f)
+                ))
                 .getEntity();
+    }
+
+    public Entity createSlicedFish(Entity fish) {
+        ComponentMapper<PositionComponent> positionMapper;
     }
 }

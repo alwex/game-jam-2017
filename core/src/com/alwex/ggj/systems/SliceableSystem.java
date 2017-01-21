@@ -2,6 +2,7 @@ package com.alwex.ggj.systems;
 
 import com.alwex.ggj.components.*;
 import com.alwex.ggj.events.SlicedEvent;
+import com.alwex.ggj.factory.EntityFactory;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -75,9 +76,9 @@ public class SliceableSystem extends EntityProcessingSystem {
                 deadMapper.create(e);
                 sliceableMapper.remove(e);
 
-                e.edit().add(new BleedingComponent());
-
                 eventSystem.dispatch(new SlicedEvent(e.getId()));
+
+                EntityFactory.instance.createSlicedFish(e);
             }
         }
     }

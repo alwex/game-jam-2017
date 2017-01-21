@@ -82,6 +82,7 @@ public class LevelScreen implements Screen {
                                 map.getProperties().get("height", Integer.class)
                         ),
                         new InputSystem(camera),
+                        new CameraSystem(camera),
                         new SliceableSystem(),
 //                        new RenderSystem(batch, camera, shapeRenderer),
                         new SpriteRenderSystem(batch, camera, game.getAssetManager().get("sprites/atlas.atlas", TextureAtlas.class)),
