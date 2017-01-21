@@ -70,9 +70,16 @@ public class SliceableSystem extends EntityProcessingSystem {
             bottomRight.y = vertices[5];
             bottomLeft.x = vertices[6];
             bottomLeft.y = vertices[7];
+            boolean slicedTop = Intersector.intersectSegments(sliceStart, sliceEnd, topLeft, topRight, null);
             boolean slicedRight = Intersector.intersectSegments(sliceStart, sliceEnd, topRight, bottomRight, null);
+            boolean slicedBottom = Intersector.intersectSegments(sliceStart, sliceEnd, bottomRight, bottomLeft, null);
             boolean slicedLeft = Intersector.intersectSegments(sliceStart, sliceEnd, bottomLeft, topLeft, null);
-            if (slicedLeft && slicedRight) {
+            if ((slicedLeft && slicedTop) ||
+                    (slicedLeft && slicedRight) ||
+                    (slicedLeft && slicedBottom) ||
+                    (slicedTop && slicedRight) ||
+                    (slicedTop && slicedBottom) ||
+                    (slicedRight && slicedBottom)) {
                 deadMapper.create(e);
                 sliceableMapper.remove(e);
                 eventSystem.dispatch(new SlicedEvent(e.getId()));
