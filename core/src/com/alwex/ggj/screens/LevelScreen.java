@@ -79,9 +79,11 @@ public class LevelScreen implements Screen {
                         ),
                         new FishSystem(
                                 map.getProperties().get("width", Integer.class),
-                                map.getProperties().get("height", Integer.class)
+                                map.getProperties().get("height", Integer.class),
+                                camera
                         ),
                         new InputSystem(camera),
+                        new CameraSystem(camera),
                         new SliceableSystem(),
 //                        new RenderSystem(batch, camera, shapeRenderer),
                         new SpriteRenderSystem(batch, camera, game.getAssetManager().get("sprites/atlas.atlas", TextureAtlas.class)),

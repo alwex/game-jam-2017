@@ -8,6 +8,7 @@ import com.artemis.Entity;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.artemis.utils.Bag;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import net.mostlyoriginal.api.utils.BagUtils;
@@ -24,14 +25,16 @@ public class FishSystem extends EntityProcessingSystem {
     float mapWidth, mapHeight;
     ComponentMapper<PositionComponent> positionMapper;
     ComponentMapper<DeadComponent> deadMapper;
+    OrthographicCamera camera;
 
     ArrayList<String> fishNames;
 
-    public FishSystem(float mapWidth, float mapHeight) {
+    public FishSystem(float mapWidth, float mapHeight, OrthographicCamera camera) {
         super(Aspect.all(FishComponent.class));
 
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
+        this.camera = camera;
     }
 
     @Override
@@ -80,15 +83,29 @@ public class FishSystem extends EntityProcessingSystem {
     }
 
     public Vector2 centreOfMass() {
+        float posX = camera.position.x;
+        float posY = camera.position.y;
+
         Bag<Entity> fishEntities = this.getEntities();
-        Entity[] fishArray = fishEntities.getData();
-        float sumX = 0;
-        float sumY = 0;
-        for (int i = 0; i < fishEntities.size(); i++) {
-            PositionComponent pos = positionMapper.get(fishArray[i]);
-            sumX += pos.x;
-            sumY += pos.y;
+        if (fishEntities.size() > 0) {
+            Entity[] fishArray = fishEntities.getData();
+            float sumX = 0;
+            float sumY = 0;
+            int count = 0;
+            for (int i = 0; i < fishEntities.size(); i++) {
+                if (!deadMapper.has(fishArray[i])) {
+                    PositionComponent pos = positionMapper.get(fishArray[i]);
+                    sumX += pos.x;
+                    sumY += pos.y;
+                    count++;
+                }
+            }
+            float fishY = sumY / count;
+            if (fishY >= camera.viewportHeight / 2 && fishY <= mapHeight - camera.viewportHeight / 2) {
+                posY = fishY;
+            }
         }
-        return new Vector2(sumX / fishEntities.size(), sumY / fishEntities.size());
+
+        return new Vector2(posX, posY);
     }
 }
