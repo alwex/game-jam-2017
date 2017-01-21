@@ -77,7 +77,7 @@ public class FishSystem extends EntityProcessingSystem {
                 fishNames.get(MathUtils.random(0, fishNames.size() - 1)),
                 MathUtils.random(0f, 32f),
                 MathUtils.random(0f, 24f),
-                1, MathUtils.random(10, 15),
+                1, MathUtils.random(30, 35),
                 MathUtils.random(2f, 5f),
                 MathUtils.random(2f, 5f)
         );
