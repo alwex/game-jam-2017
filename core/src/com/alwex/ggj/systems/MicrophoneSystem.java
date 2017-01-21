@@ -84,7 +84,7 @@ public class MicrophoneSystem extends EntityProcessingSystem {
 
 
                 float weight = 20.0f;
-                oldSz[hz] = ((oldSz[hz] * weight) + (sz / (volume * volume / 100000f + 100f))) / (weight + 1.0f);
+                oldSz[hz] = ((oldSz[hz] * weight) + (sz / (volume * volume / 100000f + 200f))) / (weight + 1.0f);
 
                 lines[hz].setScale(1f, oldSz[hz]);
 
@@ -97,7 +97,9 @@ public class MicrophoneSystem extends EntityProcessingSystem {
 
             effect2 = 0;
             for (int i = 0; i < this.maxHeight.length; i++) {
-                effect2 += (this.maxHeight[i]);
+                if(this.maxHeight[i] > 5) {
+                    effect2 += (this.maxHeight[i]);
+                }
             }
 
             effect2 = Math.abs(effect2);
@@ -119,7 +121,7 @@ public class MicrophoneSystem extends EntityProcessingSystem {
                 springPos.y += (maxHeight[i]) * (effect2 / 100000f + (effect * effect) / 1296) * 0.05f;
 
             }
-            effect += effect2 / 10000f;
+            effect += effect2 / 100000f;
 
 
         } else {
