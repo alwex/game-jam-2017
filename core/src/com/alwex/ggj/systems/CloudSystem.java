@@ -45,6 +45,7 @@ public class CloudSystem extends EntityProcessingSystem {
         cloudsDesciptors.add(new CloudDescriptor("cloud5", 4, 2));
         cloudsDesciptors.add(new CloudDescriptor("cloud6", 8, 3));
         cloudsDesciptors.add(new CloudDescriptor("cloud7", 12, 4));
+        cloudsDesciptors.add(new CloudDescriptor("birds", 2, 2));
 
         for (int i = 16; i <= mapHeight; i++) {
             int cloudId = MathUtils.random(cloudsDesciptors.size() - 1);

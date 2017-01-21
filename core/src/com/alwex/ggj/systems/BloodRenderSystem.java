@@ -40,7 +40,6 @@ public class BloodRenderSystem extends EntityProcessingSystem {
         BloodDropComponent blood = bloodMapper.get(e);
 
         shapeRenderer.setColor(blood.color);
-//        shapeRenderer.rect(position.x, position.y, blood.width, blood.height);
         shapeRenderer.circle(position.x, position.y, blood.width, 8);
     }
 

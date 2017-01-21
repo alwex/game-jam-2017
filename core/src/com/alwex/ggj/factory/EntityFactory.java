@@ -1,5 +1,6 @@
 package com.alwex.ggj.factory;
 
+import aurelienribon.tweenengine.TweenManager;
 import com.alwex.ggj.components.*;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -49,7 +50,7 @@ public class EntityFactory {
         return fish;
     }
 
-    public void createSlicedFish(World world, Entity fish) {
+    public void createSlicedFish(World world, Entity fish, TweenManager tweenManager) {
         ComponentMapper<PositionComponent> positionMapper = world.getMapper(PositionComponent.class);
         ComponentMapper<SpriteComponent> spriteMapper = world.getMapper(SpriteComponent.class);
         ComponentMapper<ShapeComponent> shapeMapper = world.getMapper(ShapeComponent.class);
