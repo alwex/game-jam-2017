@@ -38,6 +38,7 @@ public class EntityFactory {
                 .add(new FishComponent())
                 .add(new PositionComponent(x, y))
                 .add(new ShapeComponent(descriptor.width, descriptor.height))
+                .add(new ScoreComponent(descriptor.score))
 //                .add(new SliceableComponent())
                 .add(new SpriteComponent(name))
                 .add(new RotationComponent(0, MathUtils.random(0.5f, 1f)))
@@ -61,7 +62,7 @@ public class EntityFactory {
 
         Entity leftPart = this.createFish(
                 world, sprite.name + "-a",
-                new FishDescriptor(sprite.name + "-a", shape.width / 2, shape.height),
+                new FishDescriptor(sprite.name + "-a", shape.width / 2, shape.height, 0),
                 position.x, position.y,
                 -2, 0
         );
@@ -71,7 +72,7 @@ public class EntityFactory {
 
         Entity rightPart = this.createFish(
                 world, sprite.name + "-b",
-                new FishDescriptor(sprite.name + "-b", shape.width / 2, shape.height),
+                new FishDescriptor(sprite.name + "-b", shape.width / 2, shape.height, 0),
                 position.x, position.y,
                 2, 0
         );

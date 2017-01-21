@@ -102,7 +102,8 @@ public class LevelScreen implements Screen {
                         new MicrophoneSystem(game.getRecorder(), shapeRenderer, 1024),
                         new GarbageSystem(),
                         new SoundSystem(game.getAssetManager()),
-                        new BloodStainSystem(shapeRenderer, staticCamera)
+                        new BloodStainSystem(shapeRenderer, staticCamera),
+                        new GuiSystem(batch, staticCamera)
 
                 ).build();
 
@@ -127,7 +128,8 @@ public class LevelScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+//        staticCamera.setToOrtho(false, width, height);
+//        staticCamera.update(true);
     }
 
     @Override
