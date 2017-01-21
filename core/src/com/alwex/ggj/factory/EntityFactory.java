@@ -134,8 +134,8 @@ public class EntityFactory {
                 .getEntity();
     }
 
-    public Entity createCloud(World world, CloudDescriptor descriptor, float x, float y, float vx, float vy) {
-        return world.createEntity()
+    public Entity createCloud(World world, TweenManager tweenManager, CloudDescriptor descriptor, float x, float y, float vx, float vy) {
+        Entity cloud = world.createEntity()
                 .edit()
                 .add(new RotationComponent(0, 0))
                 .add(new CloudComponent())
@@ -144,5 +144,13 @@ public class EntityFactory {
                 .add(new ShapeComponent(descriptor.width, descriptor.height))
                 .add(new PhysicComponent(0, vx, vy))
                 .getEntity();
+
+        Tween.to(cloud.getComponent(ShapeComponent.class), ShapeComponentAccessor.SCALE, MathUtils.random(5f, 10f))
+                .target(MathUtils.random(1.1f, 1.3f))
+                .ease(TweenEquations.easeOutSine)
+                .repeatYoyo(-1, 0)
+                .start(tweenManager);
+
+        return cloud;
     }
 }

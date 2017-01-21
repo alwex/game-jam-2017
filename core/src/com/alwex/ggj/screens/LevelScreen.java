@@ -86,7 +86,8 @@ public class LevelScreen implements Screen {
                         ),
                         new CloudSystem(
                                 map.getProperties().get("width", Integer.class),
-                                map.getProperties().get("height", Integer.class)
+                                map.getProperties().get("height", Integer.class),
+                                game.getTweenManager()
                         ),
                         new DeadFishSystem(),
                         new BleedingSystem(),
