@@ -2,6 +2,7 @@ package com.alwex.ggj.systems;
 
 import com.alwex.ggj.components.MicrophoneComponent;
 import com.alwex.ggj.components.PositionComponent;
+import com.alwex.ggj.events.NoFishEvent;
 import com.alwex.ggj.events.ThrowFishEvent;
 import com.artemis.Aspect;
 import com.artemis.BaseSystem;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polyline;
 import net.mostlyoriginal.api.event.common.EventSystem;
+import net.mostlyoriginal.api.event.common.Subscribe;
 import org.jtransforms.dst.FloatDST_1D;
 import org.jtransforms.fft.FloatFFT_1D;
 /**
@@ -37,6 +39,7 @@ public class MicrophoneSystem extends EntityProcessingSystem {
     FloatDST_1D fourierTransform;
     ShapeRenderer shapeRenderer;
     EventSystem eventSystem;
+    boolean canThrowFish;
 
 
     ComponentMapper<PositionComponent> positionMapper;
@@ -57,10 +60,15 @@ public class MicrophoneSystem extends EntityProcessingSystem {
         return floaters;
     }
 
+    @Subscribe
+    protected void noFishEventListener(NoFishEvent event){
+        canThrowFish = true;
+    }
+
     @Override
     protected void begin() {
 
-        if (effect < 32) {
+        if (effect < 32 && canThrowFish) {
             if (!(tick-- > 0)) {
                 recorder.read(this.shortPCM, 0, this.shortPCM.length);
                 tick = 10;
@@ -138,6 +146,7 @@ public class MicrophoneSystem extends EntityProcessingSystem {
             for (int i = 0; i < this.maxHeight.length; i++) {
                 this.maxHeight[i] = 0;
             }
+            canThrowFish = false;
         }
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.box(0, 3, 0, effect, 1, 0);
@@ -151,7 +160,7 @@ public class MicrophoneSystem extends EntityProcessingSystem {
         this.floats = new float[count];
         this.oldSz = new float[count];
         this.maxHeight = new float[count];
-
+        this.canThrowFish = true;
 
         buffer = new float[128][count*2];
         lines = new Polyline[128];

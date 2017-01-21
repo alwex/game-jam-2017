@@ -48,7 +48,7 @@ public class EntityFactory {
                 .add(new SplashComponent())
                 .add(new PhysicComponent(
                         MathUtils.random(0.5f, 1f),
-                        vx, vy
+                        vx*0, vy
                 ))
                 .getEntity();
 

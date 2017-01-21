@@ -41,10 +41,10 @@ public class SpawnSystem extends BaseSystem {
     public void throwFishEventListener(ThrowFishEvent event){
         float[] velocities = event.velocityArray;
 
-        float minSpawn = 3;
-        float maxSpawn = 10;
-        float minVelocity = 50;
-        float maxVelocity = 20;
+        float minSpawn = 0.01f;
+        float maxSpawn = 0.1f;
+        float minVelocity = 5;
+        float maxVelocity = 2;
         float maxHeight = 0;
         float minHeight = Float.MAX_VALUE;
         float minX = 2;
@@ -57,13 +57,16 @@ public class SpawnSystem extends BaseSystem {
             minHeight = Math.min(minHeight,velocities[i]);
         }
 
+        float deltaHeight = maxHeight - minHeight;
+
 
 
         for(int i=0; i<velocities.length-1; i+=2) {
             float x = floatMap(i,0,velocities.length,minX,maxX);
             float y = velocities[i] - 4f;
-            float vy = floatMap(velocities[i],minHeight,maxHeight,minVelocity,maxVelocity);
-            float k = floatMap(velocities[i],minHeight,maxHeight,minSpawn,maxSpawn);
+            float vy = floatMap(velocities[i],minHeight,maxHeight,minVelocity,maxVelocity) * deltaHeight;
+            float k = floatMap(velocities[i],minHeight,maxHeight,minSpawn,maxSpawn) * deltaHeight * deltaHeight;
+
             for(int j=0; j<k; j++) {
                 float vx = floatMap(j,0,k,-k,k);
                 fishSystem.spawn(x, y, vx, vy);
