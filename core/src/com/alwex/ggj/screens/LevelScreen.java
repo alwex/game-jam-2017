@@ -19,6 +19,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -44,11 +45,8 @@ public class LevelScreen implements Screen {
     public LevelScreen(final JamGame game, String mapName) {
         this.game = game;
 
-        camera = new OrthographicCamera();
+        camera = new OrthographicCamera(32, 24);
         camera.setToOrtho(false, 32, 24);
-
-        staticCamera = new OrthographicCamera();
-        staticCamera.setToOrtho(false, 32, 24);
 
         shapeRenderer = new ShapeRenderer();
 
@@ -64,6 +62,7 @@ public class LevelScreen implements Screen {
                         // other systems goes here
                         new MicrophoneSystem(game.getRecorder(), 1024),
                         new PositionSystem(),
+                        new ShapeTweeningSystem(game.getTweenManager()),
                         new SkyRenderSystem(shapeRenderer, camera,
                                 map.getProperties().get("width", Integer.class),
                                 map.getProperties().get("height", Integer.class)
@@ -81,6 +80,7 @@ public class LevelScreen implements Screen {
                         new SliceableSystem(),
                         new SpawnSystem(1),
 //                        new RenderSystem(batch, camera, shapeRenderer),
+                        new SpriteRenderSystem(batch, camera, game.getAssetManager().get("sprites/atlas.atlas", TextureAtlas.class)),
                         new WaterRenderSystem(shapeRenderer, camera)
 //                        new MicrophoneRenderSystem(camera, shapeRenderer)
                 ).build();

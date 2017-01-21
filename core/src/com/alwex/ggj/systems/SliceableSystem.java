@@ -7,17 +7,21 @@ import com.alwex.ggj.components.SliceableComponent;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
+import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import net.mostlyoriginal.api.event.common.EventSystem;
 
 /**
  * Created by jbrungar on 20/01/17.
  */
+@Wire
 public class SliceableSystem extends EntityProcessingSystem {
 
+    EventSystem eventSystem;
     ComponentMapper<PositionComponent> positionMapper;
     ComponentMapper<ShapeComponent> shapeMapper;
     ComponentMapper<DeadComponent> deadMapper;
