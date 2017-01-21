@@ -19,10 +19,13 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import net.mostlyoriginal.api.event.common.EventSystem;
 import net.mostlyoriginal.api.system.render.MapRenderSystem;
 
@@ -42,12 +45,29 @@ public class LevelScreen implements Screen {
     World world;
     ShapeRenderer shapeRenderer;
 
+    Vector3 mousePosition;
+    Vector2 screenResolution;
+
+    private ShaderProgram focusShader;
+
     FrameBuffer pixelatedFbo;
+    FrameBuffer blurFbo;
 
     public float deltaFactor = 1;
 
     public LevelScreen(final JamGame game, String mapName) {
         this.game = game;
+
+        mousePosition = new Vector3(0, 0, 0);
+        screenResolution = new Vector2(0, 0);
+
+        focusShader = new ShaderProgram(
+                Gdx.files.internal("shaders/passthrough.vert.glsl"),
+                Gdx.files.internal("shaders/focus.frag.glsl")
+        );
+        if (!focusShader.isCompiled()) {
+            Gdx.app.log("SHADER FOCUS", focusShader.getLog());
+        }
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 32, 24);
@@ -58,6 +78,13 @@ public class LevelScreen implements Screen {
                 false
         );
         pixelatedFbo.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        blurFbo = new FrameBuffer(Pixmap.Format.RGBA8888,
+                (int) camera.viewportWidth * 8,
+                (int) camera.viewportWidth * 8,
+                false
+        );
+        blurFbo.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         staticCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         staticBatch = game.getStaticBatch();
@@ -153,7 +180,25 @@ public class LevelScreen implements Screen {
         }
         pixelatedFbo.end();
 
+
+        screenResolution.x = Gdx.graphics.getWidth();
+        screenResolution.y = Gdx.graphics.getHeight();
+        mousePosition.x = Gdx.input.getX();
+        mousePosition.y = Gdx.graphics.getHeight() - Gdx.input.getY();
+
+        focusShader.begin();
+        {
+            // setting the shader uniforms
+            focusShader.setUniformf("u_resolution", screenResolution);
+//            focusShader.setUniformf("u_time", delta);
+            focusShader.setUniformf("u_position", mousePosition);
+            focusShader.setUniformf("u_intensity", 0.05f);
+
+        }
+        focusShader.end();
+
         staticBatch.setProjectionMatrix(staticCamera.combined);
+        staticBatch.setShader(focusShader);
         staticBatch.begin();
         {
             Gdx.gl.glClearColor(0, 0, 0, 1);
