@@ -1,7 +1,10 @@
 package com.alwex.ggj.factory;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import com.alwex.ggj.components.*;
+import com.alwex.ggj.tween.accessors.ShapeComponentAccessor;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.World;
@@ -79,6 +82,18 @@ public class EntityFactory {
         rightPart.edit()
                 .add(new BleedingComponent())
                 .remove(SliceableComponent.class);
+
+        Tween.to(rightPart.getComponent(ShapeComponent.class), ShapeComponentAccessor.SCALE, 0.1f)
+                .target(1.2f)
+                .repeatYoyo(100, 0)
+                .ease(TweenEquations.easeInOutBounce)
+                .start(tweenManager);
+
+        Tween.to(leftPart.getComponent(ShapeComponent.class), ShapeComponentAccessor.SCALE, 0.1f)
+                .target(1.2f)
+                .repeatYoyo(100, 0)
+                .ease(TweenEquations.easeInOutBounce)
+                .start(tweenManager);
 
     }
 

@@ -2,6 +2,7 @@ package com.alwex.ggj.systems;
 
 import com.alwex.ggj.components.PositionComponent;
 import com.alwex.ggj.components.SpringComponent;
+import com.alwex.ggj.events.SlicedEvent;
 import com.artemis.BaseSystem;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import net.mostlyoriginal.api.event.common.Subscribe;
 
 import java.util.ArrayList;
 
@@ -42,8 +44,6 @@ public class WaterRenderSystem extends BaseSystem {
     Color topColor;
     Color bottomColor;
 
-    float[] poly;
-
     public WaterRenderSystem(ShapeRenderer shapeRenderer, OrthographicCamera camera) {
         super();
         this.shapeRenderer = shapeRenderer;
@@ -65,7 +65,7 @@ public class WaterRenderSystem extends BaseSystem {
         meshRenderer = new ImmediateModeRenderer20(false, true, 0);
 
         topColor = new Color(0.46f, 0.65f, 0.74f, 0.9f);
-        bottomColor = new Color(0.01f, 0.18f, 0.36f,  0.7f);
+        bottomColor = new Color(0.01f, 0.18f, 0.36f, 0.7f);
 
     }
 
@@ -151,5 +151,18 @@ public class WaterRenderSystem extends BaseSystem {
     protected void end() {
         meshRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
+    }
+
+    @Subscribe
+    public void onSlice(SlicedEvent event) {
+        float factor = 0.01f;
+
+        topColor.r += (topColor.r < 0.8f) ? factor : 0;
+        topColor.g -= (topColor.g > 0.1f) ? factor : 0;
+        topColor.b -= (topColor.b > 0.1f) ? factor : 0;
+
+        bottomColor.r += (bottomColor.r < 0.8f) ? factor : 0;
+        bottomColor.g -= (bottomColor.g > 0.1f) ? factor : 0;
+        bottomColor.b -= (bottomColor.b > 0.1f) ? factor : 0;
     }
 }

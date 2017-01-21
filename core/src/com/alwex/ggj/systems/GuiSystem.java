@@ -78,6 +78,6 @@ public class GuiSystem extends EntityProcessingSystem {
         ScoreComponent score = scoreMapper.get(event.entityId);
         GuiComponent guiComponent = guiMapper.get(gui);
         guiComponent.score += score.value;
-
+        guiComponent.combo += 1;
     }
 }
