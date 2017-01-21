@@ -55,7 +55,6 @@ public class WaterSystem extends EntityProcessingSystem {
             Entity e = world.createEntity()
                     .edit()
                     .add(new PositionComponent(i * resolution, waterLevel))
-                    .add(new ShapeComponent(1 * resolution, 1 * resolution))
                     .add(new SpringComponent(0, 0, waterLevel, 0, 0))
                     .getEntity();
             springList.add(e);

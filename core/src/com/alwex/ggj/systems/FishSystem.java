@@ -53,6 +53,7 @@ public class FishSystem extends EntityProcessingSystem {
                 .add(new FishComponent())
                 .add(new PositionComponent(MathUtils.random(0, mapWidth), 0))
                 .add(new ShapeComponent(1f, 2f))
+                .add(new PhysicComponent(0.1f,MathUtils.random(-2f,2f),MathUtils.random(0f,2f)))
                 .add(new SliceableComponent())
                 .getEntity();
     }
