@@ -11,6 +11,7 @@ import com.artemis.Entity;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.AudioRecorder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -118,7 +119,12 @@ public class MicrophoneSystem extends EntityProcessingSystem {
     }
 
     @Override
-    protected void process(Entity e) {}
+    protected void process(Entity e) {
+
+        if (Gdx.input.isKeyPressed(Input.Keys.M) && canThrowFish) {
+            effect+=0.01f;
+        }
+    }
 
     @Override
     protected void end() {
