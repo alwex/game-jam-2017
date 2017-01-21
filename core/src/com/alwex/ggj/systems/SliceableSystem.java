@@ -77,7 +77,8 @@ public class SliceableSystem extends EntityProcessingSystem {
                 sliceableMapper.remove(e);
                 eventSystem.dispatch(new SlicedEvent(e.getId()));
 
-//                EntityFactory.instance.createSlicedFish(e);
+                EntityFactory.instance.createSlicedFish(world, e);
+                e.deleteFromWorld();
             }
         }
     }

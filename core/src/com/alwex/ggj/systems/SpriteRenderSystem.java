@@ -8,6 +8,7 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -52,10 +53,11 @@ public class SpriteRenderSystem extends EntityProcessingSystem {
         ShapeComponent shape = shapeMapper.get(e);
         RotationComponent rotation = rotationMapper.get(e);
 
+        Gdx.app.log("sprite", sprite.name);
         batch.draw(
                 atlas.findRegion(sprite.name),
                 position.x, position.y,
-                0, 0,
+                shape.width / 2f, shape.height / 2f,
                 shape.width, shape.height,
                 shape.scale, shape.scale,
                 rotation.angle

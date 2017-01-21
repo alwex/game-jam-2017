@@ -1,6 +1,7 @@
 package com.alwex.ggj.components;
 
 import com.artemis.Component;
+import com.badlogic.gdx.graphics.Color;
 
 /**
  * Created by samsung on 20/01/2017.

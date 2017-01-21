@@ -43,7 +43,7 @@ public class FishSystem extends EntityProcessingSystem {
         fishNames.add("boot");
         fishNames.add("bottle");
         fishNames.add("crab");
-        fishNames.add("divingman");
+//        fishNames.add("divingman");
 //        fishNames.add("octopus2");
 //        fishNames.add("octopus3");
         fishNames.add("octopus4");
@@ -72,15 +72,17 @@ public class FishSystem extends EntityProcessingSystem {
     }
 
     public void spawn() {
-        EntityFactory.instance.createFish(
+        Entity fish = EntityFactory.instance.createFish(
                 world,
                 fishNames.get(MathUtils.random(0, fishNames.size() - 1)),
                 MathUtils.random(0f, 32f),
                 MathUtils.random(0f, 24f),
-                1, 1,
-                MathUtils.random(1f, 2f),
-                MathUtils.random(1f, 2f)
+                1, MathUtils.random(10, 15),
+                MathUtils.random(2f, 5f),
+                MathUtils.random(2f, 5f)
         );
+
+        fish.edit().add(new SliceableComponent());
     }
 
     public Vector2 centreOfMass() {
