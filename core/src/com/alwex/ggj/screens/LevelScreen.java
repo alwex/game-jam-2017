@@ -54,9 +54,11 @@ public class LevelScreen implements Screen {
     private ShaderProgram focusShader;
     private ShaderProgram bloomShader;
     private ShaderProgram rippleShader;
+    private ShaderProgram crtShader;
 
     FrameBuffer pixelatedFbo;
     FrameBuffer blurFbo;
+    FrameBuffer shockwaveFbo;
 
     float now = 0;
 
@@ -91,6 +93,14 @@ public class LevelScreen implements Screen {
             Gdx.app.log("SHADER rippleShader", rippleShader.getLog());
         }
 
+        crtShader = new ShaderProgram(
+                Gdx.files.internal("shaders/passthrough.vert.glsl"),
+                Gdx.files.internal("shaders/tv.frag.glsl")
+        );
+        if (!crtShader.isCompiled()) {
+            Gdx.app.log("SHADER crtShader", crtShader.getLog());
+        }
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 32, 24);
 
@@ -107,6 +117,13 @@ public class LevelScreen implements Screen {
                 false
         );
         blurFbo.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        shockwaveFbo = new FrameBuffer(Pixmap.Format.RGBA8888,
+                (int) camera.viewportWidth * 8,
+                (int) camera.viewportWidth * 8,
+                false
+        );
+        shockwaveFbo.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         staticCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         staticBatch = game.getStaticBatch();
@@ -251,17 +268,46 @@ public class LevelScreen implements Screen {
         {
 //            rippleShader.setUniformf("u_position", new Vector2(0, 0));
             rippleShader.setUniformf("time", now);
-            rippleShader.setUniformf("u_intensity", MyMaths.floatMap(deltaFactor, 1, 0, 0, 0.05f));
+            rippleShader.setUniformf("u_intensity", MyMaths.floatMap(deltaFactor, 1, 0, 0, 0.04f));
         }
         rippleShader.end();
 
-        staticBatch.setShader(rippleShader);
+        shockwaveFbo.begin();
+        {
+//            staticBatch.setShader(rippleShader);
+            staticBatch.begin();
+            {
+                Gdx.gl.glClearColor(0, 0, 0, 1);
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+                Gdx.gl.glEnable(GL20.GL_BLEND);
+                staticBatch.draw(blurFbo.getColorBufferTexture(), -staticCamera.viewportWidth / 2, -staticCamera.viewportHeight / 2, staticCamera.viewportWidth, staticCamera.viewportHeight, 0, 0, 1, 1);
+                Gdx.gl.glDisable(GL20.GL_BLEND);
+            }
+            staticBatch.end();
+            staticBatch.setShader(null);
+        }
+        shockwaveFbo.end();
+
+        crtShader.begin();
+        {
+            crtShader.setUniformf("time", now);
+        }
+        crtShader.end();
+
+        bloomShader.begin();
+        {
+            bloomShader.setUniformf("intensity", 0.1f);
+        }
+        bloomShader.end();
+
+
+        staticBatch.setShader(bloomShader);
         staticBatch.begin();
         {
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             Gdx.gl.glEnable(GL20.GL_BLEND);
-            staticBatch.draw(blurFbo.getColorBufferTexture(), -staticCamera.viewportWidth / 2, -staticCamera.viewportHeight / 2, staticCamera.viewportWidth, staticCamera.viewportHeight, 0, 0, 1, 1);
+            staticBatch.draw(shockwaveFbo.getColorBufferTexture(), -staticCamera.viewportWidth / 2, -staticCamera.viewportHeight / 2, staticCamera.viewportWidth, staticCamera.viewportHeight, 0, 0, 1, 1);
             Gdx.gl.glDisable(GL20.GL_BLEND);
         }
         staticBatch.end();

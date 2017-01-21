@@ -29,7 +29,7 @@ void main() {
     col *= vec3(0.9, 1.0, 0.7);
 
     // ajout des scanlines
-    col *= 0.8 + 0.2 * sin(10.0 * time + uv.y * 512.0);
+    col *= 0.95 + 0.2 * sin(10.0 * time + uv.y * 512.0);
 
     // ajout d'un sintillement
     col *= 1.0 - 0.07 * rand(vec2(time, tan(time)));
