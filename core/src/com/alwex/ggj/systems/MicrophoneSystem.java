@@ -97,7 +97,7 @@ public class MicrophoneSystem extends EntityProcessingSystem {
 
             effect2 = 0;
             for (int i = 0; i < this.maxHeight.length; i++) {
-                if(this.maxHeight[i] > 5) {
+                if(this.maxHeight[i] > 7) {
                     effect2 += (this.maxHeight[i]);
                 }
             }

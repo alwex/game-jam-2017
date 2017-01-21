@@ -45,6 +45,7 @@ public class EntityFactory {
 //                .add(new SliceableComponent())
                 .add(new SpriteComponent(name))
                 .add(new RotationComponent(0, MathUtils.random(0.5f, 1f)))
+                .add(new SplashComponent())
                 .add(new PhysicComponent(
                         MathUtils.random(0.5f, 1f),
                         vx, vy
@@ -71,6 +72,7 @@ public class EntityFactory {
         );
         leftPart.edit()
                 .add(new BleedingComponent())
+                .add(new SplashComponent())
                 .remove(SliceableComponent.class);
 
         Entity rightPart = this.createFish(
@@ -81,6 +83,7 @@ public class EntityFactory {
         );
         rightPart.edit()
                 .add(new BleedingComponent())
+                .add(new SplashComponent())
                 .remove(SliceableComponent.class);
 
         Tween.to(rightPart.getComponent(ShapeComponent.class), ShapeComponentAccessor.SCALE, 0.1f)
@@ -111,6 +114,23 @@ public class EntityFactory {
                         size,
                         bloodColor
                 ))
+                .add(new SplashComponent(true))
+                .getEntity();
+    }
+
+    public Entity createWaterSplash(World world, float x, float y, float vx, float vy, Color waterColor) {
+
+        float size = MathUtils.random(0.1f, 0.25f);
+
+        return world.createEntity().edit()
+                .add(new PositionComponent(x, y))
+                .add(new PhysicComponent(MathUtils.random(0.5f, 1f), vx, vy))
+                .add(new BloodDropComponent(
+                        size,
+                        size,
+                        waterColor
+                ))
+                .add(new SplashComponent(true))
                 .getEntity();
     }
 

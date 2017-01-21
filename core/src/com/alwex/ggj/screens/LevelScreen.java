@@ -94,6 +94,7 @@ public class LevelScreen implements Screen {
                         new InputSystem(camera),
                         new CameraSystem(camera),
                         new SliceableSystem(game.getTweenManager()),
+                        new WaterSplashSystem(),
 //                        new RenderSystem(batch, camera, shapeRenderer),
                         new SpriteRenderSystem(batch, camera, game.getAssetManager().get("sprites/atlas.atlas", TextureAtlas.class)),
                         new SpawnSystem(),
