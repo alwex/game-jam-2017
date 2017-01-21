@@ -1,6 +1,7 @@
 package com.alwex.ggj.systems;
 
 import com.alwex.ggj.components.*;
+import com.alwex.ggj.events.NoFishEvent;
 import com.alwex.ggj.factory.EntityFactory;
 import com.alwex.ggj.factory.FishDescriptor;
 import com.artemis.Aspect;
@@ -32,7 +33,7 @@ public class FishSystem extends EntityProcessingSystem {
     ComponentMapper<DeadComponent> deadMapper;
     OrthographicCamera camera;
 
-    boolean hasFish = false;
+    boolean askedForFish = false;
 
     ArrayList<FishDescriptor> fishDescriptors;
 
@@ -63,11 +64,13 @@ public class FishSystem extends EntityProcessingSystem {
 
     @Override
     protected void begin() {
-        if (getEntities().size() == 0 && hasFish) {
-//            hasFish = false;
-//            Gdx.app.log("FISH", "test");
+        if (getEntities().size() > 0) {
+            askedForFish = false;
         } else {
-//            hasFish = true;
+            if(!askedForFish) {
+                askedForFish = true;
+                eventSystem.dispatch(new NoFishEvent());
+            }
         }
     }
 
