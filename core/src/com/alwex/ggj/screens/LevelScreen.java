@@ -62,7 +62,6 @@ public class LevelScreen implements Screen {
                         new EventSystem(),
 
                         // other systems goes here
-                        new MicrophoneSystem(game.getRecorder(), 1024),
                         new PositionSystem(),
                         new SkyRenderSystem(shapeRenderer, camera,
                                 map.getProperties().get("width", Integer.class),
@@ -70,7 +69,7 @@ public class LevelScreen implements Screen {
                         ),
                         new MapSystem(mapRenderer, camera),
                         new PhysicSystem(
-                                0.05f,
+                                -25f,
                                 map.getProperties().get("width", Integer.class),
                                 map.getProperties().get("height", Integer.class)
                         ),
@@ -85,8 +84,9 @@ public class LevelScreen implements Screen {
                         new InputSystem(camera),
                         new SliceableSystem(),
                         new SpawnSystem(1),
-//                        new RenderSystem(batch, camera, shapeRenderer),
-                        new WaterRenderSystem(shapeRenderer, camera)
+                        new RenderSystem(batch, camera, shapeRenderer),
+                        new WaterRenderSystem(shapeRenderer, camera),
+                        new MicrophoneSystem(game.getRecorder(),shapeRenderer, 1024)
 //                        new MicrophoneRenderSystem(camera, shapeRenderer)
                 ).build();
 

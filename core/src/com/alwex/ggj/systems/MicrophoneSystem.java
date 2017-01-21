@@ -10,6 +10,7 @@ import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.AudioRecorder;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polyline;
 import org.jtransforms.dst.FloatDST_1D;
@@ -29,16 +30,18 @@ public class MicrophoneSystem extends EntityProcessingSystem {
     Polyline[] lines;
     int count;
     FloatDST_1D fourierTransform;
-    float oldVolume, volume;
+    float oldVolume, volume, volume2;
+    ShapeRenderer shapeRenderer;
 
 
     ComponentMapper<PositionComponent> positionMapper;
     WaterSystem waterSystem;
 
-    public MicrophoneSystem(AudioRecorder recorder, int count) {
+    public MicrophoneSystem(AudioRecorder recorder,  ShapeRenderer shapeRenderer,int count) {
         super(Aspect.all(PositionComponent.class));
         this.recorder = recorder;
         this.count = count;
+        this.shapeRenderer = shapeRenderer;
     }
 
     public static float[] floatMe(short[] pcms) {
@@ -49,11 +52,14 @@ public class MicrophoneSystem extends EntityProcessingSystem {
         return floaters;
     }
 
+    int tick = 0;
     @Override
     protected void begin() {
 
-        recorder.read(this.shortPCM, 0, this.shortPCM.length);
-
+        if(!(tick-->0)) {
+            recorder.read(this.shortPCM, 0, this.shortPCM.length);
+            tick = 10;
+        }
         this.floats = floatMe(shortPCM);
         this.fourierTransform.forward(floats,true);
 
@@ -63,30 +69,31 @@ public class MicrophoneSystem extends EntityProcessingSystem {
         }
 
 
-        for (int i=0; i<count; i++){
+        for (int i = 0; i < count; i++) {
             this.maxHeight[i] = 0;
         }
-        for (int hz = 0; hz<32; hz++) {
+        for (int hz = 1; hz < 32; hz++) {
 
 
             float sz = this.floats[hz];
 
 
-            float weight = 1.0f;
-            oldSz[hz] = ((oldSz[hz]*weight) + (sz/ 2000.0f) )/(weight + 1.0f);
+            float weight = 10.0f;
+            oldSz[hz] = ((oldSz[hz] * weight * (volume+1000)) + sz) / (weight + 1.0f)/(volume+1000);
 
 
-            lines[hz].setScale(0.255f,oldSz[hz] );
+            lines[hz].setScale(1f, oldSz[hz]);
 
             float[] transformed = lines[hz].getTransformedVertices();
 
-            for (int i=0; i<count; i++){
-                this.maxHeight[i] = Math.max(this.maxHeight[i],transformed[i*2+1]);
-
+            for (int i = 0; i < count; i++) {
+                this.maxHeight[i] += transformed[i * 2 + 1];//Math.max(this.maxHeight[i],);
             }
         }
 
-        boolean broken = false;
+
+
+
 
     }
 
@@ -96,14 +103,19 @@ public class MicrophoneSystem extends EntityProcessingSystem {
     @Override
     protected void end() {
         if(true) {
-            Gdx.app.log("Volume",""+volume);
             for (Entity springEntity : waterSystem.getSpringList()) {
                 PositionComponent springPos = positionMapper.get(springEntity);
-                int i = (int) (springPos.x * 8);
+                int i = (int) (springPos.x * 4);
                 springPos.y += (maxHeight[i])/10f;
+
+                volume2 += Math.abs(maxHeight[i])*0.2f;
             }
         }
-        oldVolume = volume;
+        volume2 -=  8.0f;
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.box(16,1,0,(volume2)/10f,1,0);
+        if(tick==5){Gdx.app.log("Volume",""+(volume2)/10f);}
+        shapeRenderer.end();
     }
 
     @Override
