@@ -2,6 +2,7 @@ package com.alwex.ggj.screens;
 
 import com.alwex.ggj.JamGame;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -18,7 +19,7 @@ public class ScoreScreen implements Screen {
     SpriteBatch batch;
 
 
-    public ScoreScreen(JamGame game, int score, int maxCombo) {
+    public ScoreScreen(JamGame game, int score) {
         this.game = game;
         this.score = score;
         this.maxCombo = maxCombo;
@@ -46,18 +47,15 @@ public class ScoreScreen implements Screen {
 
         font.draw(
                 batch,
-                "Your maxCombo : " + maxCombo,
-                100,
-                350
-        );
-
-        font.draw(
-                batch,
-                "Press space to kill again!",
+                "Press Enter to kill again!",
                 100,
                 200
         );
         batch.end();
+
+        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            game.restartLevel();
+        }
     }
 
     @Override
