@@ -24,6 +24,7 @@ import net.mostlyoriginal.api.event.common.Subscribe;
 public class WaterSplashSystem extends EntityProcessingSystem {
 
     WaterSystem waterSystem;
+    WaterRenderSystem waterRenderSystem;
     EventSystem eventSystem;
 
     ComponentMapper<SplashComponent> splashMapper;
@@ -64,15 +65,22 @@ public class WaterSplashSystem extends EntityProcessingSystem {
     public void splashEventListener(SplashEvent event) {
         Gdx.app.log("Water Splash",event.x+","+event.y);
 
-        for(int i=0; i<event.mass*16f; i++) {
+
+        for(int i=0; i<event.mass*32f; i++) {
+
+            Color splashColor = new Color(waterRenderSystem.topColor);
+            if(MathUtils.random(0,1)==1){
+                splashColor = Color.WHITE;
+            }
+            //splashColor.add(MathUtils.random(0,0.5f),MathUtils.random(0,0.5f),MathUtils.random(0,0.5f),0);
 
             EntityFactory.instance.createWaterSplash(
                     world,
                     event.x,
-                    event.y,
+                    event.y+0.5f,
                     MathUtils.random(-event.mass*4, event.mass*4),
                     MathUtils.random(event.mass*10f, event.mass*20f),
-                    Color.BLACK
+                    splashColor
             );
         }
 
