@@ -53,7 +53,7 @@ public class FishSystem extends EntityProcessingSystem {
         fishDescriptors.add(new FishDescriptor("redfish1", 1, 1));
         fishDescriptors.add(new FishDescriptor("redfish2", 1, 1));
         fishDescriptors.add(new FishDescriptor("seal", 2, 2));
-        fishDescriptors.add(new FishDescriptor("whale", 3, 1));
+        fishDescriptors.add(new FishDescriptor("whale", 5, 1));
 
 
     }
@@ -85,16 +85,16 @@ public class FishSystem extends EntityProcessingSystem {
         fish.edit().add(new SliceableComponent());
     }
 
-    public void spawn(float x, float y, float velocity) {
-        world.createEntity()
-                .edit()
-                .add(new FishComponent())
-                .add(new PositionComponent(x, y))
-                .add(new ShapeComponent(1f, 2f))
-                .add(new PhysicComponent(0.1f,MathUtils.random(-1f,1f),MathUtils.random(0f,velocity)))
-                .add(new SliceableComponent())
-                .getEntity();
-    }
+//    public void spawn(float x, float y, float velocity) {
+//        world.createEntity()
+//                .edit()
+//                .add(new FishComponent())
+//                .add(new PositionComponent(x, y))
+//                .add(new ShapeComponent(1f, 2f))
+//                .add(new PhysicComponent(0.1f,MathUtils.random(-1f,1f),MathUtils.random(0f,velocity)))
+//                .add(new SliceableComponent())
+//                .getEntity();
+//    }
 
     public Vector2 centreOfMass() {
         float posX = camera.viewportWidth / 2;

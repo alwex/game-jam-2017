@@ -53,14 +53,12 @@ public class SpriteRenderSystem extends EntityProcessingSystem {
         ShapeComponent shape = shapeMapper.get(e);
         RotationComponent rotation = rotationMapper.get(e);
 
-        Gdx.app.log("sprite", sprite.name);
         batch.draw(
                 atlas.findRegion(sprite.name),
                 position.x, position.y,
                 shape.width / 2f, shape.height / 2f,
                 shape.width, shape.height,
-//                shape.scale, shape.scale,
-                1,1,
+                shape.scale, shape.scale,
                 rotation.angle
         );
     }

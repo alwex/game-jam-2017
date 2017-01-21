@@ -84,7 +84,7 @@ public class MicrophoneSystem extends EntityProcessingSystem {
 
 
                 float weight = 20.0f;
-                oldSz[hz] = ((oldSz[hz] * weight) + (sz / (volume * volume / 100000f + 50f))) / (weight + 1.0f);
+                oldSz[hz] = ((oldSz[hz] * weight) + (sz / (volume * volume / 100000f + 100f))) / (weight + 1.0f);
 
                 lines[hz].setScale(1f, oldSz[hz]);
 

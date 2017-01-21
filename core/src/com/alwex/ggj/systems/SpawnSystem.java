@@ -38,7 +38,7 @@ public class SpawnSystem extends BaseSystem {
         float[] velocities = event.velocityArray;
         for(int i=0; i<velocities.length; i++){
             for(int j=0; j<velocities[i]/3; j++){
-                fishSystem.spawn(i,velocities[i],velocities[i]*3.0f);
+//                fishSystem.spawn(i,velocities[i],velocities[i]*3.0f);
             }
         }
     }
