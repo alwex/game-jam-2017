@@ -101,6 +101,10 @@ public class LevelScreen implements Screen {
                         new WaterRenderSystem(shapeRenderer, camera),
                         new MicrophoneSystem(game.getRecorder(), shapeRenderer, 1024),
                         new GarbageSystem(),
+                        new BounceOffEdgeSystem(
+                                map.getProperties().get("width", Integer.class),
+                                map.getProperties().get("height", Integer.class)
+                        ),
                         new SoundSystem(game.getAssetManager()),
                         new BloodStainSystem(shapeRenderer, staticCamera),
                         new GuiSystem(batch, staticCamera)
