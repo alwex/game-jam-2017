@@ -66,7 +66,7 @@ public class SliceableSystem extends EntityProcessingSystem {
         if (isSlicing && TimeUtils.timeSinceMillis(sliceStartTime) < 200) {
             PositionComponent pos = positionMapper.get(e);
             ShapeComponent shape = shapeMapper.get(e);
-            Polygon collPoly = new Polygon(new float[] { 0, 0, shape.width, 0, shape.width, shape.height, 0, shape.height });
+            Polygon collPoly = new Polygon(new float[]{0, 0, shape.width, 0, shape.width, shape.height, 0, shape.height});
             collPoly.setPosition(pos.x, pos.y);
             float[] vertices = collPoly.getTransformedVertices();
             topLeft.x = vertices[0];
@@ -100,8 +100,8 @@ public class SliceableSystem extends EntityProcessingSystem {
                     float alpha = MathUtils.random(0.5f, 1f);
                     world.createEntity().edit()
                             .add(new BloodStainComponent(
-                                    MathUtils.random(0, Gdx.graphics.getWidth()),
-                                    MathUtils.random(0, Gdx.graphics.getHeight()),
+                                            MathUtils.random(-Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2),
+                                            MathUtils.random(-Gdx.graphics.getHeight() / 2, Gdx.graphics.getHeight() / 2),
                                     MathUtils.random(10f, 50f),
                                     new Color(red, 0, 0, alpha)
                             ));

@@ -53,6 +53,7 @@ public class WaterSplashSystem extends EntityProcessingSystem {
                     if (splashComponent.initialized) {
                         eventSystem.dispatch(new SplashEvent(positionComponent.x, positionComponent.y, physicComponent.mass));
                         springPosition.y -= physicComponent.mass * 1.2f;
+                        positionComponent.y -= physicComponent.mass * 1.2f;
                     }
                     splashComponent.inWater = true;
                 }

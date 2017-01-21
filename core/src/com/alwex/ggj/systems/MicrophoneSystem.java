@@ -139,9 +139,9 @@ public class MicrophoneSystem extends EntityProcessingSystem {
                 this.maxHeight[i] = 0;
             }
         }
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.box(0, 3, 0, effect, 1, 0);
-        shapeRenderer.end();
+//        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+//        shapeRenderer.box(0, 3, 0, effect, 1, 0);
+//        shapeRenderer.end();
     }
 
     @Override

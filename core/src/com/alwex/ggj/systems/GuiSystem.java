@@ -1,8 +1,13 @@
 package com.alwex.ggj.systems;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
+import aurelienribon.tweenengine.TweenManager;
 import com.alwex.ggj.components.GuiComponent;
 import com.alwex.ggj.components.ScoreComponent;
 import com.alwex.ggj.events.SlicedEvent;
+import com.alwex.ggj.screens.LevelScreen;
+import com.alwex.ggj.tween.accessors.LevelScreenAccessor;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -22,12 +27,18 @@ public class GuiSystem extends EntityProcessingSystem {
     BitmapFont font;
     Entity gui;
 
+    LevelScreen levelScreen;
+    TweenManager tweenManager;
+    Tween bulletTime = null;
+
     ComponentMapper<GuiComponent> guiMapper;
     ComponentMapper<ScoreComponent> scoreMapper;
 
-    public GuiSystem(SpriteBatch batch, OrthographicCamera camera) {
+    public GuiSystem(LevelScreen levelScreen, SpriteBatch batch, OrthographicCamera camera, TweenManager tweenManager) {
         super(Aspect.all(GuiComponent.class));
 
+        this.levelScreen = levelScreen;
+        this.tweenManager = tweenManager;
         this.batch = batch;
         this.camera = camera;
     }
@@ -78,6 +89,15 @@ public class GuiSystem extends EntityProcessingSystem {
         ScoreComponent score = scoreMapper.get(event.entityId);
         GuiComponent guiComponent = guiMapper.get(gui);
         guiComponent.score += score.value;
-        guiComponent.combo += 1;
+
+//        if ((guiComponent.combo + 1) % 20 == 0 && (bulletTime == null || bulletTime.isFinished())) {
+//            bulletTime = Tween.to(levelScreen, LevelScreenAccessor.DELTA_FACTOR, 1f)
+//                    .target(0.1f)
+//                    .repeatYoyo(1, 3f)
+//                    .ease(TweenEquations.easeInQuad)
+//                    .start(tweenManager);
+//        } else if(bulletTime == null || bulletTime.isFinished()) {
+            guiComponent.combo += 1;
+//        }
     }
 }
