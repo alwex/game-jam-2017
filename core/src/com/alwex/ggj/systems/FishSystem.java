@@ -46,7 +46,6 @@ public class FishSystem extends EntityProcessingSystem {
             pos.y += 0.1f;
         }
     }
-
     public void spawn() {
         world.createEntity()
                 .edit()
@@ -54,6 +53,17 @@ public class FishSystem extends EntityProcessingSystem {
                 .add(new PositionComponent(MathUtils.random(0, mapWidth), 0))
                 .add(new ShapeComponent(1f, 2f))
                 .add(new PhysicComponent(0.1f,MathUtils.random(-2f,2f),MathUtils.random(0f,2f)))
+                .add(new SliceableComponent())
+                .getEntity();
+    }
+
+    public void spawn(float x, float y, float velocity) {
+        world.createEntity()
+                .edit()
+                .add(new FishComponent())
+                .add(new PositionComponent(x, y))
+                .add(new ShapeComponent(1f, 2f))
+                .add(new PhysicComponent(0.1f,MathUtils.random(-1f,1f),MathUtils.random(0f,velocity)))
                 .add(new SliceableComponent())
                 .getEntity();
     }

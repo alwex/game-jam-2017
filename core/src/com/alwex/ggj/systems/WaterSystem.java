@@ -1,7 +1,6 @@
 package com.alwex.ggj.systems;
 
 import com.alwex.ggj.components.PositionComponent;
-import com.alwex.ggj.components.ShapeComponent;
 import com.alwex.ggj.components.SpringComponent;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
@@ -10,7 +9,6 @@ import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.MathUtils;
 
 import java.util.ArrayList;
 
@@ -26,6 +24,7 @@ public class WaterSystem extends EntityProcessingSystem {
     float spread = 0.01f;
     float dampening = 0.05f;
     float waterLevel = 15f;
+    public float totalAcceleration;
 
     Entity target;
 
@@ -86,6 +85,7 @@ public class WaterSystem extends EntityProcessingSystem {
             PositionComponent p = positionMapper.get(target);
             p.y = 4;
         }
+        totalAcceleration = 0;
     }
 
     @Override
@@ -97,6 +97,7 @@ public class WaterSystem extends EntityProcessingSystem {
         float acceleration = (-k * x) - (dampening * s.v);
         p.y += s.v;
         s.v += acceleration;
+        totalAcceleration += Math.abs(acceleration);
     }
 
     @Override
