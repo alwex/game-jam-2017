@@ -75,10 +75,9 @@ public class SliceableSystem extends EntityProcessingSystem {
             if (slicedLeft && slicedRight) {
                 deadMapper.create(e);
                 sliceableMapper.remove(e);
-
                 eventSystem.dispatch(new SlicedEvent(e.getId()));
 
-                EntityFactory.instance.createSlicedFish(e);
+//                EntityFactory.instance.createSlicedFish(e);
             }
         }
     }

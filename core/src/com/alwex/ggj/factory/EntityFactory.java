@@ -38,12 +38,12 @@ public class EntityFactory {
                 .add(new PhysicComponent(
                         MathUtils.random(0.5f, 1f),
                         MathUtils.random(0.5f, 1f),
-                        MathUtils.random(0.5f, 1f)
+                        MathUtils.random(20f, 30f)
                 ))
                 .getEntity();
     }
 
-    public Entity createSlicedFish(Entity fish) {
-        ComponentMapper<PositionComponent> positionMapper;
-    }
+//    public Entity createSlicedFish(Entity fish) {
+//        ComponentMapper<PositionComponent> positionMapper;
+//    }
 }

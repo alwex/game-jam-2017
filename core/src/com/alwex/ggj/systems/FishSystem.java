@@ -62,11 +62,12 @@ public class FishSystem extends EntityProcessingSystem {
         PositionComponent pos = positionMapper.get(e);
         if (deadMapper.has(e)) {
             pos.y -= 0.2f;
-            if (pos.y < 0) {
-                world.deleteEntity(e);
-            }
         } else {
             pos.y += 0.1f;
+        }
+
+        if (pos.y < 0) {
+                world.deleteEntity(e);
         }
     }
 
