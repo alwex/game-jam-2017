@@ -1,5 +1,6 @@
 package com.alwex.ggj.systems;
 
+import aurelienribon.tweenengine.TweenManager;
 import com.alwex.ggj.components.*;
 import com.alwex.ggj.events.SlicedEvent;
 import com.alwex.ggj.factory.EntityFactory;
@@ -9,7 +10,9 @@ import com.artemis.Entity;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import net.mostlyoriginal.api.event.common.EventSystem;
@@ -27,6 +30,8 @@ public class SliceableSystem extends EntityProcessingSystem {
     ComponentMapper<DeadComponent> deadMapper;
     ComponentMapper<SliceableComponent> sliceableMapper;
 
+    TweenManager tweenManager;
+
     Vector2 topLeft;
     Vector2 topRight;
     Vector2 bottomRight;
@@ -37,8 +42,9 @@ public class SliceableSystem extends EntityProcessingSystem {
     public Vector2 sliceEnd;
     public long sliceStartTime;
 
-    public SliceableSystem() {
+    public SliceableSystem(TweenManager tweenManager) {
         super(Aspect.all(SliceableComponent.class));
+        this.tweenManager = tweenManager;
     }
 
     @Override
@@ -84,8 +90,21 @@ public class SliceableSystem extends EntityProcessingSystem {
                 sliceableMapper.remove(e);
                 eventSystem.dispatch(new SlicedEvent(e.getId()));
 
-                EntityFactory.instance.createSlicedFish(world, e);
+                EntityFactory.instance.createSlicedFish(world, e, tweenManager);
                 e.deleteFromWorld();
+
+
+                for (int i = 0; i <= MathUtils.random(3, 5); i++) {
+                    float red = MathUtils.random(0.5f, 1f);
+                    float alpha = MathUtils.random(0.5f, 1f);
+                    world.createEntity().edit()
+                            .add(new BloodStainComponent(
+                                    MathUtils.random(0, Gdx.graphics.getWidth()),
+                                    MathUtils.random(0, Gdx.graphics.getHeight()),
+                                    MathUtils.random(10f, 50f),
+                                    new Color(red, 0, 0, alpha)
+                            ));
+                }
             }
         }
     }

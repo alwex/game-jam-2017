@@ -1,6 +1,10 @@
 package com.alwex.ggj.factory;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
+import aurelienribon.tweenengine.TweenManager;
 import com.alwex.ggj.components.*;
+import com.alwex.ggj.tween.accessors.ShapeComponentAccessor;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.World;
@@ -37,6 +41,7 @@ public class EntityFactory {
                 .add(new FishComponent())
                 .add(new PositionComponent(x, y))
                 .add(new ShapeComponent(descriptor.width, descriptor.height))
+                .add(new ScoreComponent(descriptor.score))
 //                .add(new SliceableComponent())
                 .add(new SpriteComponent(name))
                 .add(new RotationComponent(0, MathUtils.random(0.5f, 1f)))
@@ -50,7 +55,7 @@ public class EntityFactory {
         return fish;
     }
 
-    public void createSlicedFish(World world, Entity fish) {
+    public void createSlicedFish(World world, Entity fish, TweenManager tweenManager) {
         ComponentMapper<PositionComponent> positionMapper = world.getMapper(PositionComponent.class);
         ComponentMapper<SpriteComponent> spriteMapper = world.getMapper(SpriteComponent.class);
         ComponentMapper<ShapeComponent> shapeMapper = world.getMapper(ShapeComponent.class);
@@ -61,7 +66,7 @@ public class EntityFactory {
 
         Entity leftPart = this.createFish(
                 world, sprite.name + "-a",
-                new FishDescriptor(sprite.name + "-a", shape.width / 2, shape.height),
+                new FishDescriptor(sprite.name + "-a", shape.width / 2, shape.height, 0),
                 position.x, position.y,
                 -2, 0
         );
@@ -72,7 +77,7 @@ public class EntityFactory {
 
         Entity rightPart = this.createFish(
                 world, sprite.name + "-b",
-                new FishDescriptor(sprite.name + "-b", shape.width / 2, shape.height),
+                new FishDescriptor(sprite.name + "-b", shape.width / 2, shape.height, 0),
                 position.x, position.y,
                 2, 0
         );
@@ -80,6 +85,18 @@ public class EntityFactory {
                 .add(new BleedingComponent())
                 .add(new SplashComponent())
                 .remove(SliceableComponent.class);
+
+        Tween.to(rightPart.getComponent(ShapeComponent.class), ShapeComponentAccessor.SCALE, 0.1f)
+                .target(1.2f)
+                .repeatYoyo(100, 0)
+                .ease(TweenEquations.easeInOutBounce)
+                .start(tweenManager);
+
+        Tween.to(leftPart.getComponent(ShapeComponent.class), ShapeComponentAccessor.SCALE, 0.1f)
+                .target(1.2f)
+                .repeatYoyo(100, 0)
+                .ease(TweenEquations.easeInOutBounce)
+                .start(tweenManager);
 
     }
 

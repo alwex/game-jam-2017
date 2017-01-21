@@ -45,8 +45,10 @@ public class LevelScreen implements Screen {
     public LevelScreen(final JamGame game, String mapName) {
         this.game = game;
 
-        camera = new OrthographicCamera(32, 24);
+        camera = new OrthographicCamera();
         camera.setToOrtho(false, 32, 24);
+
+        staticCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         shapeRenderer = new ShapeRenderer();
 
@@ -91,7 +93,7 @@ public class LevelScreen implements Screen {
                         new BloodRenderSystem(shapeRenderer, camera),
                         new InputSystem(camera),
                         new CameraSystem(camera),
-                        new SliceableSystem(),
+                        new SliceableSystem(game.getTweenManager()),
                         new WaterSplashSystem(),
 //                        new RenderSystem(batch, camera, shapeRenderer),
                         new SpriteRenderSystem(batch, camera, game.getAssetManager().get("sprites/atlas.atlas", TextureAtlas.class)),
@@ -100,7 +102,15 @@ public class LevelScreen implements Screen {
                         new WaterRenderSystem(shapeRenderer, camera),
                         new MicrophoneSystem(game.getRecorder(), shapeRenderer, 1024),
                         new GarbageSystem(),
-                        new SoundSystem(game.getAssetManager())
+                        new BounceOffEdgeSystem(
+                                map.getProperties().get("width", Integer.class),
+                                map.getProperties().get("height", Integer.class)
+                        ),
+                        new SoundSystem(game.getAssetManager()),
+                        new BloodStainSystem(shapeRenderer, staticCamera),
+                        new ComboSystem(),
+                        new GuiSystem(batch, staticCamera)
+
                 ).build();
 
         world = new World(config);
@@ -124,7 +134,8 @@ public class LevelScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+//        staticCamera.setToOrtho(false, width, height);
+//        staticCamera.update(true);
     }
 
     @Override

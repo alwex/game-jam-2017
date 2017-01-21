@@ -41,19 +41,16 @@ public class FishSystem extends EntityProcessingSystem {
     @Override
     protected void initialize() {
         fishDescriptors = new ArrayList<FishDescriptor>();
-        fishDescriptors.add(new FishDescriptor("boot", 1, 1));
-        fishDescriptors.add(new FishDescriptor("bottle", 1, 1));
-        fishDescriptors.add(new FishDescriptor("crab", 1, 1));
-//        fishNames.add("divingman");
-//        fishNames.add("octopus2");
-//        fishNames.add("octopus3");
-        fishDescriptors.add(new FishDescriptor("octopus4", 1,1));
-        fishDescriptors.add(new FishDescriptor("pengo", 1, 2));
-        fishDescriptors.add(new FishDescriptor("pengobaby", 1, 1));
-        fishDescriptors.add(new FishDescriptor("redfish1", 1, 1));
-        fishDescriptors.add(new FishDescriptor("redfish2", 1, 1));
-        fishDescriptors.add(new FishDescriptor("seal", 2, 2));
-        fishDescriptors.add(new FishDescriptor("whale", 5, 1));
+        fishDescriptors.add(new FishDescriptor("boot", 1, 1, 1));
+        fishDescriptors.add(new FishDescriptor("bottle", 1, 1, 1));
+        fishDescriptors.add(new FishDescriptor("crab", 1, 1, 10));
+        fishDescriptors.add(new FishDescriptor("octopus4", 1,1, 15));
+        fishDescriptors.add(new FishDescriptor("pengo", 1, 2, 20));
+        fishDescriptors.add(new FishDescriptor("pengobaby", 1, 1, 100));
+        fishDescriptors.add(new FishDescriptor("redfish1", 1, 1, 30));
+        fishDescriptors.add(new FishDescriptor("redfish2", 1, 1, 30));
+        fishDescriptors.add(new FishDescriptor("seal", 2, 2, 50));
+        fishDescriptors.add(new FishDescriptor("whale", 5, 1, 1000));
 
 
     }
@@ -79,7 +76,8 @@ public class FishSystem extends EntityProcessingSystem {
                 currentDescriptor,
                 MathUtils.random(0f, 32f),
                 MathUtils.random(0f, 24f),
-                1, MathUtils.random(30, 35)
+                MathUtils.random(-5, 5),
+                MathUtils.random(30, 35)
         );
 
         fish.edit().add(new SliceableComponent());
