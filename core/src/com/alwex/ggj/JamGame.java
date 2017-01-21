@@ -52,6 +52,7 @@ public class JamGame extends Game {
         assetManager = new AssetManager();
         assetManager.load("sprites/atlas.atlas", TextureAtlas.class);
         assetManager.load("sounds/splash.mp3", Sound.class);
+        assetManager.load("sounds/water-splash.ogg", Sound.class);
         assetManager.load("sounds/ambient.ogg", Music.class);
         assetManager.finishLoading();
 
