@@ -39,7 +39,6 @@ public class PositionSystem extends EntityProcessingSystem {
 
         p.x += psx.vx * deltaSystem.getDelta();
         p.y += psx.vy * deltaSystem.getDelta();
-
     }
 
     @Override

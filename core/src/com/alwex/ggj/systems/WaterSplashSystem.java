@@ -67,9 +67,6 @@ public class WaterSplashSystem extends EntityProcessingSystem {
 
     @Subscribe
     public void splashEventListener(SplashEvent event) {
-        Gdx.app.log("Water Splash",event.x+","+event.y);
-
-
         for(int i=0; i<event.mass*32f; i++) {
 
             Color splashColor = new Color(waterRenderSystem.topColor);

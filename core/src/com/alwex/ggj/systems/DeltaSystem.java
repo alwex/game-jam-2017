@@ -55,8 +55,6 @@ public class DeltaSystem extends BaseSystem {
             currentDeltaFactor = (currentDeltaFactor * resistance  + targetDeltaFactor) / (resistance + 1);
         }
 
-        Gdx.app.log("currentDeltaFactor",""+currentDeltaFactor);
-
         if (Gdx.input.isKeyPressed(Input.Keys.PAGE_UP)) {
             targetDeltaFactor += 0.1;
         }
