@@ -192,7 +192,6 @@ public class LevelScreen implements Screen {
         focusShader.begin();
         {
             float deltaFactor = world.getSystem(DeltaSystem.class).getDeltaFactor();
-
             // setting the shader uniforms
             focusShader.setUniformf("u_resolution", screenResolution);
 //            focusShader.setUniformf("u_time", delta);
