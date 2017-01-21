@@ -148,9 +148,9 @@ public class MicrophoneSystem extends EntityProcessingSystem {
             }
             canThrowFish = false;
         }
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.box(0, 3, 0, effect, 1, 0);
-        shapeRenderer.end();
+//        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+//        shapeRenderer.box(0, 3, 0, effect, 1, 0);
+//        shapeRenderer.end();
     }
 
     @Override

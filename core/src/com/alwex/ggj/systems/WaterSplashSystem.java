@@ -42,7 +42,8 @@ public class WaterSplashSystem extends EntityProcessingSystem {
         int i = MathUtils.floor(positionComponent.x );
         if(i < waterSystem.getSpringList().size() && i > 0) {
 
-            PositionComponent springPosition = positionMapper.get(waterSystem.getSpringList().get(i));
+            Entity spring = waterSystem.getSpringList().get(i);
+            PositionComponent springPosition = positionMapper.get(spring);
             PhysicComponent physicComponent = physicMapper.get(e);
 
             if (springPosition.y > positionComponent.y && !splashComponent.inWater) {
@@ -51,6 +52,8 @@ public class WaterSplashSystem extends EntityProcessingSystem {
                 } else {
                     if (splashComponent.initialized) {
                         eventSystem.dispatch(new SplashEvent(positionComponent.x, positionComponent.y, physicComponent.mass));
+                        springPosition.y -= physicComponent.mass * 1.2f;
+                        positionComponent.y -= physicComponent.mass * 1.2f;
                     }
                     splashComponent.inWater = true;
                 }
@@ -70,9 +73,9 @@ public class WaterSplashSystem extends EntityProcessingSystem {
         for(int i=0; i<event.mass*32f; i++) {
 
             Color splashColor = new Color(waterRenderSystem.topColor);
-            if(MathUtils.random(0,1)==1){
-                splashColor = Color.WHITE;
-            }
+//            if(MathUtils.random(0,1)==1){
+//                splashColor = Color.WHITE;
+//            }
             //splashColor.add(MathUtils.random(0,0.5f),MathUtils.random(0,0.5f),MathUtils.random(0,0.5f),0);
 
             EntityFactory.instance.createWaterSplash(

@@ -31,6 +31,7 @@ public class BloodRenderSystem extends EntityProcessingSystem {
     }
 
     protected void begin() {
+        shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
     }
 

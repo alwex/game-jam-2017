@@ -42,6 +42,8 @@ public class LevelScreen implements Screen {
     World world;
     ShapeRenderer shapeRenderer;
 
+    public float deltaFactor = 1;
+
     public LevelScreen(final JamGame game, String mapName) {
         this.game = game;
 
@@ -86,11 +88,11 @@ public class LevelScreen implements Screen {
                         ),
                         new CloudSystem(
                                 map.getProperties().get("width", Integer.class),
-                                map.getProperties().get("height", Integer.class)
+                                map.getProperties().get("height", Integer.class),
+                                game.getTweenManager()
                         ),
                         new DeadFishSystem(),
                         new BleedingSystem(),
-                        new BloodRenderSystem(shapeRenderer, camera),
                         new InputSystem(camera),
                         new CameraSystem(camera),
                         new SliceableSystem(game.getTweenManager()),
@@ -109,8 +111,9 @@ public class LevelScreen implements Screen {
                         new SoundSystem(game.getAssetManager()),
                         new BloodStainSystem(shapeRenderer, staticCamera),
                         new ComboSystem(),
-                        new GuiSystem(batch, staticCamera)
-
+                        new BloodRenderSystem(shapeRenderer, camera),
+                        new GuiSystem(this, batch, staticCamera, game.getTweenManager()),
+                        new CameraShakingSystem(camera)
                 ).build();
 
         world = new World(config);
@@ -128,7 +131,7 @@ public class LevelScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.getTweenManager().update(delta);
-        world.setDelta(delta);
+        world.setDelta(delta * deltaFactor);
         world.process();
     }
 

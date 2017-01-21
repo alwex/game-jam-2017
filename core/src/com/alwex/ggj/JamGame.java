@@ -5,6 +5,7 @@ import aurelienribon.tweenengine.TweenManager;
 import com.alwex.ggj.components.ShapeComponent;
 import com.alwex.ggj.screens.LevelScreen;
 import com.alwex.ggj.systems.MicrophoneSystem;
+import com.alwex.ggj.tween.accessors.LevelScreenAccessor;
 import com.alwex.ggj.tween.accessors.ShapeComponentAccessor;
 import com.artemis.World;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -63,6 +64,7 @@ public class JamGame extends Game {
         img = new Texture("badlogic.jpg");
         tweenManager = new TweenManager();
         Tween.registerAccessor(ShapeComponent.class, new ShapeComponentAccessor());
+        Tween.registerAccessor(LevelScreen.class, new LevelScreenAccessor());
 
         this.setScreen(new LevelScreen(this, "template.tmx"));
     }
