@@ -78,9 +78,10 @@ public class LevelScreen implements Screen {
                         ),
                         new InputSystem(camera),
                         new SliceableSystem(),
-                        new SpawnSystem(1),
 //                        new RenderSystem(batch, camera, shapeRenderer),
                         new SpriteRenderSystem(batch, camera, game.getAssetManager().get("sprites/atlas.atlas", TextureAtlas.class)),
+                        new SpawnSystem(),
+//                        new RenderSystem(batch, camera, shapeRenderer),
                         new WaterRenderSystem(shapeRenderer, camera)
 //                        new MicrophoneRenderSystem(camera, shapeRenderer)
                 ).build();
@@ -99,6 +100,7 @@ public class LevelScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        game.getTweenManager().update(delta);
         world.setDelta(delta);
         world.process();
     }

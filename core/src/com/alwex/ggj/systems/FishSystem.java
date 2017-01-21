@@ -1,12 +1,16 @@
 package com.alwex.ggj.systems;
 
 import com.alwex.ggj.components.*;
+import com.alwex.ggj.factory.EntityFactory;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.utils.Bag;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import net.mostlyoriginal.api.utils.BagUtils;
 
 
 /**
@@ -45,13 +49,19 @@ public class FishSystem extends EntityProcessingSystem {
     }
 
     public void spawn() {
-        world.createEntity()
-                .edit()
-                .add(new FishComponent())
-                .add(new PositionComponent(MathUtils.random(0, mapWidth), 0))
-                .add(new ShapeComponent(1f, 2f))
-                .add(new SliceableComponent())
-                .add(new SpriteComponent("one"))
-                .getEntity();
+        EntityFactory.instance.createFish(world, "boot");
+    }
+
+    public Vector2 centreOfMass() {
+        Bag<Entity> fishEntities = this.getEntities();
+        Entity[] fishArray = fishEntities.getData();
+        float sumX = 0;
+        float sumY = 0;
+        for (int i = 0; i < fishEntities.size(); i++) {
+            PositionComponent pos = positionMapper.get(fishArray[i]);
+            sumX += pos.x;
+            sumY += pos.y;
+        }
+        return new Vector2(sumX / fishEntities.size(), sumY / fishEntities.size());
     }
 }

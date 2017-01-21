@@ -14,9 +14,8 @@ public class ShapeComponentAccessor implements TweenAccessor<ShapeComponent> {
 
         switch (tweenType) {
             case SCALE:
-                returnValues[0] = target.width;
-                returnValues[1] = target.height;
-                return 2;
+                returnValues[0] = target.scale;
+                return 1;
             default:
                 assert false;
                 return -1;
@@ -27,8 +26,7 @@ public class ShapeComponentAccessor implements TweenAccessor<ShapeComponent> {
     public void setValues(ShapeComponent target, int tweenType, float[] newValues) {
         switch (tweenType) {
             case SCALE:
-                target.width = newValues[0];
-                target.height = newValues[1];
+                target.scale = newValues[0];
                 break;
             default:
                 assert false;

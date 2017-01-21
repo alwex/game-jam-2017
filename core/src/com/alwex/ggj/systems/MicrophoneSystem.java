@@ -49,9 +49,6 @@ public class MicrophoneSystem extends EntityProcessingSystem {
         return floaters;
     }
 
-    int aboveThreshold;
-    int belowThreshold;
-
     @Override
     protected void begin() {
 
@@ -59,6 +56,11 @@ public class MicrophoneSystem extends EntityProcessingSystem {
 
         this.floats = floatMe(shortPCM);
         this.fourierTransform.forward(floats,true);
+
+        volume = 0;
+        for (int i=0; i<this.shortPCM.length; i++){
+            volume = Math.max(this.shortPCM[i],volume);
+        }
 
 
         for (int i=0; i<count; i++){
@@ -82,41 +84,22 @@ public class MicrophoneSystem extends EntityProcessingSystem {
                 this.maxHeight[i] = Math.max(this.maxHeight[i],transformed[i*2+1]);
 
             }
-
         }
 
-        volume = 0;
         boolean broken = false;
-
-        for (int i=0; i<this.shortPCM.length; i++){
-            volume = Math.max(this.shortPCM[i],volume);
-            if(Float.isNaN(volume) && !broken){
-                broken = true;
-            }
-        }
 
     }
 
     @Override
-    protected void process(Entity e) {
-
-
-        PositionComponent spring = positionMapper.get(e);
-
-
-
-        //float[] size = lines[i].getTransformedVertices();
-
-
-    }
+    protected void process(Entity e) {}
 
     @Override
     protected void end() {
         if(true) {
-            Gdx.app.log("Volume",""+(volume - oldVolume));
+            Gdx.app.log("Volume",""+volume);
             for (Entity springEntity : waterSystem.getSpringList()) {
                 PositionComponent springPos = positionMapper.get(springEntity);
-                int i = (int) (springPos.x * 16);
+                int i = (int) (springPos.x * 8);
                 springPos.y += (maxHeight[i])/10f;
             }
         }
@@ -137,7 +120,7 @@ public class MicrophoneSystem extends EntityProcessingSystem {
         for (int hz = 0; hz<32; hz++) {
             for (int i = 0; i < count; i++) {
                 buffer[hz][i * 2] = i;
-                buffer[hz][i * 2 + 1] = MathUtils.sin(i / 40f * hz);//-0.5f;
+                buffer[hz][i * 2 + 1] = MathUtils.sin(i / 40f * hz);
             }
             lines[hz] = new Polyline(buffer[hz]);
         }

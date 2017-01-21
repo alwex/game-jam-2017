@@ -44,7 +44,12 @@ public class SpriteRenderSystem extends EntityProcessingSystem {
         SpriteComponent sprite = spriteMapper.get(e);
         ShapeComponent shape = shapeMapper.get(e);
 
-        batch.draw(atlas.findRegion(sprite.name), position.x, position.y, shape.width, shape.height);
+        float scale = shape.scale - 1;
+        float xCorrection = -scale * (shape.width / 2f);
+        float yCorrection = -scale * (shape.height / 2f);
+
+
+        batch.draw(atlas.findRegion(sprite.name), position.x + xCorrection, position.y + yCorrection, shape.width * shape.scale, shape.height * shape.scale);
     }
 
     protected void end() {
