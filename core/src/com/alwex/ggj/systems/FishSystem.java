@@ -84,8 +84,8 @@ public class FishSystem extends EntityProcessingSystem {
     }
 
     public Vector2 centreOfMass() {
-        float posX = camera.position.x;
-        float posY = camera.position.y;
+        float posX = camera.viewportWidth / 2;
+        float posY = camera.viewportHeight / 2;
 
         Bag<Entity> fishEntities = this.getEntities();
         if (fishEntities.size() > 0) {
@@ -102,7 +102,9 @@ public class FishSystem extends EntityProcessingSystem {
                 }
             }
             float fishY = sumY / count;
-            if (fishY >= camera.viewportHeight / 2 && fishY <= mapHeight - camera.viewportHeight / 2) {
+            if (fishY > mapHeight - camera.viewportHeight / 2) {
+                posY = mapHeight - camera.viewportHeight / 2;
+            } else if (fishY >= camera.viewportHeight / 2) {
                 posY = fishY;
             }
         }
