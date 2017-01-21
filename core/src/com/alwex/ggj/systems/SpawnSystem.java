@@ -1,6 +1,7 @@
 package com.alwex.ggj.systems;
 
 import com.alwex.ggj.events.SpawnEvent;
+import com.alwex.ggj.events.ThrowFishEvent;
 import com.artemis.BaseSystem;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.Gdx;
@@ -30,5 +31,15 @@ public class SpawnSystem extends BaseSystem {
     @Subscribe
     public void spawnEventListener(SpawnEvent event) {
         fishSystem.spawn();
+    }
+
+    @Subscribe
+    public void throwFishEventListener(ThrowFishEvent event){
+        float[] velocities = event.velocityArray;
+        for(int i=0; i<velocities.length; i++){
+            for(int j=0; j<velocities[i]/3; j++){
+                fishSystem.spawn(i,velocities[i],velocities[i]*3.0f);
+            }
+        }
     }
 }

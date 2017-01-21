@@ -2,6 +2,7 @@ package com.alwex.ggj.systems;
 
 import com.alwex.ggj.components.MicrophoneComponent;
 import com.alwex.ggj.components.PositionComponent;
+import com.alwex.ggj.events.ThrowFishEvent;
 import com.artemis.Aspect;
 import com.artemis.BaseSystem;
 import com.artemis.ComponentMapper;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.audio.AudioRecorder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polyline;
+import net.mostlyoriginal.api.event.common.EventSystem;
 import org.jtransforms.dst.FloatDST_1D;
 import org.jtransforms.fft.FloatFFT_1D;
 /**
@@ -21,17 +23,20 @@ import org.jtransforms.fft.FloatFFT_1D;
 @Wire
 public class MicrophoneSystem extends EntityProcessingSystem {
 
+    int count;
+
     AudioRecorder recorder;
     short[] shortPCM;
     float[] floats;
     float[][] buffer;
     float[] oldSz;
     float[] maxHeight;
+    int tick;
     Polyline[] lines;
-    int count;
+    float volume, effect, effect2;
     FloatDST_1D fourierTransform;
-    float oldVolume, volume, volume2;
     ShapeRenderer shapeRenderer;
+    EventSystem eventSystem;
 
 
     ComponentMapper<PositionComponent> positionMapper;
@@ -52,48 +57,53 @@ public class MicrophoneSystem extends EntityProcessingSystem {
         return floaters;
     }
 
-    int tick = 0;
     @Override
     protected void begin() {
 
-        if(!(tick-->0)) {
-            recorder.read(this.shortPCM, 0, this.shortPCM.length);
-            tick = 10;
-        }
-        this.floats = floatMe(shortPCM);
-        this.fourierTransform.forward(floats,true);
+        if (effect < 32) {
+            if (!(tick-- > 0)) {
+                recorder.read(this.shortPCM, 0, this.shortPCM.length);
+                tick = 10;
+            }
+            this.floats = floatMe(shortPCM);
+            this.fourierTransform.forward(floats, true);
 
-        volume = 0;
-        for (int i=0; i<this.shortPCM.length; i++){
-            volume = Math.max(this.shortPCM[i],volume);
-        }
-
-
-        for (int i = 0; i < count; i++) {
-            this.maxHeight[i] = 0;
-        }
-        for (int hz = 1; hz < 32; hz++) {
-
-
-            float sz = this.floats[hz];
-
-
-            float weight = 10.0f;
-            oldSz[hz] = ((oldSz[hz] * weight * (volume+1000)) + sz) / (weight + 1.0f)/(volume+1000);
-
-
-            lines[hz].setScale(1f, oldSz[hz]);
-
-            float[] transformed = lines[hz].getTransformedVertices();
+            volume = 0;
+            for (int i = 0; i < this.shortPCM.length; i++) {
+                volume = Math.max(this.shortPCM[i], volume);
+            }
 
             for (int i = 0; i < count; i++) {
-                this.maxHeight[i] += transformed[i * 2 + 1];//Math.max(this.maxHeight[i],);
+                this.maxHeight[i] = 0;
+
             }
+            for (int hz = 1; hz < 32; hz++) {
+
+
+                float sz = this.floats[hz];
+
+
+                float weight = 20.0f;
+                oldSz[hz] = ((oldSz[hz] * weight) + (sz / (volume * volume / 100000f + 50f))) / (weight + 1.0f);
+
+                lines[hz].setScale(1f, oldSz[hz]);
+
+                float[] transformed = lines[hz].getTransformedVertices();
+
+                for (int i = 0; i < count; i++) {
+                    this.maxHeight[i] += transformed[i * 2 + 1];//Math.max(this.maxHeight[i],);
+                }
+            }
+
+            effect2 = 0;
+            for (int i = 0; i < this.maxHeight.length; i++) {
+                effect2 += (this.maxHeight[i]);
+            }
+
+            effect2 = Math.abs(effect2);
+        } else {
+
         }
-
-
-
-
 
     }
 
@@ -102,19 +112,33 @@ public class MicrophoneSystem extends EntityProcessingSystem {
 
     @Override
     protected void end() {
-        if(true) {
+        if (effect < 32) {
             for (Entity springEntity : waterSystem.getSpringList()) {
                 PositionComponent springPos = positionMapper.get(springEntity);
                 int i = (int) (springPos.x * 4);
-                springPos.y += (maxHeight[i])/10f;
+                springPos.y += (maxHeight[i]) * (effect2 / 100000f + (effect * effect) / 1296) * 0.05f;
 
-                volume2 += Math.abs(maxHeight[i])*0.002f;
+            }
+            effect += effect2 / 10000f;
+
+
+        } else {
+            float[] velocityArray = new float[waterSystem.getSpringList().size()];
+
+            for (Entity springEntity : waterSystem.getSpringList()) {
+                PositionComponent springPos = positionMapper.get(springEntity);
+                int i = (int) (springPos.x);
+                velocityArray[i] = springPos.y;
+            }
+            eventSystem.dispatch(new ThrowFishEvent(velocityArray));
+            effect = 0;
+            effect2 = 0;
+            for (int i = 0; i < this.maxHeight.length; i++) {
+                this.maxHeight[i] = 0;
             }
         }
-        volume2 -=  0.08f;
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.box(16,1,0,(volume2),1,0);
-        if(tick==5){Gdx.app.log("Volume",""+(volume2));}
+        shapeRenderer.box(0, 3, 0, effect, 1, 0);
         shapeRenderer.end();
     }
 
