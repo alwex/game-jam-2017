@@ -48,8 +48,9 @@ public class WaterSplashSystem extends EntityProcessingSystem {
                 if(splashComponent.removeOnSplash){
                     e.deleteFromWorld();
                 } else {
-                    if (splashComponent.initialized)
+                    if (splashComponent.initialized) {
                         eventSystem.dispatch(new SplashEvent(positionComponent.x, positionComponent.y, physicComponent.mass));
+                    }
                     splashComponent.inWater = true;
                 }
             }

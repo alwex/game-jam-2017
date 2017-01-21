@@ -1,6 +1,7 @@
 package com.alwex.ggj.systems;
 
 import com.alwex.ggj.events.SlicedEvent;
+import com.alwex.ggj.events.SplashEvent;
 import com.alwex.ggj.events.ThrowFishEvent;
 import com.artemis.BaseSystem;
 import com.artemis.annotations.Wire;
@@ -43,5 +44,10 @@ public class SoundSystem extends BaseSystem {
     @Subscribe
     public void onThrowFish(ThrowFishEvent event) {
         assetManager.get("sounds/water-splash.ogg", Sound.class).play(1, MathUtils.random(0.8f, 1f), 0);
+    }
+
+    @Subscribe
+    public void onSplash(SplashEvent event) {
+        assetManager.get("sounds/ploup.ogg", Sound.class).play(1, MathUtils.random(0.8f, 1f), 0);
     }
 }
