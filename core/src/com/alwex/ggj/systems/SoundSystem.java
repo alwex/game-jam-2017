@@ -20,7 +20,21 @@ public class SoundSystem extends BaseSystem {
 
     AssetManager assetManager;
     Music ambient;
+    DeltaSystem deltaSystem;
     private static String[][] comboLevelSoundVariants;
+
+    Sound slicedSound = null;
+    Sound thrownSound = null;
+    Sound splashSound = null;
+
+    long[] slicedSounds = new long[10];
+    int slicedSoundsIndex = 0;
+    long[] thrownSounds = new long[10];
+    int thrownSoundsIndex = 0;
+    long[] splashSounds = new long[10];
+    int splashSoundsIndex = 0;
+    private Sound comboLevelSound;
+    long comboLevelSoundId = 0;
 
     public SoundSystem(AssetManager assetManager) {
         this.assetManager = assetManager;
@@ -28,6 +42,23 @@ public class SoundSystem extends BaseSystem {
 
     @Override
     protected void processSystem() {
+
+        float delta = deltaSystem.getDeltaFactor();
+        for(int i=0; i<10; i++){
+            if(slicedSounds[i] != 0) {
+                slicedSound.setPitch(slicedSounds[i], delta);
+            }
+            if(thrownSounds[i] != 0) {
+                thrownSound.setPitch(thrownSounds[i], delta);
+            }
+            if(splashSounds[i] != 0) {
+                splashSound.setPitch(splashSounds[i], delta);
+            }
+        }
+
+        if(comboLevelSound!=null){
+            comboLevelSound.setPitch(comboLevelSoundId, delta);
+        }
 
     }
 
@@ -81,36 +112,57 @@ public class SoundSystem extends BaseSystem {
                 "sounds/aaaaa_10.ogg",
                 "sounds/aaaaa_11.ogg"
         };
+
+        slicedSound = assetManager.get("sounds/splash.mp3", Sound.class);
+        thrownSound = assetManager.get("sounds/water-splash.ogg", Sound.class);
+        splashSound = assetManager.get("sounds/ploup.ogg", Sound.class);
+
+
+
     }
 
-    Sound[] slicedSounds = new Sound[5];
-    int slicedSoundsIndex = 0;
 
     @Subscribe
     public void onSliced(SlicedEvent event) {
-        assetManager.get("sounds/splash.mp3", Sound.class).play(0.1f, MathUtils.random(0.8f, 1f), 0);
+        slicedSounds[slicedSoundsIndex] = slicedSound.play(0.1f, MathUtils.random(0.8f, 1f), 0);
+
+        slicedSoundsIndex ++;
+        if(slicedSoundsIndex > 9) {
+            slicedSoundsIndex = 0;
+        }
     }
 
     @Subscribe
     public void onThrowFish(ThrowFishEvent event) {
-        assetManager.get("sounds/water-splash.ogg", Sound.class).play(0.1f, MathUtils.random(0.8f, 1f), 0);
+        thrownSounds[thrownSoundsIndex] = thrownSound.play(0.1f, MathUtils.random(0.8f, 1f), 0);
+
+        thrownSoundsIndex ++;
+        if(thrownSoundsIndex > 9) {
+            thrownSoundsIndex = 0;
+        }
     }
 
-    private Sound comboLevelSound;
     @Subscribe
     public void onComboLevelReached(ComboLevelEvent event){
         if(comboLevelSound != null ){
             comboLevelSound.stop();
         }
-        String[] variants = comboLevelSoundVariants[(int)event.level];
-        int variant = MathUtils.random(0,variants.length-1);
+        int index = Math.min((int)event.level, comboLevelSoundVariants.length - 1);
+        String[] variants = comboLevelSoundVariants[index];
+        int variant = MathUtils.random(0, variants.length - 1);
 
         comboLevelSound = assetManager.get(variants[variant], Sound.class);
-        comboLevelSound.play(1,1,0);
+        comboLevelSoundId = comboLevelSound.play(1,1,0);
     }
+
 
     @Subscribe
     public void onSplash(SplashEvent event) {
-        assetManager.get("sounds/ploup.ogg", Sound.class).play(0.1f, MathUtils.random(0.8f, 1f), 0);
+        splashSounds[splashSoundsIndex] = splashSound.play(0.1f, MathUtils.random(0.8f, 1f), 0);
+
+        spslashSoundsIsndex ++;
+        if(splashSoundsIndex > 9s) {
+            splashSoundsIndex = 0;
+        }
     }
 }
