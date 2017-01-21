@@ -24,7 +24,8 @@ public class EntityFactory {
                 .add(new ShapeComponent(width, height))
                 .add(new SliceableComponent())
                 .add(new SpriteComponent(name))
-                .add(new PhysicComponent())
+                .add(new RotationComponent(0, MathUtils.random(0.5f, 1f)))
+//                .add(new PhysicComponent())
                 .getEntity();
     }
 }

@@ -63,6 +63,7 @@ public class LevelScreen implements Screen {
                         new MicrophoneSystem(game.getRecorder(), 1024),
                         new PositionSystem(),
                         new ShapeTweeningSystem(game.getTweenManager()),
+                        new RotationSystem(),
                         new SkyRenderSystem(shapeRenderer, camera,
                                 map.getProperties().get("width", Integer.class),
                                 map.getProperties().get("height", Integer.class)

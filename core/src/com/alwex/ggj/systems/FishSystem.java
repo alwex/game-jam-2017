@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import net.mostlyoriginal.api.utils.BagUtils;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by jbrungar on 20/01/17.
@@ -23,6 +25,8 @@ public class FishSystem extends EntityProcessingSystem {
     ComponentMapper<PositionComponent> positionMapper;
     ComponentMapper<DeadComponent> deadMapper;
 
+    ArrayList<String> fishNames;
+
     public FishSystem(float mapWidth, float mapHeight) {
         super(Aspect.all(FishComponent.class));
 
@@ -32,6 +36,21 @@ public class FishSystem extends EntityProcessingSystem {
 
     @Override
     protected void initialize() {
+        fishNames = new ArrayList<String>();
+        fishNames.add("boot");
+        fishNames.add("bottle");
+        fishNames.add("crab");
+        fishNames.add("divingman");
+        fishNames.add("octopus2");
+        fishNames.add("octopus3");
+        fishNames.add("octopus4");
+        fishNames.add("pengo");
+        fishNames.add("pengobaby");
+        fishNames.add("redfish1");
+        fishNames.add("redfish2");
+        fishNames.add("seal");
+        fishNames.add("whale");
+
 
     }
 
@@ -49,7 +68,15 @@ public class FishSystem extends EntityProcessingSystem {
     }
 
     public void spawn() {
-        EntityFactory.instance.createFish(world, "boot");
+        EntityFactory.instance.createFish(
+                world,
+                fishNames.get(MathUtils.random(0, fishNames.size() - 1)),
+                MathUtils.random(0f, 32f),
+                MathUtils.random(0f, 24f),
+                1, 1,
+                MathUtils.random(1f, 2f),
+                MathUtils.random(1f, 2f)
+        );
     }
 
     public Vector2 centreOfMass() {

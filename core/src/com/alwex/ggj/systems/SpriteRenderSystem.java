@@ -1,6 +1,7 @@
 package com.alwex.ggj.systems;
 
 import com.alwex.ggj.components.PositionComponent;
+import com.alwex.ggj.components.RotationComponent;
 import com.alwex.ggj.components.ShapeComponent;
 import com.alwex.ggj.components.SpriteComponent;
 import com.artemis.Aspect;
@@ -19,13 +20,19 @@ public class SpriteRenderSystem extends EntityProcessingSystem {
     ComponentMapper<PositionComponent> positionMapper;
     ComponentMapper<SpriteComponent> spriteMapper;
     ComponentMapper<ShapeComponent> shapeMapper;
+    ComponentMapper<RotationComponent> rotationMapper;
 
     SpriteBatch batch;
     OrthographicCamera camera;
     TextureAtlas atlas;
 
     public SpriteRenderSystem(SpriteBatch batch, OrthographicCamera camera, TextureAtlas atlas) {
-        super(Aspect.all(PositionComponent.class, SpriteComponent.class, ShapeComponent.class));
+        super(Aspect.all(
+                PositionComponent.class,
+                SpriteComponent.class,
+                ShapeComponent.class,
+                RotationComponent.class
+        ));
 
         this.batch = batch;
         this.camera = camera;
@@ -43,13 +50,16 @@ public class SpriteRenderSystem extends EntityProcessingSystem {
         PositionComponent position = positionMapper.get(e);
         SpriteComponent sprite = spriteMapper.get(e);
         ShapeComponent shape = shapeMapper.get(e);
+        RotationComponent rotation = rotationMapper.get(e);
 
-        float scale = shape.scale - 1;
-        float xCorrection = -scale * (shape.width / 2f);
-        float yCorrection = -scale * (shape.height / 2f);
-
-
-        batch.draw(atlas.findRegion(sprite.name), position.x + xCorrection, position.y + yCorrection, shape.width * shape.scale, shape.height * shape.scale);
+        batch.draw(
+                atlas.findRegion(sprite.name),
+                position.x, position.y,
+                0, 0,
+                shape.width, shape.height,
+                shape.scale, shape.scale,
+                rotation.angle
+        );
     }
 
     protected void end() {

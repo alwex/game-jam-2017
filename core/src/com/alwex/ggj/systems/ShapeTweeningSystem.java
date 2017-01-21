@@ -37,7 +37,7 @@ public class ShapeTweeningSystem extends BaseSystem {
         ShapeComponent shape = shapeMapper.get(event.entityId);
 
         Tween.to(shape, ShapeComponentAccessor.SCALE, 0.25f)
-                .targetRelative(1.1f)
+                .target(1.5f)
                 .repeatYoyo(5, 0)
                 .ease(TweenEquations.easeInOutBounce)
                 .start(tweenManager);

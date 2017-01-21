@@ -1,9 +1,6 @@
 package com.alwex.ggj.systems;
 
-import com.alwex.ggj.components.DeadComponent;
-import com.alwex.ggj.components.PositionComponent;
-import com.alwex.ggj.components.ShapeComponent;
-import com.alwex.ggj.components.SliceableComponent;
+import com.alwex.ggj.components.*;
 import com.alwex.ggj.events.SlicedEvent;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
@@ -77,6 +74,8 @@ public class SliceableSystem extends EntityProcessingSystem {
             if (slicedLeft && slicedRight) {
                 deadMapper.create(e);
                 sliceableMapper.remove(e);
+
+                e.edit().add(new BleedingComponent());
 
                 eventSystem.dispatch(new SlicedEvent(e.getId()));
             }

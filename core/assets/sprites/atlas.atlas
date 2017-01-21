@@ -1,27 +1,202 @@
 
 atlas.png
-size: 32,16
+size: 512,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-one
+birds
   rotate: false
-  xy: 2, 2
+  xy: 68, 12
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+boot
+  rotate: false
+  xy: 193, 12
   size: 8, 8
   orig: 8, 8
+  offset: 0, 0
+  index: -1
+bottle
+  rotate: false
+  xy: 86, 2
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+cloud1
+  rotate: false
+  xy: 68, 2
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+cloud2
+  rotate: false
+  xy: 185, 2
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+cloud3
+  rotate: false
+  xy: 235, 46
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+cloud4
+  rotate: false
+  xy: 151, 2
+  size: 32, 8
+  orig: 32, 8
+  offset: 0, 0
+  index: -1
+cloud5
+  rotate: false
+  xy: 269, 46
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+cloud6
+  rotate: false
+  xy: 2, 4
+  size: 64, 24
+  orig: 64, 24
+  offset: 0, 0
+  index: -1
+cloud7
+  rotate: false
+  xy: 2, 30
+  size: 96, 32
+  orig: 96, 32
+  offset: 0, 0
+  index: -1
+crab
+  rotate: false
+  xy: 201, 28
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+divingman
+  rotate: false
+  xy: 339, 53
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+icebergBig
+  rotate: false
+  xy: 100, 6
+  size: 49, 56
+  orig: 49, 56
+  offset: 0, 0
+  index: -1
+icebergSmall
+  rotate: false
+  xy: 303, 46
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+island
+  rotate: false
+  xy: 201, 38
+  size: 32, 24
+  orig: 32, 24
+  offset: 0, 0
+  index: -1
+octopus2
+  rotate: false
+  xy: 350, 54
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+octopus3
+  rotate: false
+  xy: 211, 28
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+octopus4
+  rotate: false
+  xy: 360, 54
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+one
+  rotate: false
+  xy: 221, 28
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+pengo
+  rotate: false
+  xy: 86, 12
+  size: 8, 16
+  orig: 8, 16
+  offset: 0, 0
+  index: -1
+pengobaby
+  rotate: false
+  xy: 370, 54
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+redfish1
+  rotate: false
+  xy: 380, 54
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+redfish2
+  rotate: false
+  xy: 390, 54
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+seal
+  rotate: false
+  xy: 321, 46
+  size: 16, 16
+  orig: 16, 16
   offset: 0, 0
   index: -1
 three
   rotate: false
-  xy: 12, 2
+  xy: 400, 54
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
+titanic
+  rotate: false
+  xy: 151, 22
+  size: 48, 40
+  orig: 48, 40
+  offset: 0, 0
+  index: -1
 two
   rotate: false
-  xy: 22, 2
+  xy: 410, 54
   size: 8, 8
   orig: 8, 8
+  offset: 0, 0
+  index: -1
+whale
+  rotate: false
+  xy: 151, 12
+  size: 40, 8
+  orig: 40, 8
   offset: 0, 0
   index: -1
