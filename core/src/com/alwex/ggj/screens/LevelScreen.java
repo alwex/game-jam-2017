@@ -82,6 +82,10 @@ public class LevelScreen implements Screen {
                                 map.getProperties().get("height", Integer.class),
                                 camera
                         ),
+                        new CloudSystem(
+                                map.getProperties().get("width", Integer.class),
+                                map.getProperties().get("height", Integer.class)
+                        ),
                         new DeadFishSystem(),
                         new BleedingSystem(),
                         new BloodRenderSystem(shapeRenderer, camera),

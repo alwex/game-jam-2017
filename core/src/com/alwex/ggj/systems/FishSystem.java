@@ -53,7 +53,7 @@ public class FishSystem extends EntityProcessingSystem {
         fishDescriptors.add(new FishDescriptor("redfish1", 1, 1));
         fishDescriptors.add(new FishDescriptor("redfish2", 1, 1));
         fishDescriptors.add(new FishDescriptor("seal", 2, 2));
-        fishDescriptors.add(new FishDescriptor("whale", 3, 1));
+        fishDescriptors.add(new FishDescriptor("whale", 5, 1));
 
 
     }
