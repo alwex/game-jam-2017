@@ -85,15 +85,21 @@ public class FishSystem extends EntityProcessingSystem {
         fish.edit().add(new SliceableComponent());
     }
 
-    public void spawn(float x, float y, float velocity) {
-        world.createEntity()
-                .edit()
-                .add(new FishComponent())
-                .add(new PositionComponent(x, y))
-                .add(new ShapeComponent(1f, 2f))
-                .add(new PhysicComponent(0.1f,MathUtils.random(-1f,1f),MathUtils.random(0f,velocity)))
-                .add(new SliceableComponent())
-                .getEntity();
+    public void spawn(float x, float y, float vx, float vy) {
+
+
+        FishDescriptor currentDescriptor = fishDescriptors.get(MathUtils.random(0, fishDescriptors.size() - 1));
+        Entity fish = EntityFactory.instance.createFish(
+                world,
+                currentDescriptor.name,
+                currentDescriptor,
+                x,
+                y,
+                vx,
+                vy
+        );
+
+        fish.edit().add(new SliceableComponent());
     }
 
     public Vector2 centreOfMass() {
