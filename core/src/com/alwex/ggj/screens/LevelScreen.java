@@ -241,7 +241,7 @@ public class LevelScreen implements Screen {
             focusShader.setUniformf("u_resolution", screenResolution);
 //            focusShader.setUniformf("u_time", delta);
             focusShader.setUniformf("u_position", mousePosition);
-            focusShader.setUniformf("u_intensity", MyMaths.floatMap(deltaFactor, 1, 0, 0, 0.08f));
+            focusShader.setUniformf("u_intensity", MyMaths.floatMap(deltaFactor, 1, 0, 0, 0.1f));
 
         }
         focusShader.end();
