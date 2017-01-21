@@ -3,11 +3,9 @@
 varying vec4      v_color;
 varying vec2      v_texCoord0;
 
-uniform float     time;
 uniform float     intensity;
 uniform vec4      u_color;
 uniform sampler2D u_texture;
-uniform vec2      u_resolution;
 
 void main() {
 
