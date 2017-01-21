@@ -79,7 +79,8 @@ public class FishSystem extends EntityProcessingSystem {
                 currentDescriptor,
                 MathUtils.random(0f, 32f),
                 MathUtils.random(0f, 24f),
-                1, MathUtils.random(30, 35)
+                MathUtils.random(-5, 5),
+                MathUtils.random(30, 35)
         );
 
         fish.edit().add(new SliceableComponent());
