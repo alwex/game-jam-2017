@@ -33,7 +33,7 @@ public class BounceOffEdgeSystem extends EntityProcessingSystem {
         if (position.x <= 0 || position.x + shape.width >= mapWidth) {
             physic.vx *= -1;
         }
-        if (position.y + shape.height >= mapHeight) {
+        if (physic.vy > 0 && position.y + shape.height >= mapHeight) {
             physic.vy = 0;
         }
     }
