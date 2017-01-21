@@ -49,16 +49,31 @@ public class CloudSystem extends EntityProcessingSystem {
         cloudsDesciptors.add(new CloudDescriptor("cloud7", 12, 4));
         cloudsDesciptors.add(new CloudDescriptor("birds", 2, 2));
 
-        for (int i = 16; i <= mapHeight; i++) {
-            int cloudId = MathUtils.random(cloudsDesciptors.size() - 1);
-            EntityFactory.instance.createCloud(
-                    world,
-                    tweenManager,
-                    cloudsDesciptors.get(cloudId),
-                    MathUtils.random(0, mapWidth), i,
-                    MathUtils.random(0f, 0.5f),
-                    0
-            );
+
+//        cloudsDesciptors.add(new CloudDescriptor("seal", 2, 2));
+        cloudsDesciptors.add(new CloudDescriptor("whale", 5, 1));
+        cloudsDesciptors.add(new CloudDescriptor("redfish1", 1, 1));
+        cloudsDesciptors.add(new CloudDescriptor("redfish2", 1, 1));
+
+        for (int i = 0; i <= mapHeight; i++) {
+            int cloudId = MathUtils.random(7);
+            float vx = MathUtils.random(0f, 0.5f);
+            if (i < 12) {
+                cloudId = MathUtils.random(8, cloudsDesciptors.size() - 1);
+                vx = MathUtils.random(0.5f, 1.5f);
+            }
+
+            if ((i < 16 && cloudId >= 8) || (i > 17 && cloudId <= 7)) {
+
+                EntityFactory.instance.createCloud(
+                        world,
+                        tweenManager,
+                        cloudsDesciptors.get(cloudId),
+                        MathUtils.random(0, mapWidth), i,
+                        vx,
+                        0
+                );
+            }
 
         }
     }
