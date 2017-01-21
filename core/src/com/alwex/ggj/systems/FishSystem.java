@@ -9,9 +9,11 @@ import com.artemis.Entity;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.artemis.utils.Bag;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import net.mostlyoriginal.api.event.common.EventSystem;
 import net.mostlyoriginal.api.utils.BagUtils;
 
 import java.util.ArrayList;
@@ -23,10 +25,14 @@ import java.util.ArrayList;
 @Wire
 public class FishSystem extends EntityProcessingSystem {
 
+    EventSystem eventSystem;
+
     float mapWidth, mapHeight;
     ComponentMapper<PositionComponent> positionMapper;
     ComponentMapper<DeadComponent> deadMapper;
     OrthographicCamera camera;
+
+    boolean hasFish = false;
 
     ArrayList<FishDescriptor> fishDescriptors;
 
@@ -53,6 +59,16 @@ public class FishSystem extends EntityProcessingSystem {
         fishDescriptors.add(new FishDescriptor("whale", 5, 1, 1000));
 
 
+    }
+
+    @Override
+    protected void begin() {
+        if (getEntities().size() == 0 && hasFish) {
+//            hasFish = false;
+//            Gdx.app.log("FISH", "test");
+        } else {
+//            hasFish = true;
+        }
     }
 
     @Override
