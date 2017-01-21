@@ -2,6 +2,7 @@ package com.alwex.ggj.systems;
 
 import aurelienribon.tweenengine.TweenManager;
 import com.alwex.ggj.components.*;
+import com.alwex.ggj.events.CameraShakeEvent;
 import com.alwex.ggj.events.SlicedEvent;
 import com.alwex.ggj.factory.EntityFactory;
 import com.artemis.Aspect;
@@ -105,6 +106,8 @@ public class SliceableSystem extends EntityProcessingSystem {
                                     new Color(red, 0, 0, alpha)
                             ));
                 }
+
+                eventSystem.dispatch(new CameraShakeEvent(0.25f, 100f));
             }
         }
     }

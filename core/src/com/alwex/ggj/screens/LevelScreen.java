@@ -110,8 +110,8 @@ public class LevelScreen implements Screen {
                         new SoundSystem(game.getAssetManager()),
                         new BloodStainSystem(shapeRenderer, staticCamera),
                         new ComboSystem(),
-                        new GuiSystem(batch, staticCamera)
-
+                        new GuiSystem(batch, staticCamera),
+                        new CameraShakingSystem(camera)
                 ).build();
 
         world = new World(config);
