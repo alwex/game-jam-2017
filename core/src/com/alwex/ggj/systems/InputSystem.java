@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.TimeUtils;
 
 /**
  * Created by jbrungar on 21/01/17.
@@ -54,6 +55,7 @@ public class InputSystem extends EntityProcessingSystem implements InputProcesso
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (!sliceableSystem.isSlicing) {
             sliceableSystem.isSlicing = true;
+            sliceableSystem.sliceStartTime = TimeUtils.millis();
             sliceableSystem.sliceStart.x = camera.unproject(new Vector3(screenX, 0, 0)).x;
             sliceableSystem.sliceStart.y = camera.unproject(new Vector3(0, screenY, 0)).y;
             sliceableSystem.sliceEnd.x = camera.unproject(new Vector3(screenX, 0, 0)).x;

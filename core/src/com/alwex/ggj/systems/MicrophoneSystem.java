@@ -108,13 +108,13 @@ public class MicrophoneSystem extends EntityProcessingSystem {
                 int i = (int) (springPos.x * 4);
                 springPos.y += (maxHeight[i])/10f;
 
-                volume2 += Math.abs(maxHeight[i])*0.2f;
+                volume2 += Math.abs(maxHeight[i])*0.002f;
             }
         }
-        volume2 -=  8.0f;
+        volume2 -=  0.08f;
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.box(16,1,0,(volume2)/10f,1,0);
-        if(tick==5){Gdx.app.log("Volume",""+(volume2)/10f);}
+        shapeRenderer.box(16,1,0,(volume2),1,0);
+        if(tick==5){Gdx.app.log("Volume",""+(volume2));}
         shapeRenderer.end();
     }
 
