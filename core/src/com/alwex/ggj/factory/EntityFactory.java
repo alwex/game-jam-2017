@@ -41,7 +41,32 @@ public class EntityFactory {
                 .add(new PositionComponent(x, y))
                 .add(new ShapeComponent(descriptor.width, descriptor.height))
                 .add(new ScoreComponent(descriptor.score))
-//                .add(new SliceableComponent())
+                .add(new SpriteComponent(name))
+                .add(new RotationComponent(0, MathUtils.random(0.5f, 1f)))
+                .add(new SplashComponent())
+                .add(new PhysicComponent(
+                        MathUtils.random(0.5f, 1f),
+                        vx, vy
+                ))
+                .getEntity();
+
+        return fish;
+    }
+
+    public void createEnemy(
+            World world,
+            String name,
+            FishDescriptor descriptor,
+            float x, float y, float vx, float vy
+    ) {
+        Entity fish = world.createEntity()
+                .edit()
+                .add(new FishComponent())
+                .add(new EnemyComponent())
+                .add(new PositionComponent(x, y))
+                .add(new ShapeComponent(descriptor.width, descriptor.height))
+                .add(new ScoreComponent(descriptor.score))
+                .add(new SliceableComponent())
                 .add(new SpriteComponent(name))
                 .add(new RotationComponent(0, MathUtils.random(0.5f, 1f)))
                 .add(new SplashComponent())
@@ -51,7 +76,6 @@ public class EntityFactory {
                 ))
                 .getEntity();
 
-        return fish;
     }
 
     public void createSlicedFish(World world, Entity fish, TweenManager tweenManager) {

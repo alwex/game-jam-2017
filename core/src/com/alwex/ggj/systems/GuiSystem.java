@@ -5,9 +5,7 @@ import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import com.alwex.ggj.components.GuiComponent;
 import com.alwex.ggj.components.ScoreComponent;
-import com.alwex.ggj.events.CameraShakeEvent;
-import com.alwex.ggj.events.ComboLevelEvent;
-import com.alwex.ggj.events.SlicedEvent;
+import com.alwex.ggj.events.*;
 import com.alwex.ggj.screens.LevelScreen;
 import com.alwex.ggj.tween.accessors.LevelScreenAccessor;
 import com.artemis.Aspect;
@@ -39,6 +37,7 @@ public class GuiSystem extends EntityProcessingSystem {
 
     ComponentMapper<GuiComponent> guiMapper;
     ComponentMapper<ScoreComponent> scoreMapper;
+
 
     EventSystem eventSystem;
 
@@ -140,5 +139,16 @@ public class GuiSystem extends EntityProcessingSystem {
         }
 
 //        }
+    }
+
+
+    @Subscribe
+    public void enemySlicedEvent(EnemySlicedEvent event){
+        GuiComponent guiComponent = guiMapper.get(gui);
+        guiComponent.lives--;
+        if(guiComponent.lives<0){
+            guiComponent.lives = 0;
+            eventSystem.dispatch(new GameOverEvent(guiComponent.score));
+        }
     }
 }

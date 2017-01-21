@@ -11,44 +11,51 @@ birds
   orig: 16, 16
   offset: 0, 0
   index: -1
+bomb
+  rotate: false
+  xy: 219, 28
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
 boot
   rotate: false
-  xy: 349, 54
+  xy: 396, 54
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 boot-a
   rotate: false
-  xy: 254, 40
+  xy: 209, 22
   size: 5, 4
   orig: 5, 4
   offset: 0, 0
   index: -1
 boot-b
   rotate: false
-  xy: 472, 57
+  xy: 217, 15
   size: 3, 5
   orig: 3, 5
   offset: 0, 0
   index: -1
 bottle
   rotate: false
-  xy: 212, 28
+  xy: 229, 28
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 bottle-a
   rotate: false
-  xy: 477, 57
+  xy: 419, 47
   size: 3, 5
   orig: 3, 5
   offset: 0, 0
   index: -1
 bottle-b
   rotate: false
-  xy: 482, 57
+  xy: 424, 47
   size: 3, 5
   orig: 3, 5
   offset: 0, 0
@@ -104,7 +111,7 @@ cloud7
   index: -1
 crab
   rotate: false
-  xy: 359, 54
+  xy: 406, 54
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
@@ -118,16 +125,23 @@ crab-a
   index: -1
 crab-b
   rotate: false
-  xy: 242, 28
+  xy: 506, 54
   size: 4, 8
   orig: 4, 8
   offset: 0, 0
   index: -1
 divingman
   rotate: false
-  xy: 201, 27
+  xy: 375, 53
   size: 9, 9
   orig: 9, 9
+  offset: 0, 0
+  index: -1
+duck
+  rotate: false
+  xy: 416, 54
+  size: 8, 8
+  orig: 8, 8
   offset: 0, 0
   index: -1
 icebergBig
@@ -153,42 +167,42 @@ island
   index: -1
 octopus2
   rotate: false
-  xy: 222, 28
+  xy: 426, 54
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 octopus3
   rotate: false
-  xy: 369, 54
+  xy: 436, 54
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 octopus4
   rotate: false
-  xy: 232, 28
+  xy: 446, 54
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 octopus4-a
   rotate: false
-  xy: 248, 36
+  xy: 367, 44
   size: 4, 8
   orig: 4, 8
   offset: 0, 0
   index: -1
 octopus4-b
   rotate: false
-  xy: 459, 54
+  xy: 406, 44
   size: 4, 8
   orig: 4, 8
   offset: 0, 0
   index: -1
 one
   rotate: false
-  xy: 379, 54
+  xy: 456, 54
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
@@ -202,91 +216,112 @@ pengo
   index: -1
 pengo-a
   rotate: false
-  xy: 389, 54
+  xy: 466, 54
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 pengo-b
   rotate: false
-  xy: 399, 54
+  xy: 476, 54
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 pengobaby
   rotate: false
-  xy: 409, 54
+  xy: 486, 54
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
   index: -1
 pengobaby-a
   rotate: false
-  xy: 465, 58
+  xy: 248, 40
   size: 5, 4
   orig: 5, 4
   offset: 0, 0
   index: -1
 pengobaby-b
   rotate: false
-  xy: 349, 48
+  xy: 201, 22
   size: 6, 4
   orig: 6, 4
   offset: 0, 0
   index: -1
-redfish1
-  rotate: false
-  xy: 419, 54
-  size: 8, 8
-  orig: 8, 8
-  offset: 0, 0
-  index: -1
-redfish1-a
-  rotate: false
-  xy: 357, 48
-  size: 5, 4
-  orig: 5, 4
-  offset: 0, 0
-  index: -1
-redfish1-b
-  rotate: false
-  xy: 261, 40
-  size: 5, 4
-  orig: 5, 4
-  offset: 0, 0
-  index: -1
-redfish2
-  rotate: false
-  xy: 429, 54
-  size: 8, 8
-  orig: 8, 8
-  offset: 0, 0
-  index: -1
-redfish2-a
-  rotate: false
-  xy: 248, 29
-  size: 4, 5
-  orig: 4, 5
-  offset: 0, 0
-  index: -1
-redfish2-b
-  rotate: false
-  xy: 254, 34
-  size: 5, 4
-  orig: 5, 4
-  offset: 0, 0
-  index: -1
-seal
+plane
   rotate: false
   xy: 321, 46
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
+redfish1
+  rotate: false
+  xy: 496, 54
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+redfish1-a
+  rotate: false
+  xy: 412, 48
+  size: 5, 4
+  orig: 5, 4
+  offset: 0, 0
+  index: -1
+redfish1-b
+  rotate: false
+  xy: 216, 22
+  size: 5, 4
+  orig: 5, 4
+  offset: 0, 0
+  index: -1
+redfish2
+  rotate: false
+  xy: 239, 28
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+redfish2-a
+  rotate: false
+  xy: 211, 15
+  size: 4, 5
+  orig: 4, 5
+  offset: 0, 0
+  index: -1
+redfish2-b
+  rotate: false
+  xy: 255, 40
+  size: 5, 4
+  orig: 5, 4
+  offset: 0, 0
+  index: -1
+rocket
+  rotate: false
+  xy: 357, 54
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+satellite
+  rotate: false
+  xy: 201, 28
+  size: 16, 8
+  orig: 16, 8
+  offset: 0, 0
+  index: -1
+seal
+  rotate: false
+  xy: 339, 46
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 seal-a
   rotate: false
-  xy: 339, 47
+  xy: 386, 47
   size: 8, 15
   orig: 8, 15
   offset: 0, 0
@@ -300,7 +335,7 @@ seal-b
   index: -1
 three
   rotate: false
-  xy: 439, 54
+  xy: 357, 44
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
@@ -314,7 +349,7 @@ titanic
   index: -1
 two
   rotate: false
-  xy: 449, 54
+  xy: 396, 44
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
