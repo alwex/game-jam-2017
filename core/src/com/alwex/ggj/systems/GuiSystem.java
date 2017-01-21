@@ -7,6 +7,7 @@ import com.alwex.ggj.components.GuiComponent;
 import com.alwex.ggj.components.ScoreComponent;
 import com.alwex.ggj.events.CameraShakeEvent;
 import com.alwex.ggj.events.ComboLevelEvent;
+import com.alwex.ggj.events.GameOverEvent;
 import com.alwex.ggj.events.SlicedEvent;
 import com.alwex.ggj.screens.LevelScreen;
 import com.alwex.ggj.tween.accessors.LevelScreenAccessor;
@@ -138,7 +139,11 @@ public class GuiSystem extends EntityProcessingSystem {
                 eventSystem.dispatch(new ComboLevelEvent((int)(guiComponent.comboLevelReached / comboThreshold - 1), true));
             }
         }
-
 //        }
+    }
+
+    @Subscribe
+    public void onGameOver(GameOverEvent event) {
+        levelScreen.game.showScore(event.score);
     }
 }

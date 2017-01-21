@@ -5,6 +5,7 @@ import aurelienribon.tweenengine.TweenManager;
 import com.alwex.ggj.components.ShapeComponent;
 import com.alwex.ggj.screens.LevelScreen;
 import com.alwex.ggj.screens.ScoreScreen;
+import com.alwex.ggj.screens.SplashScreen;
 import com.alwex.ggj.systems.MicrophoneSystem;
 import com.alwex.ggj.tween.accessors.LevelScreenAccessor;
 import com.alwex.ggj.tween.accessors.ShapeComponentAccessor;
@@ -111,12 +112,14 @@ public class JamGame extends Game {
         Tween.registerAccessor(ShapeComponent.class, new ShapeComponentAccessor());
         Tween.registerAccessor(LevelScreen.class, new LevelScreenAccessor());
 
-        this.restartLevel();
+//        this.restartLevel();
 //        this.showScore(10000, 40);
+
+        this.setScreen(new SplashScreen(this));
     }
 
-    public void showScore(int score, int combo) {
-        this.setScreen(new ScoreScreen(this, score, combo));
+    public void showScore(int score) {
+        this.setScreen(new ScoreScreen(this, score));
     }
 
     public void restartLevel() {
