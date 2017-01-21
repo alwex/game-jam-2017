@@ -1,6 +1,7 @@
 package com.alwex.ggj.systems;
 
 import com.alwex.ggj.components.PositionComponent;
+import com.alwex.ggj.components.SpringComponent;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -18,7 +19,7 @@ public class GarbageSystem extends EntityProcessingSystem {
     float torelance = 3f;
 
     public GarbageSystem() {
-        super(Aspect.all(PositionComponent.class));
+        super(Aspect.all(PositionComponent.class).exclude(SpringComponent.class));
     }
 
     @Override

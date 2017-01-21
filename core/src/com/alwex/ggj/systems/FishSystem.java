@@ -2,6 +2,7 @@ package com.alwex.ggj.systems;
 
 import com.alwex.ggj.components.*;
 import com.alwex.ggj.factory.EntityFactory;
+import com.alwex.ggj.factory.FishDescriptor;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -27,7 +28,7 @@ public class FishSystem extends EntityProcessingSystem {
     ComponentMapper<DeadComponent> deadMapper;
     OrthographicCamera camera;
 
-    ArrayList<String> fishNames;
+    ArrayList<FishDescriptor> fishDescriptors;
 
     public FishSystem(float mapWidth, float mapHeight, OrthographicCamera camera) {
         super(Aspect.all(FishComponent.class));
@@ -39,20 +40,20 @@ public class FishSystem extends EntityProcessingSystem {
 
     @Override
     protected void initialize() {
-        fishNames = new ArrayList<String>();
-        fishNames.add("boot");
-        fishNames.add("bottle");
-        fishNames.add("crab");
+        fishDescriptors = new ArrayList<FishDescriptor>();
+        fishDescriptors.add(new FishDescriptor("boot", 1, 1));
+        fishDescriptors.add(new FishDescriptor("bottle", 1, 1));
+        fishDescriptors.add(new FishDescriptor("crab", 1, 1));
 //        fishNames.add("divingman");
 //        fishNames.add("octopus2");
 //        fishNames.add("octopus3");
-        fishNames.add("octopus4");
-        fishNames.add("pengo");
-        fishNames.add("pengobaby");
-        fishNames.add("redfish1");
-        fishNames.add("redfish2");
-        fishNames.add("seal");
-        fishNames.add("whale");
+        fishDescriptors.add(new FishDescriptor("octopus4", 1,1));
+        fishDescriptors.add(new FishDescriptor("pengo", 1, 2));
+        fishDescriptors.add(new FishDescriptor("pengobaby", 1, 1));
+        fishDescriptors.add(new FishDescriptor("redfish1", 1, 1));
+        fishDescriptors.add(new FishDescriptor("redfish2", 1, 1));
+        fishDescriptors.add(new FishDescriptor("seal", 2, 2));
+        fishDescriptors.add(new FishDescriptor("whale", 3, 1));
 
 
     }
@@ -72,14 +73,14 @@ public class FishSystem extends EntityProcessingSystem {
     }
 
     public void spawn() {
+        FishDescriptor currentDescriptor = fishDescriptors.get(MathUtils.random(0, fishDescriptors.size() - 1));
         Entity fish = EntityFactory.instance.createFish(
                 world,
-                fishNames.get(MathUtils.random(0, fishNames.size() - 1)),
+                currentDescriptor.name,
+                currentDescriptor,
                 MathUtils.random(0f, 32f),
                 MathUtils.random(0f, 24f),
-                1, MathUtils.random(30, 35),
-                MathUtils.random(2f, 5f),
-                MathUtils.random(2f, 5f)
+                1, MathUtils.random(30, 35)
         );
 
         fish.edit().add(new SliceableComponent());

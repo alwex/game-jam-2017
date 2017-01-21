@@ -59,7 +59,8 @@ public class SpriteRenderSystem extends EntityProcessingSystem {
                 position.x, position.y,
                 shape.width / 2f, shape.height / 2f,
                 shape.width, shape.height,
-                shape.scale, shape.scale,
+//                shape.scale, shape.scale,
+                1,1,
                 rotation.angle
         );
     }
