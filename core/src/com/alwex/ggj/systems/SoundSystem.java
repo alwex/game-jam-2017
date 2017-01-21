@@ -1,16 +1,17 @@
 package com.alwex.ggj.systems;
 
-import com.alwex.ggj.events.ComboLevelEvent;
-import com.alwex.ggj.events.SlicedEvent;
-import com.alwex.ggj.events.SplashEvent;
-import com.alwex.ggj.events.ThrowFishEvent;
+import com.alwex.ggj.events.*;
+import com.alwex.ggj.utils.MyMaths;
 import com.artemis.BaseSystem;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
+import net.mostlyoriginal.api.event.common.EventSystem;
 import net.mostlyoriginal.api.event.common.Subscribe;
+
+import static com.alwex.ggj.utils.MyMaths.floatMap;
 
 /**
  * Created by samsung on 21/01/2017.
@@ -21,6 +22,7 @@ public class SoundSystem extends BaseSystem {
     AssetManager assetManager;
     Music ambient;
     Music music;
+    EventSystem eventSystem;
     DeltaSystem deltaSystem;
     private static String[][] comboLevelSoundVariants;
 
@@ -155,11 +157,15 @@ public class SoundSystem extends BaseSystem {
             comboLevelSound.stop();
         }
         int index = Math.min((int)event.level, comboLevelSoundVariants.length - 1);
+        float timeFactor = MyMaths.floatMap(index,0,5,1f,0.3f);
+        eventSystem.dispatch(new DeltaChangeEvent(timeFactor));
         String[] variants = comboLevelSoundVariants[index];
         int variant = MathUtils.random(0, variants.length - 1);
 
-        comboLevelSound = assetManager.get(variants[variant], Sound.class);
-        comboLevelSoundId = comboLevelSound.play(1,1,0);
+        if(!event.degrade) {
+            comboLevelSound = assetManager.get(variants[variant], Sound.class);
+            comboLevelSoundId = comboLevelSound.play(1, 1, 0);
+        }
     }
 
 

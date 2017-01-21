@@ -7,7 +7,12 @@ import net.mostlyoriginal.api.event.common.Event;
  */
 public class ComboLevelEvent implements Event {
     public float level;
+    public boolean degrade;
     public ComboLevelEvent(int level){
         this.level = level;
+    }
+    public ComboLevelEvent(int level,boolean degrade){
+        this.level = level;
+        this.degrade = degrade;
     }
 }
