@@ -19,9 +19,10 @@ import javax.swing.text.Position;
 public class PositionSystem extends EntityProcessingSystem {
 
     ComponentMapper<PositionComponent> positionMapper;
+    ComponentMapper<PhysicComponent> physicMapper;
 
     public PositionSystem() {
-        super(Aspect.all(PositionComponent.class));
+        super(Aspect.all(PositionComponent.class, PhysicComponent.class));
     }
 
     @Override
@@ -32,6 +33,11 @@ public class PositionSystem extends EntityProcessingSystem {
     protected void process(Entity e) {
 
         PositionComponent p = positionMapper.get(e);
+        PhysicComponent psx = physicMapper.get(e);
+
+        p.x += psx.vx * world.getDelta();
+        p.y += psx.vy * world.getDelta();
+
     }
 
     @Override
