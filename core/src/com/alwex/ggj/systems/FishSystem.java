@@ -1,15 +1,19 @@
 package com.alwex.ggj.systems;
 
 import com.alwex.ggj.components.*;
+import com.alwex.ggj.factory.EntityFactory;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.artemis.utils.Bag;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import net.mostlyoriginal.api.utils.BagUtils;
+
+import java.util.ArrayList;
 
 
 /**
@@ -21,16 +25,35 @@ public class FishSystem extends EntityProcessingSystem {
     float mapWidth, mapHeight;
     ComponentMapper<PositionComponent> positionMapper;
     ComponentMapper<DeadComponent> deadMapper;
+    OrthographicCamera camera;
 
-    public FishSystem(float mapWidth, float mapHeight) {
+    ArrayList<String> fishNames;
+
+    public FishSystem(float mapWidth, float mapHeight, OrthographicCamera camera) {
         super(Aspect.all(FishComponent.class));
 
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
+        this.camera = camera;
     }
 
     @Override
     protected void initialize() {
+        fishNames = new ArrayList<String>();
+        fishNames.add("boot");
+        fishNames.add("bottle");
+        fishNames.add("crab");
+//        fishNames.add("divingman");
+//        fishNames.add("octopus2");
+//        fishNames.add("octopus3");
+        fishNames.add("octopus4");
+        fishNames.add("pengo");
+        fishNames.add("pengobaby");
+        fishNames.add("redfish1");
+        fishNames.add("redfish2");
+        fishNames.add("seal");
+        fishNames.add("whale");
+
 
     }
 
@@ -39,22 +62,26 @@ public class FishSystem extends EntityProcessingSystem {
         PositionComponent pos = positionMapper.get(e);
         if (deadMapper.has(e)) {
             pos.y -= 0.2f;
-            if (pos.y < 0) {
-                world.deleteEntity(e);
-            }
         } else {
             pos.y += 0.1f;
         }
+
+        if (pos.y < 0) {
+                world.deleteEntity(e);
+        }
     }
     public void spawn() {
-        world.createEntity()
-                .edit()
-                .add(new FishComponent())
-                .add(new PositionComponent(MathUtils.random(0, mapWidth), 0))
-                .add(new ShapeComponent(1f, 2f))
-                .add(new PhysicComponent(0.1f,MathUtils.random(-2f,2f),MathUtils.random(0f,2f)))
-                .add(new SliceableComponent())
-                .getEntity();
+        Entity fish = EntityFactory.instance.createFish(
+                world,
+                fishNames.get(MathUtils.random(0, fishNames.size() - 1)),
+                MathUtils.random(0f, 32f),
+                MathUtils.random(0f, 24f),
+                1, MathUtils.random(30, 35),
+                MathUtils.random(2f, 5f),
+                MathUtils.random(2f, 5f)
+        );
+
+        fish.edit().add(new SliceableComponent());
     }
 
     public void spawn(float x, float y, float velocity) {
@@ -69,15 +96,31 @@ public class FishSystem extends EntityProcessingSystem {
     }
 
     public Vector2 centreOfMass() {
+        float posX = camera.viewportWidth / 2;
+        float posY = camera.viewportHeight / 2;
+
         Bag<Entity> fishEntities = this.getEntities();
-        Entity[] fishArray = fishEntities.getData();
-        float sumX = 0;
-        float sumY = 0;
-        for (int i = 0; i < fishEntities.size(); i++) {
-            PositionComponent pos = positionMapper.get(fishArray[i]);
-            sumX += pos.x;
-            sumY += pos.y;
+        if (fishEntities.size() > 0) {
+            Entity[] fishArray = fishEntities.getData();
+            float sumX = 0;
+            float sumY = 0;
+            int count = 0;
+            for (int i = 0; i < fishEntities.size(); i++) {
+                if (!deadMapper.has(fishArray[i])) {
+                    PositionComponent pos = positionMapper.get(fishArray[i]);
+                    sumX += pos.x;
+                    sumY += pos.y;
+                    count++;
+                }
+            }
+            float fishY = sumY / count;
+            if (fishY > mapHeight - camera.viewportHeight / 2) {
+                posY = mapHeight - camera.viewportHeight / 2;
+            } else if (fishY >= camera.viewportHeight / 2) {
+                posY = fishY;
+            }
         }
-        return new Vector2(sumX / fishEntities.size(), sumY / fishEntities.size());
+
+        return new Vector2(posX, posY);
     }
 }
