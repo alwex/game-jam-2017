@@ -8,11 +8,11 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 public class DesktopLauncher {
     public static void main(String[] arg) {
 
-        TexturePacker.Settings settings = new TexturePacker.Settings();
-        settings.maxWidth = 512;
-        settings.maxHeight = 512;
+//        TexturePacker.Settings settings = new TexturePacker.Settings();
+//        settings.maxWidth = 512;
+//        settings.maxHeight = 512;
 
-        TexturePacker.process(settings, "sprites/sources", "sprites", "atlas");
+//        TexturePacker.process(settings, "sprites/sources", "sprites", "atlas");
 
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.vSyncEnabled = true;
