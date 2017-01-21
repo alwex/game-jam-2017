@@ -101,6 +101,10 @@ public class GuiSystem extends EntityProcessingSystem {
                 (camera.viewportHeight - 40) - (camera.viewportHeight / 2)
         );
 //        }
+
+        if (gui.combo > 5) {
+//            levelScreen.game.showScore(gui.score, gui.combo);
+        }
     }
 
     @Override
@@ -112,7 +116,7 @@ public class GuiSystem extends EntityProcessingSystem {
     public void onSlice(SlicedEvent event) {
         ScoreComponent score = scoreMapper.get(event.entityId);
         GuiComponent guiComponent = guiMapper.get(gui);
-        guiComponent.score += score.value;
+        guiComponent.score += score.value * guiComponent.combo + 1;
         int comboThreshold = 5;
 
 //        if ((guiComponent.combo + 1) % 20 == 0 && (bulletTime == null || bulletTime.isFinished())) {

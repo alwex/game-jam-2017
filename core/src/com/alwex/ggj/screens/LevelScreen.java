@@ -36,7 +36,7 @@ import net.mostlyoriginal.api.system.render.MapRenderSystem;
  */
 public class LevelScreen implements Screen {
 
-    final JamGame game;
+    public final JamGame game;
 
     OrthogonalTiledMapRenderer mapRenderer;
     OrthographicCamera camera;

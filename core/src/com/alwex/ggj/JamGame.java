@@ -4,6 +4,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 import com.alwex.ggj.components.ShapeComponent;
 import com.alwex.ggj.screens.LevelScreen;
+import com.alwex.ggj.screens.ScoreScreen;
 import com.alwex.ggj.systems.MicrophoneSystem;
 import com.alwex.ggj.tween.accessors.LevelScreenAccessor;
 import com.alwex.ggj.tween.accessors.ShapeComponentAccessor;
@@ -54,10 +55,6 @@ public class JamGame extends Game {
 
     @Override
     public void create() {
-
-
-
-
         assetManager = new AssetManager();
         assetManager.load("sprites/atlas.atlas", TextureAtlas.class);
         assetManager.load("sounds/splash.mp3", Sound.class);
@@ -114,6 +111,15 @@ public class JamGame extends Game {
         Tween.registerAccessor(ShapeComponent.class, new ShapeComponentAccessor());
         Tween.registerAccessor(LevelScreen.class, new LevelScreenAccessor());
 
+        this.restartLevel();
+//        this.showScore(10000, 40);
+    }
+
+    public void showScore(int score, int combo) {
+        this.setScreen(new ScoreScreen(this, score, combo));
+    }
+
+    public void restartLevel() {
         this.setScreen(new LevelScreen(this, "template.tmx"));
     }
 
