@@ -6,17 +6,21 @@ import com.alwex.ggj.components.ShapeComponent;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
+import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.math.MathUtils;
 
 /**
  * Created by Isaac on 21/01/2017.
  */
+@Wire
 public class PhysicSystem extends EntityProcessingSystem {
 
     ComponentMapper<PhysicComponent> physicMapper;
 
     float mapWidth, mapHeight;
+
+    DeltaSystem deltaSystem;
 
     float gravity;
     public PhysicSystem(float gravity, float mapWidth, float mapHeight) {
@@ -31,7 +35,7 @@ public class PhysicSystem extends EntityProcessingSystem {
     protected void process(Entity e) {
         PhysicComponent psx = physicMapper.get(e);
 
-        psx.vy += world.getDelta() * psx.mass * gravity;
+        psx.vy += deltaSystem.getDelta() * psx.mass * gravity;
 
     }
 

@@ -18,6 +18,7 @@ import net.mostlyoriginal.api.event.common.Subscribe;
 public class CameraShakingSystem extends BaseSystem {
 
     EventSystem eventSystem;
+    DeltaSystem deltaSystem;
 
     OrthographicCamera camera;
     float intensity;
@@ -47,7 +48,7 @@ public class CameraShakingSystem extends BaseSystem {
             float power = intensity * ((duration - elapsed) / duration);
             float x = MathUtils.random(-0.5f, 0.5f) * power;
             camera.position.x = camera.viewportWidth / 2 + x;
-            elapsed += world.getDelta();
+            elapsed += deltaSystem.getDelta();
         } else {
             intensity = 0;
             duration = 0;

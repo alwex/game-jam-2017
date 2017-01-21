@@ -6,6 +6,7 @@ import com.artemis.BaseSystem;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.MathUtils;
 import net.mostlyoriginal.api.event.common.EventSystem;
 import net.mostlyoriginal.api.event.common.Subscribe;
 
@@ -69,7 +70,7 @@ public class SpawnSystem extends BaseSystem {
                 float k = floatMap(velocities[(int) i], minHeight, maxHeight, minSpawn, maxSpawn);
 
                 for (int j = 0; j < k; j++) {
-                    float vx = floatMap(j, 0, k, -k, k) * deltaHeight * 100f;
+                    float vx = MathUtils.random(-vy,vy);
                     fishSystem.spawn(x, y, vx, vy);
                 }
             }

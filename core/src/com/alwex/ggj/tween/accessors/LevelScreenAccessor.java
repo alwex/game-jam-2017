@@ -15,7 +15,7 @@ public class LevelScreenAccessor implements TweenAccessor<LevelScreen> {
 
         switch (tweenType) {
             case DELTA_FACTOR:
-                returnValues[0] = target.deltaFactor;
+                //returnValues[0] = target.deltaFactor;
                 return 1;
             default:
                 assert false;
@@ -27,7 +27,7 @@ public class LevelScreenAccessor implements TweenAccessor<LevelScreen> {
     public void setValues(LevelScreen target, int tweenType, float[] newValues) {
         switch (tweenType) {
             case DELTA_FACTOR:
-                target.deltaFactor = newValues[0];
+                //target.deltaFactor = newValues[0];
                 break;
             default:
                 assert false;

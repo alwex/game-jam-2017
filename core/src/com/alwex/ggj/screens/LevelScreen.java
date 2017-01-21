@@ -41,8 +41,8 @@ public class LevelScreen implements Screen {
     TiledMap map;
     World world;
     ShapeRenderer shapeRenderer;
+    DeltaSystem deltaSystem;
 
-    public float deltaFactor = 1;
 
     public LevelScreen(final JamGame game, String mapName) {
         this.game = game;
@@ -58,10 +58,12 @@ public class LevelScreen implements Screen {
 
         map = new TmxMapLoader().load("maps/" + mapName);
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / 8f);
+        deltaSystem = new DeltaSystem();
 
         WorldConfiguration config = new WorldConfigurationBuilder()
                 .with(
                         new EventSystem(),
+                        deltaSystem,
 
                         // other systems goes here
                         new PositionSystem(),
@@ -131,7 +133,7 @@ public class LevelScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.getTweenManager().update(delta);
-        world.setDelta(delta * deltaFactor);
+        world.setDelta(delta );
         world.process();
     }
 

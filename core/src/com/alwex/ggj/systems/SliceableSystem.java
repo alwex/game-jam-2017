@@ -107,7 +107,6 @@ public class SliceableSystem extends EntityProcessingSystem {
                             ));
                 }
 
-                eventSystem.dispatch(new CameraShakeEvent(0.25f, 100f));
             }
         }
     }

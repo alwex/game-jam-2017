@@ -45,6 +45,7 @@ public class MicrophoneSystem extends EntityProcessingSystem {
 
     ComponentMapper<PositionComponent> positionMapper;
     WaterSystem waterSystem;
+    DeltaSystem deltaSystem;
 
     public MicrophoneSystem(AudioRecorder recorder,  ShapeRenderer shapeRenderer,int count) {
         super(Aspect.all(PositionComponent.class));
@@ -132,7 +133,7 @@ public class MicrophoneSystem extends EntityProcessingSystem {
             for (Entity springEntity : waterSystem.getSpringList()) {
                 PositionComponent springPos = positionMapper.get(springEntity);
                 int i = (int) (springPos.x * 4);
-                springPos.y += (maxHeight[i]) * (effect2 / 100000f + (effect * effect) / 1296) * 0.05f;
+                springPos.y += (maxHeight[i]) * (effect2 / 100000f + (effect * effect) / 1296) * 0.05f * deltaSystem.getDeltaFactor();
 
             }
             effect += effect2 / 100000f;

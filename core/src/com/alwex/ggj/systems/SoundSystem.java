@@ -1,5 +1,6 @@
 package com.alwex.ggj.systems;
 
+import com.alwex.ggj.events.ComboLevelEvent;
 import com.alwex.ggj.events.SlicedEvent;
 import com.alwex.ggj.events.SplashEvent;
 import com.alwex.ggj.events.ThrowFishEvent;
@@ -19,6 +20,7 @@ public class SoundSystem extends BaseSystem {
 
     AssetManager assetManager;
     Music ambient;
+    private static String[][] comboLevelSoundVariants;
 
     public SoundSystem(AssetManager assetManager) {
         this.assetManager = assetManager;
@@ -34,20 +36,81 @@ public class SoundSystem extends BaseSystem {
         ambient = assetManager.get("sounds/ambient.ogg", Music.class);
         ambient.setLooping(true);
         ambient.play();
+        comboLevelSoundVariants = new String[5][];
+        comboLevelSoundVariants[0] = new String[]{
+                "sounds/nice_1.ogg",
+                "sounds/nice_2.ogg",
+                "sounds/nice_3.ogg",
+                "sounds/nice_4.ogg",
+                "sounds/nice_5.ogg"
+        };
+        comboLevelSoundVariants[1] = new String[]{
+                "sounds/epic_1.ogg",
+                "sounds/epic_2.ogg",
+                "sounds/epic_3.ogg",
+                "sounds/epic_4.ogg",
+                "sounds/epic_5.ogg",
+                "sounds/epic_6.ogg",
+                "sounds/epic_7.ogg"
+        };
+        comboLevelSoundVariants[2] = new String[]{
+                "sounds/unreal_1.ogg",
+                "sounds/unreal_2.ogg",
+                "sounds/unreal_3.ogg",
+                "sounds/unreal_4.ogg",
+                "sounds/unreal_5.ogg"
+        };
+        comboLevelSoundVariants[3] = new String[]{
+                "sounds/warcrime_1.ogg",
+                "sounds/warcrime_2.ogg",
+                "sounds/warcrime_3.ogg",
+                "sounds/warcrime_4.ogg",
+                "sounds/warcrime_5.ogg",
+                "sounds/warcrime_6.ogg"
+        };
+        comboLevelSoundVariants[4] = new String[]{
+                "sounds/aaaaa_1.ogg",
+               // "sounds/aaaaa_2.ogg",
+               // "sounds/aaaaa_3.ogg",
+               // "sounds/aaaaa_4.ogg",
+               // "sounds/aaaaa_5.ogg",
+               // "sounds/aaaaa_6.ogg",
+                "sounds/aaaaa_7.ogg",
+                "sounds/aaaaa_8.ogg",
+                "sounds/aaaaa_9.ogg",
+                "sounds/aaaaa_10.ogg",
+                "sounds/aaaaa_11.ogg"
+        };
     }
+
+    Sound[] slicedSounds = new Sound[5];
+    int slicedSoundsIndex = 0;
 
     @Subscribe
     public void onSliced(SlicedEvent event) {
-        assetManager.get("sounds/splash.mp3", Sound.class).play(1, MathUtils.random(0.8f, 1f), 0);
+        assetManager.get("sounds/splash.mp3", Sound.class).play(0.1f, MathUtils.random(0.8f, 1f), 0);
     }
 
     @Subscribe
     public void onThrowFish(ThrowFishEvent event) {
-        assetManager.get("sounds/water-splash.ogg", Sound.class).play(1, MathUtils.random(0.8f, 1f), 0);
+        assetManager.get("sounds/water-splash.ogg", Sound.class).play(0.1f, MathUtils.random(0.8f, 1f), 0);
+    }
+
+    private Sound comboLevelSound;
+    @Subscribe
+    public void onComboLevelReached(ComboLevelEvent event){
+        if(comboLevelSound != null ){
+            comboLevelSound.stop();
+        }
+        String[] variants = comboLevelSoundVariants[(int)event.level];
+        int variant = MathUtils.random(0,variants.length-1);
+
+        comboLevelSound = assetManager.get(variants[variant], Sound.class);
+        comboLevelSound.play(1,1,0);
     }
 
     @Subscribe
     public void onSplash(SplashEvent event) {
-        assetManager.get("sounds/ploup.ogg", Sound.class).play(1, MathUtils.random(0.8f, 1f), 0);
+        assetManager.get("sounds/ploup.ogg", Sound.class).play(0.1f, MathUtils.random(0.8f, 1f), 0);
     }
 }

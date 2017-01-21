@@ -29,6 +29,7 @@ public class ComboSystem extends EntityProcessingSystem {
     protected void process(Entity e) {
         if (lastEvent + 3000l < System.currentTimeMillis()) {
             guiMapper.get(e).combo = 0;
+            guiMapper.get(e).comboLevelReached = 0;
         }
     }
 

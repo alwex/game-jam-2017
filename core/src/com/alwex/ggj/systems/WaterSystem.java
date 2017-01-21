@@ -18,6 +18,7 @@ import java.util.ArrayList;
 @Wire
 public class WaterSystem extends EntityProcessingSystem {
 
+    DeltaSystem deltaSystem;
     MapSystem mapSystem;
     float mapWidth, mapHeight;
     float k = 0.025f;
@@ -105,7 +106,7 @@ public class WaterSystem extends EntityProcessingSystem {
         float[] leftDeltas = new float[springList.size()];
         float[] rightDeltas = new float[springList.size()];
 
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < 8 * deltaSystem.getDeltaFactor(); j++) {
             for (int i = 0; i < springList.size(); i++) {
                 if (i > 0) {
 
@@ -116,7 +117,7 @@ public class WaterSystem extends EntityProcessingSystem {
                     PositionComponent positionLeft = positionMapper.get(springList.get(i - 1));
 
                     leftDeltas[i] = spread * (positionCurrent.y - positionLeft.y);
-                    springLeft.v += leftDeltas[i];
+                    springLeft.v += leftDeltas[i] * deltaSystem.getDeltaFactor();
                 }
                 if (i < springList.size() - 1) {
                     SpringComponent springCurrent = springMapper.get(springList.get(i));
@@ -126,7 +127,7 @@ public class WaterSystem extends EntityProcessingSystem {
                     PositionComponent positionRight = positionMapper.get(springList.get(i + 1));
 
                     rightDeltas[i] = spread * (positionCurrent.y - positionRight.y);
-                    springRight.v += rightDeltas[i];
+                    springRight.v += rightDeltas[i] * deltaSystem.getDeltaFactor();
                 }
             }
 
@@ -137,7 +138,7 @@ public class WaterSystem extends EntityProcessingSystem {
 
                     PositionComponent positionCurrent = positionMapper.get(springList.get(i));
                     PositionComponent positionLeft = positionMapper.get(springList.get(i - 1));
-                    positionLeft.y += leftDeltas[i];
+                    positionLeft.y += leftDeltas[i] * deltaSystem.getDeltaFactor();
                 }
                 if (i < springList.size() - 1) {
                     SpringComponent springCurrent = springMapper.get(springList.get(i));
@@ -146,7 +147,7 @@ public class WaterSystem extends EntityProcessingSystem {
                     PositionComponent positionCurrent = positionMapper.get(springList.get(i));
                     PositionComponent positionRight = positionMapper.get(springList.get(i + 1));
 
-                    positionRight.y += rightDeltas[i];
+                    positionRight.y += rightDeltas[i] * deltaSystem.getDeltaFactor();
                 }
             }
         }

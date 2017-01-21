@@ -25,6 +25,8 @@ public class PositionSystem extends EntityProcessingSystem {
         super(Aspect.all(PositionComponent.class, PhysicComponent.class));
     }
 
+    DeltaSystem deltaSystem;
+
     @Override
     protected void begin() {
     }
@@ -35,8 +37,8 @@ public class PositionSystem extends EntityProcessingSystem {
         PositionComponent p = positionMapper.get(e);
         PhysicComponent psx = physicMapper.get(e);
 
-        p.x += psx.vx * world.getDelta();
-        p.y += psx.vy * world.getDelta();
+        p.x += psx.vx * deltaSystem.getDelta();
+        p.y += psx.vy * deltaSystem.getDelta();
 
     }
 
