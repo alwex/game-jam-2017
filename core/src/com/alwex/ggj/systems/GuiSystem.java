@@ -135,6 +135,7 @@ public class GuiSystem extends EntityProcessingSystem {
                 eventSystem.dispatch(new CameraShakeEvent(0.25f*guiComponent.comboLevelReached / comboThreshold, 100f));
             } else {
                 guiComponent.comboLevelReached = guiComponent.combo;
+                eventSystem.dispatch(new ComboLevelEvent((int)(guiComponent.comboLevelReached / comboThreshold - 1), true));
             }
         }
 

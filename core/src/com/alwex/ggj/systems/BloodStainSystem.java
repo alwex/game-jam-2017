@@ -18,6 +18,7 @@ public class BloodStainSystem extends EntityProcessingSystem {
     ComponentMapper<BloodStainComponent> bloodStainMapper;
 
     ShapeRenderer shapeRenderer;
+    DeltaSystem deltaSystem;
     OrthographicCamera camera;
 
     public BloodStainSystem(ShapeRenderer shapeRenderer, OrthographicCamera camera) {
@@ -37,7 +38,7 @@ public class BloodStainSystem extends EntityProcessingSystem {
     @Override
     protected void process(Entity e) {
         BloodStainComponent bloodStain = bloodStainMapper.get(e);
-        bloodStain.color.a -= 0.005f;
+        bloodStain.color.a -= 0.005f * deltaSystem.getDeltaFactor();
 //        bloodStain.y -= 1f;
 //        bloodStain.radius -= 0.1f;
 

@@ -17,7 +17,7 @@ public class DeltaSystem extends BaseSystem {
 
     private float currentDeltaFactor = 1;
     private float targetDeltaFactor = 1;
-    private float resistance = 10;
+    private float resistance = 20;
 
     public float getDeltaFactor(){
         return currentDeltaFactor;
