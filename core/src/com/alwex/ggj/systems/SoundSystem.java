@@ -18,8 +18,11 @@ import net.mostlyoriginal.api.event.common.Subscribe;
 @Wire
 public class SoundSystem extends BaseSystem {
 
+    DeltaSystem deltaSystem;
+
     AssetManager assetManager;
     Music ambient;
+    Music music;
     private static String[][] comboLevelSoundVariants;
 
     public SoundSystem(AssetManager assetManager) {
@@ -28,7 +31,6 @@ public class SoundSystem extends BaseSystem {
 
     @Override
     protected void processSystem() {
-
     }
 
     @Override
@@ -36,6 +38,12 @@ public class SoundSystem extends BaseSystem {
         ambient = assetManager.get("sounds/ambient.ogg", Music.class);
         ambient.setLooping(true);
         ambient.play();
+
+        music = assetManager.get("sounds/music.mp3", Music.class);
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
+
         comboLevelSoundVariants = new String[5][];
         comboLevelSoundVariants[0] = new String[]{
                 "sounds/nice_1.ogg",

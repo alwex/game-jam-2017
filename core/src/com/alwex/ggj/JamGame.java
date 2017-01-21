@@ -63,6 +63,7 @@ public class JamGame extends Game {
         assetManager.load("sounds/splash.mp3", Sound.class);
         assetManager.load("sounds/water-splash.ogg", Sound.class);
         assetManager.load("sounds/ambient.ogg", Music.class);
+        assetManager.load("sounds/music.mp3", Music.class);
         assetManager.load("sounds/ploup.ogg", Sound.class);
 
 
