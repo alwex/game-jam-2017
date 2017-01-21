@@ -24,12 +24,17 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 public class JamGame extends Game {
 
     SpriteBatch batch;
+    SpriteBatch staticBatch;
     Texture img;
     TweenManager tweenManager;
     AudioRecorder recorder;
     FPSLogger fpsLogger;
 
     AssetManager assetManager;
+
+    public SpriteBatch getStaticBatch() {
+        return staticBatch;
+    }
 
     public SpriteBatch getBatch() {
         return batch;
@@ -102,6 +107,7 @@ public class JamGame extends Game {
         fpsLogger = new FPSLogger();
         recorder = Gdx.audio.newAudioRecorder(22050 * 4, true);
         batch = new SpriteBatch();
+        staticBatch = new SpriteBatch();
         img = new Texture("badlogic.jpg");
         tweenManager = new TweenManager();
         Tween.registerAccessor(ShapeComponent.class, new ShapeComponentAccessor());
@@ -120,6 +126,7 @@ public class JamGame extends Game {
     @Override
     public void dispose() {
         batch.dispose();
+        staticBatch.dispose();
         img.dispose();
         recorder.dispose();
         assetManager.dispose();

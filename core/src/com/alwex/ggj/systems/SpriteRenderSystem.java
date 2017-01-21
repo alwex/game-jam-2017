@@ -53,6 +53,9 @@ public class SpriteRenderSystem extends EntityProcessingSystem {
         ShapeComponent shape = shapeMapper.get(e);
         RotationComponent rotation = rotationMapper.get(e);
 
+        if (!atlas.findRegion(sprite.name).isFlipX()) {
+            atlas.findRegion(sprite.name).flip(true, false);
+        }
         batch.draw(
                 atlas.findRegion(sprite.name),
                 position.x, position.y,

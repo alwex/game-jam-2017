@@ -32,8 +32,8 @@ public class BleedingSystem extends IntervalEntityProcessingSystem {
                 world,
                 position.x,
                 position.y,
-                MathUtils.random(0.1f, 0.6f),
-                MathUtils.random(0.1f, 2f)
+                MathUtils.random(-5f, 5f),
+                MathUtils.random(-1f, 10f)
         );
     }
 }
