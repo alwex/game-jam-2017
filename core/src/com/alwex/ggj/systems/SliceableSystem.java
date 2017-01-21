@@ -98,15 +98,20 @@ public class SliceableSystem extends EntityProcessingSystem {
                 for (int i = 0; i <= MathUtils.random(3, 5); i++) {
                     float red = MathUtils.random(0.5f, 1f);
                     float alpha = MathUtils.random(0.5f, 1f);
-                    world.createEntity().edit()
-                            .add(new BloodStainComponent(
-                                            MathUtils.random(-Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2),
-                                            MathUtils.random(-Gdx.graphics.getHeight() / 2, Gdx.graphics.getHeight() / 2),
-                                    MathUtils.random(10f, 50f),
-                                    new Color(red, 0, 0, alpha)
-                            ));
-                }
 
+
+                    float x = MathUtils.random(-Gdx.graphics.getWidth() / 2, Gdx.graphics.getWidth() / 2);
+                    float y = MathUtils.random(-Gdx.graphics.getHeight() / 2, Gdx.graphics.getHeight() / 2);
+                    if (Math.abs(x) > 180 || Math.abs(y) > 180) {
+                        world.createEntity().edit()
+                                .add(new BloodStainComponent(
+                                        x,
+                                        y,
+                                        MathUtils.random(10f, 50f),
+                                        new Color(red, 0, 0, alpha)
+                                ));
+                    }
+                }
                 eventSystem.dispatch(new CameraShakeEvent(0.25f, 100f));
             }
         }

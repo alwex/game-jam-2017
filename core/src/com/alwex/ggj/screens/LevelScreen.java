@@ -15,11 +15,10 @@ import com.artemis.WorldConfiguration;
 import com.artemis.WorldConfigurationBuilder;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -38,9 +37,12 @@ public class LevelScreen implements Screen {
     OrthographicCamera camera;
     OrthographicCamera staticCamera;
     SpriteBatch batch;
+    SpriteBatch staticBatch;
     TiledMap map;
     World world;
     ShapeRenderer shapeRenderer;
+
+    FrameBuffer pixelatedFbo;
 
     public float deltaFactor = 1;
 
@@ -50,7 +52,15 @@ public class LevelScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 32, 24);
 
+        pixelatedFbo = new FrameBuffer(Pixmap.Format.RGBA8888,
+                (int) camera.viewportWidth * 8,
+                (int) camera.viewportWidth * 8,
+                false
+        );
+        pixelatedFbo.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
         staticCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        staticBatch = game.getStaticBatch();
 
         shapeRenderer = new ShapeRenderer();
 
@@ -127,12 +137,34 @@ public class LevelScreen implements Screen {
     @Override
     public void render(float delta) {
         // clear the screen with plain black
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.getTweenManager().update(delta);
-        world.setDelta(delta * deltaFactor);
-        world.process();
+        pixelatedFbo.begin();
+        {
+
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+
+            game.getTweenManager().update(delta);
+            world.setDelta(delta * deltaFactor);
+            world.process();
+
+            Gdx.gl.glDisable(GL20.GL_BLEND);
+        }
+        pixelatedFbo.end();
+
+        staticBatch.setProjectionMatrix(staticCamera.combined);
+        staticBatch.begin();
+        {
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            staticBatch.draw(pixelatedFbo.getColorBufferTexture(), -staticCamera.viewportWidth / 2, -staticCamera.viewportHeight / 2, staticCamera.viewportWidth, staticCamera.viewportHeight, 0, 0, 1, 1);
+            Gdx.gl.glDisable(GL20.GL_BLEND);
+        }
+        staticBatch.end();
+
+        world.getSystem(GuiSystem.class).process();
     }
 
     @Override
@@ -159,5 +191,6 @@ public class LevelScreen implements Screen {
     @Override
     public void dispose() {
         world.dispose();
+        pixelatedFbo.dispose();
     }
 }

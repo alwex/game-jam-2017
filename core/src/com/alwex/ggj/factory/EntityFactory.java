@@ -26,7 +26,6 @@ public class EntityFactory {
 
     }
 
-
     public Entity createFish(
             World world,
             String name,
@@ -104,7 +103,7 @@ public class EntityFactory {
 
         float size = MathUtils.random(0.1f, 0.25f);
         float red = MathUtils.random(0.5f, 1f);
-        Color bloodColor = new Color(red, 0, 0, 0.4f);
+        Color bloodColor = new Color(red, 0, 0, 0.8f);
 
         return world.createEntity().edit()
                 .add(new PositionComponent(x, y))

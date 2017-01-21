@@ -9,6 +9,9 @@
  <tileset firstgid="289" name="shipwreck" tilewidth="8" tileheight="8" tilecount="96" columns="12">
   <image source="shipwreck.png" width="96" height="70"/>
  </tileset>
+ <tileset firstgid="385" name="template" tilewidth="8" tileheight="8" tilecount="25" columns="5">
+  <image source="template.png" width="40" height="40"/>
+ </tileset>
  <layer name="back2" width="32" height="96">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
