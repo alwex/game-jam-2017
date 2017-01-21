@@ -23,6 +23,7 @@ public class PhysicSystem extends EntityProcessingSystem {
     DeltaSystem deltaSystem;
 
     float gravity;
+
     public PhysicSystem(float gravity, float mapWidth, float mapHeight) {
         super(Aspect.all(PhysicComponent.class));
         this.gravity = gravity;

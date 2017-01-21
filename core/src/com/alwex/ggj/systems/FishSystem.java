@@ -78,9 +78,9 @@ public class FishSystem extends EntityProcessingSystem {
     protected void process(Entity e) {
         PositionComponent pos = positionMapper.get(e);
         if (deadMapper.has(e)) {
-            pos.y -= 0.2f;
+//            pos.y -= 0.2f;
         } else {
-            pos.y += 0.1f;
+//            pos.y += 0.1f;
         }
 
         if (pos.y < 0) {

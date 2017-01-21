@@ -9,6 +9,7 @@ import com.alwex.ggj.systems.PositionSystem;
 import com.alwex.ggj.systems.MicrophoneSystem;
 import com.alwex.ggj.systems.RenderSystem;
 import com.alwex.ggj.systems.*;
+import com.alwex.ggj.utils.MyMaths;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
@@ -190,11 +191,12 @@ public class LevelScreen implements Screen {
 
         focusShader.begin();
         {
+            float deltaFactor = world.getSystem(DeltaSystem.class).getDeltaFactor();
             // setting the shader uniforms
             focusShader.setUniformf("u_resolution", screenResolution);
 //            focusShader.setUniformf("u_time", delta);
             focusShader.setUniformf("u_position", mousePosition);
-            focusShader.setUniformf("u_intensity", 0.05f);
+            focusShader.setUniformf("u_intensity", MyMaths.floatMap(deltaFactor, 1, 0, 0, 0.05f));
 
         }
         focusShader.end();

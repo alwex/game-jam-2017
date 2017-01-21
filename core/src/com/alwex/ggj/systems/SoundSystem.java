@@ -20,6 +20,7 @@ public class SoundSystem extends BaseSystem {
 
     AssetManager assetManager;
     Music ambient;
+    Music music;
     DeltaSystem deltaSystem;
     private static String[][] comboLevelSoundVariants;
 
@@ -67,6 +68,12 @@ public class SoundSystem extends BaseSystem {
         ambient = assetManager.get("sounds/ambient.ogg", Music.class);
         ambient.setLooping(true);
         ambient.play();
+
+        music = assetManager.get("sounds/music.mp3", Music.class);
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
+
         comboLevelSoundVariants = new String[5][];
         comboLevelSoundVariants[0] = new String[]{
                 "sounds/nice_1.ogg",
@@ -160,8 +167,8 @@ public class SoundSystem extends BaseSystem {
     public void onSplash(SplashEvent event) {
         splashSounds[splashSoundsIndex] = splashSound.play(0.1f, MathUtils.random(0.8f, 1f), 0);
 
-        spslashSoundsIsndex ++;
-        if(splashSoundsIndex > 9s) {
+        splashSoundsIndex ++;
+        if(splashSoundsIndex > 9) {
             splashSoundsIndex = 0;
         }
     }
