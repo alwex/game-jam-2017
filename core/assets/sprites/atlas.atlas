@@ -18,6 +18,20 @@ bomb
   orig: 8, 8
   offset: 0, 0
   index: -1
+bomb-a
+  rotate: false
+  xy: 91, 2
+  size: 4, 8
+  orig: 4, 8
+  offset: 0, 0
+  index: -1
+bomb-b
+  rotate: false
+  xy: 506, 54
+  size: 4, 8
+  orig: 4, 8
+  offset: 0, 0
+  index: -1
 boot
   rotate: false
   xy: 396, 54
@@ -48,14 +62,14 @@ bottle
   index: -1
 bottle-a
   rotate: false
-  xy: 419, 47
+  xy: 441, 47
   size: 3, 5
   orig: 3, 5
   offset: 0, 0
   index: -1
 bottle-b
   rotate: false
-  xy: 424, 47
+  xy: 446, 47
   size: 3, 5
   orig: 3, 5
   offset: 0, 0
@@ -118,14 +132,14 @@ crab
   index: -1
 crab-a
   rotate: false
-  xy: 91, 2
+  xy: 367, 44
   size: 4, 8
   orig: 4, 8
   offset: 0, 0
   index: -1
 crab-b
   rotate: false
-  xy: 506, 54
+  xy: 416, 44
   size: 4, 8
   orig: 4, 8
   offset: 0, 0
@@ -188,14 +202,14 @@ octopus4
   index: -1
 octopus4-a
   rotate: false
-  xy: 367, 44
+  xy: 422, 44
   size: 4, 8
   orig: 4, 8
   offset: 0, 0
   index: -1
 octopus4-b
   rotate: false
-  xy: 406, 44
+  xy: 428, 44
   size: 4, 8
   orig: 4, 8
   offset: 0, 0
@@ -265,7 +279,7 @@ redfish1
   index: -1
 redfish1-a
   rotate: false
-  xy: 412, 48
+  xy: 434, 48
   size: 5, 4
   orig: 5, 4
   offset: 0, 0
@@ -333,9 +347,16 @@ seal-b
   orig: 11, 6
   offset: 0, 0
   index: -1
-three
+target
   rotate: false
   xy: 357, 44
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+three
+  rotate: false
+  xy: 396, 44
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
@@ -349,7 +370,7 @@ titanic
   index: -1
 two
   rotate: false
-  xy: 396, 44
+  xy: 406, 44
   size: 8, 8
   orig: 8, 8
   offset: 0, 0

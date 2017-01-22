@@ -47,6 +47,7 @@ public class EnemySystem extends IntervalSystem {
         enemyDescriptors = new ArrayList<EnemyDescriptor>();
         enemyDescriptors.add(new EnemyDescriptor("boot", 2, 2, 0));
         enemyDescriptors.add(new EnemyDescriptor("bottle", 2, 2, 0));
+        enemyDescriptors.add(new EnemyDescriptor("bomb", 4, 4, 0));
 
 
     }
