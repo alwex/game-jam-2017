@@ -151,7 +151,7 @@ public class LevelScreen implements Screen {
                         ),
                         new MapSystem(mapRenderer, camera),
                         new PhysicSystem(
-                                -25f,
+                                -15f,
                                 map.getProperties().get("width", Integer.class),
                                 map.getProperties().get("height", Integer.class)
                         ),
