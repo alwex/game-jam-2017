@@ -6,6 +6,8 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 
 /**
  * Created by jbrungar on 21/01/17.
@@ -32,9 +34,13 @@ public class BounceOffEdgeSystem extends EntityProcessingSystem {
         PhysicComponent physic = physicMapper.get(e);
         if (position.x <= 0 || position.x + shape.width >= mapWidth) {
             physic.vx *= -1;
+            position.x = MathUtils.clamp(position.x,0.01f,position.x + shape.width - 0.01f);
+
+
         }
         if (physic.vy > 0 && position.y + shape.height >= mapHeight) {
             physic.vy = 0;
+            position.y = position.y + shape.height - 0.01f;
         }
     }
 }

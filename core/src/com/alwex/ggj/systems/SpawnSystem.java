@@ -44,8 +44,8 @@ public class SpawnSystem extends BaseSystem {
 
         float minSpawn = 0.000001f;
         float maxSpawn = 0.005f;
-        float minVelocity = 5;
-        float maxVelocity = 2;
+        float minVelocity = 15;
+        float maxVelocity = 7;
         float maxHeight = 0;
         float minHeight = Float.MAX_VALUE;
         float minX = 2;
