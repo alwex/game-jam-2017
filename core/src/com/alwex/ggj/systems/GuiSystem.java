@@ -103,11 +103,26 @@ public class GuiSystem extends EntityProcessingSystem {
                 10 - (camera.viewportWidth / 2),
                 (camera.viewportHeight - 40) - (camera.viewportHeight / 2)
         );
+
+        String lives = "";
+        for(int i=0; i<=gui.lives; i++){
+            lives += "+";
+        }
+        for(int i=gui.lives; i<=3; i++){
+            lives += " ";
+        }
+        font.draw(
+                batch,
+                "Lives [" + lives + "]",
+                10 - (camera.viewportWidth / 2),
+                (camera.viewportHeight - 70) - (camera.viewportHeight / 2)
+        );
 //        }
 
         if (gui.combo > 5) {
 //            levelScreen.game.showScore(gui.score, gui.combo);
         }
+
     }
 
     @Override

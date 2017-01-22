@@ -48,8 +48,6 @@ public class FishSystem extends EntityProcessingSystem {
     @Override
     protected void initialize() {
         fishDescriptors = new ArrayList<FishDescriptor>();
-        fishDescriptors.add(new FishDescriptor("boot", 1, 1, 1));
-        fishDescriptors.add(new FishDescriptor("bottle", 1, 1, 1));
         fishDescriptors.add(new FishDescriptor("crab", 1, 1, 10));
         fishDescriptors.add(new FishDescriptor("octopus4", 1,1, 15));
         fishDescriptors.add(new FishDescriptor("pengo", 1, 2, 20));

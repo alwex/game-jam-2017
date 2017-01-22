@@ -56,23 +56,22 @@ public class EntityFactory {
     public void createEnemy(
             World world,
             String name,
-            FishDescriptor descriptor,
+            EnemyDescriptor descriptor,
             float x, float y, float vx, float vy
     ) {
         Entity fish = world.createEntity()
                 .edit()
-                .add(new FishComponent())
                 .add(new EnemyComponent())
                 .add(new PositionComponent(x, y))
                 .add(new ShapeComponent(descriptor.width, descriptor.height))
                 .add(new ScoreComponent(descriptor.score))
                 .add(new SliceableComponent())
                 .add(new SpriteComponent(name))
-                .add(new RotationComponent(0, MathUtils.random(0.5f, 1f)))
+                .add(new RotationComponent(0, MathUtils.random(14.5f, 20f)))
                 .add(new SplashComponent())
                 .add(new PhysicComponent(
                         MathUtils.random(0.5f, 1f),
-                        vx*0, vy
+                        vx, vy
                 ))
                 .getEntity();
 

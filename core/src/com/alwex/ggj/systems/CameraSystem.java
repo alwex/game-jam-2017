@@ -37,6 +37,7 @@ public class CameraSystem extends EntityProcessingSystem {
                 .getEntity();
     }
 
+
     @Override
     protected void process(Entity e) {
         Vector3 cameraPosition = camera.position;

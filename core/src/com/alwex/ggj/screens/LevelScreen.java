@@ -178,6 +178,11 @@ public class LevelScreen implements Screen {
 //                        new RenderSystem(batch, camera, shapeRenderer),
                         new SpriteRenderSystem(batch, camera, game.getAssetManager().get("sprites/atlas.atlas", TextureAtlas.class)),
                         new SpawnSystem(),
+                        new EnemySystem(
+                                camera,
+                                map.getProperties().get("width", Integer.class),
+                                map.getProperties().get("height", Integer.class)
+                        ),
 //                        new RenderSystem(batch, camera, shapeRenderer),
                         new WaterRenderSystem(shapeRenderer, camera),
                         new MicrophoneSystem(game.getRecorder(), shapeRenderer, 1024),
