@@ -19,6 +19,9 @@ public class DesktopLauncher {
         config.foregroundFPS = -1;
         config.backgroundFPS = -1;
 
+        config.width *= 1.5f;
+        config.height *= 1.5f;
+
         new LwjglApplication(new JamGame(), config);
     }
 }
