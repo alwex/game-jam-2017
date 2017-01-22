@@ -1,16 +1,10 @@
 package com.alwex.ggj.screens;
 
 import com.alwex.ggj.JamGame;
-import com.alwex.ggj.components.MicrophoneComponent;
-import com.alwex.ggj.components.PositionComponent;
-import com.alwex.ggj.components.ShapeComponent;
-import com.alwex.ggj.systems.MicrophoneRenderSystem;
 import com.alwex.ggj.systems.PositionSystem;
 import com.alwex.ggj.systems.MicrophoneSystem;
-import com.alwex.ggj.systems.RenderSystem;
 import com.alwex.ggj.systems.*;
 import com.alwex.ggj.utils.MyMaths;
-import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
 import com.artemis.WorldConfigurationBuilder;
@@ -29,7 +23,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import net.mostlyoriginal.api.event.common.EventSystem;
-import net.mostlyoriginal.api.system.render.MapRenderSystem;
 
 /**
  * Created by alexandreguidet on 20/01/17.
@@ -197,7 +190,9 @@ public class LevelScreen implements Screen {
                         new BloodRenderSystem(shapeRenderer, camera),
                         new GuiSystem(this, batch, staticCamera, game.getTweenManager()),
 //                        new TargetSystem(shapeRenderer, batch, staticCamera, game.getAssetManager().get("sprites/atlas.atlas", TextureAtlas.class)),
-                        new CameraShakingSystem(camera)
+                        new CameraShakingSystem(camera),
+                        new SlicingSystem(),
+                        new SliceLineRenderSystem(shapeRenderer, camera)
                 ).build();
 
         world = new World(config);

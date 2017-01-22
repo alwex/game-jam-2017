@@ -17,7 +17,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import net.mostlyoriginal.api.event.common.EventSystem;
-import com.badlogic.gdx.utils.TimeUtils;
 
 /**
  * Created by jbrungar on 20/01/17.
@@ -31,17 +30,14 @@ public class SliceableSystem extends EntityProcessingSystem {
     ComponentMapper<DeadComponent> deadMapper;
     ComponentMapper<SliceableComponent> sliceableMapper;
 
+    SlicingSystem slicingSystem;
+
     TweenManager tweenManager;
 
     Vector2 topLeft;
     Vector2 topRight;
     Vector2 bottomRight;
     Vector2 bottomLeft;
-
-    public boolean isSlicing;
-    public Vector2 sliceStart;
-    public Vector2 sliceEnd;
-    public long sliceStartTime;
 
     public SliceableSystem(TweenManager tweenManager) {
         super(Aspect.all(SliceableComponent.class));
@@ -50,11 +46,6 @@ public class SliceableSystem extends EntityProcessingSystem {
 
     @Override
     protected void initialize() {
-        isSlicing = false;
-        sliceStart = new Vector2();
-        sliceEnd = new Vector2();
-        sliceStartTime = 0;
-
         topLeft = new Vector2();
         topRight = new Vector2();
         bottomRight = new Vector2();
@@ -63,7 +54,7 @@ public class SliceableSystem extends EntityProcessingSystem {
 
     @Override
     protected void process(Entity e) {
-        if (isSlicing && TimeUtils.timeSinceMillis(sliceStartTime) < 200) {
+        if (slicingSystem.isSlicing()) {
             PositionComponent pos = positionMapper.get(e);
             ShapeComponent shape = shapeMapper.get(e);
             Polygon collPoly = new Polygon(new float[]{0, 0, shape.width, 0, shape.width, shape.height, 0, shape.height});
@@ -77,10 +68,10 @@ public class SliceableSystem extends EntityProcessingSystem {
             bottomRight.y = vertices[5];
             bottomLeft.x = vertices[6];
             bottomLeft.y = vertices[7];
-            boolean slicedTop = Intersector.intersectSegments(sliceStart, sliceEnd, topLeft, topRight, null);
-            boolean slicedRight = Intersector.intersectSegments(sliceStart, sliceEnd, topRight, bottomRight, null);
-            boolean slicedBottom = Intersector.intersectSegments(sliceStart, sliceEnd, bottomRight, bottomLeft, null);
-            boolean slicedLeft = Intersector.intersectSegments(sliceStart, sliceEnd, bottomLeft, topLeft, null);
+            boolean slicedTop = Intersector.intersectSegments(slicingSystem.sliceStart, slicingSystem.sliceEnd, topLeft, topRight, null);
+            boolean slicedRight = Intersector.intersectSegments(slicingSystem.sliceStart, slicingSystem.sliceEnd, topRight, bottomRight, null);
+            boolean slicedBottom = Intersector.intersectSegments(slicingSystem.sliceStart, slicingSystem.sliceEnd, bottomRight, bottomLeft, null);
+            boolean slicedLeft = Intersector.intersectSegments(slicingSystem.sliceStart, slicingSystem.sliceEnd, bottomLeft, topLeft, null);
             if ((slicedLeft && slicedTop) ||
                     (slicedLeft && slicedRight) ||
                     (slicedLeft && slicedBottom) ||
