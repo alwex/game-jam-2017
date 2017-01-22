@@ -191,6 +191,7 @@ public class LevelScreen implements Screen {
                         new ComboSystem(),
                         new BloodRenderSystem(shapeRenderer, camera),
                         new GuiSystem(this, batch, staticCamera, game.getTweenManager()),
+//                        new TargetSystem(shapeRenderer, batch, staticCamera, game.getAssetManager().get("sprites/atlas.atlas", TextureAtlas.class)),
                         new CameraShakingSystem(camera)
                 ).build();
 
