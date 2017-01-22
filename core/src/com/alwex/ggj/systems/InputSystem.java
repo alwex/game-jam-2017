@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class InputSystem extends EntityProcessingSystem implements InputProcessor {
 
     OrthographicCamera camera;
-    SliceableSystem sliceableSystem;
+    SlicingSystem slicingSystem;
 
     public InputSystem(OrthographicCamera camera) {
         super(Aspect.all(SliceableComponent.class));
@@ -53,29 +53,29 @@ public class InputSystem extends EntityProcessingSystem implements InputProcesso
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (!sliceableSystem.isSlicing) {
-            sliceableSystem.isSlicing = true;
-            sliceableSystem.sliceStartTime = TimeUtils.millis();
-            sliceableSystem.sliceStart.x = camera.unproject(new Vector3(screenX, 0, 0)).x;
-            sliceableSystem.sliceStart.y = camera.unproject(new Vector3(0, screenY, 0)).y;
-            sliceableSystem.sliceEnd.x = camera.unproject(new Vector3(screenX, 0, 0)).x;
-            sliceableSystem.sliceEnd.y = camera.unproject(new Vector3(0, screenY, 0)).y;
+        if (!slicingSystem.isSlicing) {
+            slicingSystem.isSlicing = true;
+            slicingSystem.sliceStartTime = TimeUtils.millis();
+            slicingSystem.sliceStart.x = camera.unproject(new Vector3(screenX, 0, 0)).x;
+            slicingSystem.sliceStart.y = camera.unproject(new Vector3(0, screenY, 0)).y;
+            slicingSystem.sliceEnd.x = camera.unproject(new Vector3(screenX, 0, 0)).x;
+            slicingSystem.sliceEnd.y = camera.unproject(new Vector3(0, screenY, 0)).y;
         }
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if (sliceableSystem.isSlicing) {
-            sliceableSystem.isSlicing = false;
+        if (slicingSystem.isSlicing) {
+            slicingSystem.isSlicing = false;
         }
         return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        sliceableSystem.sliceEnd.x = camera.unproject(new Vector3(screenX, 0, 0)).x;
-        sliceableSystem.sliceEnd.y = camera.unproject(new Vector3(0, screenY, 0)).y;
+        slicingSystem.sliceEnd.x = camera.unproject(new Vector3(screenX, 0, 0)).x;
+        slicingSystem.sliceEnd.y = camera.unproject(new Vector3(0, screenY, 0)).y;
         return true;
     }
 
