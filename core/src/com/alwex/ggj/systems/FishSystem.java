@@ -48,14 +48,19 @@ public class FishSystem extends EntityProcessingSystem {
     @Override
     protected void initialize() {
         fishDescriptors = new ArrayList<FishDescriptor>();
-        fishDescriptors.add(new FishDescriptor("crab", 1, 1, 10));
-        fishDescriptors.add(new FishDescriptor("octopus4", 1,1, 15));
-        fishDescriptors.add(new FishDescriptor("pengo", 1, 2, 20));
-        fishDescriptors.add(new FishDescriptor("pengobaby", 1, 1, 100));
-        fishDescriptors.add(new FishDescriptor("redfish1", 1, 1, 30));
-        fishDescriptors.add(new FishDescriptor("redfish2", 1, 1, 30));
-        fishDescriptors.add(new FishDescriptor("seal", 2, 2, 50));
-        fishDescriptors.add(new FishDescriptor("whale", 5, 1, 1000));
+        fishDescriptors.add(new FishDescriptor("crab", 2, 2, 10));
+        fishDescriptors.add(new FishDescriptor("octopus4", 2,2, 15));
+        fishDescriptors.add(new FishDescriptor("pengo", 2, 4, 20));
+        fishDescriptors.add(new FishDescriptor("pengo", 2, 4, 20));
+        fishDescriptors.add(new FishDescriptor("pengobaby", 2, 2, 100));
+        fishDescriptors.add(new FishDescriptor("pengobaby", 2, 2, 100));
+        fishDescriptors.add(new FishDescriptor("redfish1", 2, 2, 30));
+        fishDescriptors.add(new FishDescriptor("redfish1", 2, 2, 30));
+        fishDescriptors.add(new FishDescriptor("redfish2", 2, 2, 30));
+        fishDescriptors.add(new FishDescriptor("redfish2", 2, 2, 30));
+        fishDescriptors.add(new FishDescriptor("seal", 4, 4, 50));
+        fishDescriptors.add(new FishDescriptor("whale", 20, 4, 1000));
+        fishDescriptors.add(new FishDescriptor("whale", 10, 2, 1000));
 
 
     }

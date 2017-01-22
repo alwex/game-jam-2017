@@ -151,7 +151,7 @@ public class LevelScreen implements Screen {
                         ),
                         new MapSystem(mapRenderer, camera),
                         new PhysicSystem(
-                                -25f,
+                                -15f,
                                 map.getProperties().get("width", Integer.class),
                                 map.getProperties().get("height", Integer.class)
                         ),
@@ -196,6 +196,7 @@ public class LevelScreen implements Screen {
                         new ComboSystem(),
                         new BloodRenderSystem(shapeRenderer, camera),
                         new GuiSystem(this, batch, staticCamera, game.getTweenManager()),
+//                        new TargetSystem(shapeRenderer, batch, staticCamera, game.getAssetManager().get("sprites/atlas.atlas", TextureAtlas.class)),
                         new CameraShakingSystem(camera)
                 ).build();
 
